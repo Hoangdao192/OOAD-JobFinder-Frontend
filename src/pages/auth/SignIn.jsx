@@ -75,7 +75,9 @@ function SignIn() {
               {...register("password", { required: true })}
               className="border border-slate-200 focus:outline-none p-2 rounded-md "
             />
-            {errors.password && <p>This field is required</p>}
+            {errors.password && (
+              <p className="text-red-500">This field is required</p>
+            )}
           </div>
 
           <input
