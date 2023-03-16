@@ -22,20 +22,34 @@ function SignUp() {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => {
-      console.log(res);
-    });
+    })
+      .then((res) => {
+        if (res.data) {
+          if (res.status === 200 || res.status === 201) {
+            console.log(res);
+            return res;
+          }
+          return Promise.reject(res);
+        }
+        return Promise.reject(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
   };
   return (
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-1/3 m-auto flex flex-col gap-5 px-14 py-14 mt-10 shadow-md rounded-md"
+        className="mx-4 md:w-1/2 xl:w-1/3 md:m-auto flex flex-col gap-5 px-8 md:px-14 py-14 shadow-md rounded-md md:mt-10"
       >
-        <h1 className="text-4xl self-center font-semibold mb-5">Sign up</h1>
+        <h1 className="text-3xl md:text-4xl self-center font-semibold mb-5">
+          Sign up
+        </h1>
         <div className="flex flex-col gap-2">
           <label
-            className="text-lg font-normal flex gap-2 items-center"
+            className="text-base md:text-lg font-normal flex gap-2 items-center"
             htmlFor="email"
           >
             Email
@@ -60,7 +74,7 @@ function SignUp() {
         </div>
         <div className="flex flex-col gap-2">
           <label
-            className="text-lg font-normal flex gap-2 items-center"
+            className="text-base md:text-lg font-normal flex gap-2 items-center"
             htmlFor="password"
           >
             Password
@@ -80,7 +94,7 @@ function SignUp() {
         </div>
         <div className="flex flex-col gap-2">
           <label
-            className="text-lg font-normal flex gap-2 items-center"
+            className="text-base md:text-lg font-normal flex gap-2 items-center"
             htmlFor="repeat_password"
           >
             Repeat password
@@ -107,7 +121,7 @@ function SignUp() {
 
         <div className="flex flex-col gap-2">
           <label
-            className="text-lg font-normal flex gap-2 items-center"
+            className="text-base md:text-lg font-normal flex gap-2 items-center"
             htmlFor="role"
           >
             Who you are?
@@ -142,7 +156,7 @@ function SignUp() {
 
         <input
           type="submit"
-          className="text-white text-lg bg-background_color hover:bg-background_color_hover py-2 rounded-md mt-5"
+          className="text-white text-base md:text-lg bg-background_color hover:bg-background_color_hover py-2 rounded-md mt-5"
         />
       </form>
     </div>

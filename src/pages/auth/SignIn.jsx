@@ -35,17 +35,19 @@ function SignIn() {
 
   return (
     <div className="">
-      <div className="w-1/3 m-auto px-14 mt-20 py-10 rounded-md shadow-md text-text_color">
+      <div className="mx-4 md:w-1/2 xl:w-1/3 md:m-auto px-4 md:px-14 md:mt-20 py-10 rounded-md shadow-md text-text_color">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className=" flex flex-col gap-10 "
         >
-          <h1 className="text-4xl font-semibold self-center">Sign In</h1>
-          <h2 className="text-2xl font-normal self-center">
+          <h1 className="text-3xl md:text-4xl font-semibold self-center">
+            Sign In
+          </h1>
+          <h2 className="text-lg md:text-2xl font-normal self-center">
             Welcome to JobFinder
           </h2>
           <div className="flex flex-col gap-2">
-            <label className="text-lg" htmlFor="email">
+            <label className="text-base md:text-lg" htmlFor="email">
               Email
             </label>
             <input
@@ -66,7 +68,7 @@ function SignIn() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-lg" htmlFor="password">
+            <label className="text-base md:text-lg" htmlFor="password">
               Password
             </label>
             <input
@@ -82,7 +84,7 @@ function SignIn() {
 
           <input
             type="submit"
-            className=" bg-background_color hover:bg-background_color_hover p-2 w-full text-lg rounded-md text-white font-normal self-center"
+            className=" bg-background_color hover:bg-background_color_hover p-2 w-full text-base md:text-lg rounded-md text-white font-normal self-center"
           />
         </form>
 
