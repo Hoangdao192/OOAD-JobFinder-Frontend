@@ -52,7 +52,7 @@ cd src/main/reactjs
 Server front-end sẽ chạy trên port `3000`
 
 <a name="api"></a>
-## [Đặc tả API](API.md)
+## [Đặc tả API](https://github.com/Hoangdao192/OOAD-JobFinder-Backend/blob/master/API.md)
 
 # Giải thích một số thành phần mã nguồn
 ## Phần giải thích này chỉ dành cho reactjs thôi nhé
