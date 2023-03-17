@@ -34,11 +34,14 @@ function SignIn() {
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <div className="">
-      <div className="mx-4 md:w-1/2 xl:w-1/3 md:m-auto px-4 md:px-14 md:mt-20 py-10 rounded-md shadow-md text-text_color">
+    <div
+      className="m-0 p-0
+      bg-[url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-violet-500 h-screen"
+    >
+      <div className="mx-4 bg-white md:w-1/2 xl:w-1/3 md:m-auto px-4 md:px-14 md:mt-20 py-10 rounded-md shadow-md text-text_color">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className=" flex flex-col gap-10 "
+          className=" flex flex-col gap-5 "
         >
           <h1 className="text-3xl md:text-4xl font-semibold self-center">
             Sign In
@@ -73,7 +76,6 @@ function SignIn() {
             </label>
             <input
               type="password"
-              autoFocus
               {...register("password", { required: true })}
               className="border border-slate-200 focus:outline-none p-2 rounded-md "
             />
@@ -84,12 +86,12 @@ function SignIn() {
 
           <input
             type="submit"
-            className=" bg-background_color hover:bg-background_color_hover p-2 w-full text-base md:text-lg rounded-md text-white font-normal self-center"
+            className="mt-5 bg-background_color hover:bg-background_color_hover p-2 w-full text-base md:text-lg rounded-md text-white font-normal self-center"
           />
         </form>
 
         <div>
-          <p className="mt-5 text-right hover:text-blue-600">
+          <p className="mt-10 text-right text-base md:text-lg hover:text-blue-600">
             Forgot your password?
           </p>
         </div>

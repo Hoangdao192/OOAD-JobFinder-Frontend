@@ -10,6 +10,9 @@ module.exports = {
         background_color: "#795FFF",
         background_color_hover: "rgba(121, 95, 255, 0.8)",
       },
+      images: {
+        domains: ["images.unsplash.com"],
+      },
     },
   },
   plugins: [],

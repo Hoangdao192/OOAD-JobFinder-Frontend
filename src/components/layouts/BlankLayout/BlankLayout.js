@@ -1,14 +1,11 @@
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import React from "react";
 
-function BlankLayout({children}) {
-    return (
-        <div>
-            <div className="container">
-                {children}
-            </div>
-        </div>
-    )
+function BlankLayout({ children }) {
+  return (
+    <div>
+      <div>{children}</div>
+    </div>
+  );
 }
 
 export default BlankLayout;

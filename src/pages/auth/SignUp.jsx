@@ -1,13 +1,16 @@
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-function SignUp() {
+import { useNavigate } from "react-router-dom";
+function SignUp({ navigation }) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
+
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -27,6 +30,12 @@ function SignUp() {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
             console.log(res);
+
+            navigate("/auth/verifyemail", {
+              state: {
+                email: res.data.email,
+              },
+            });
             return res;
           }
           return Promise.reject(res);
@@ -82,7 +91,6 @@ function SignUp() {
           </label>
           <input
             className="border p-2 rounded-md focus:outline-none"
-            autoFocus
             type="password"
             {...register("password", {
               required: true,
@@ -102,7 +110,6 @@ function SignUp() {
           </label>
           <input
             className="border p-2 rounded-md focus:outline-none"
-            autoFocus
             type="password"
             {...register("repeat_password", {
               required: true,
