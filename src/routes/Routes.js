@@ -1,8 +1,9 @@
 import { Home } from "../pages/Home";
-import BlankLayout from "../components/layouts/BlankLayout/BlankLayout";
+import BlankLayout from "../components/layouts/blankLayout/BlankLayout";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
+import CompanyDetail from "pages/auth/detail/CompanyDetail";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -18,6 +19,11 @@ const publicRoutes = [
   { path: "/auth/signin", component: SignIn, layout: BlankLayout },
   { path: "/auth/signup", component: SignUp, layout: BlankLayout },
   { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
+  {
+    path: "/auth/detail/company",
+    component: CompanyDetail,
+    layout: BlankLayout,
+  },
 ];
 
 export { publicRoutes, privateRoutes };

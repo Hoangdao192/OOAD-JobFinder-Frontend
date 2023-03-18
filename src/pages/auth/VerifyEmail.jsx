@@ -106,21 +106,14 @@ function VerifyEmail() {
               <Countdown date={Date.now() + 1000 * 120} renderer={rendered} />
             </span>
           </p>
-          {/* <form className="flex gap-4">
-            {[...Array(inputs)].map((i) => {
-              return (
-                <input
-                  key={i}
-                  type="text"
-                  className="h-14 w-14 px-4 text-2xl font-medium rounded-md bg-slate-100 focus:outline-none"
-                />
-              );
-            })}
-          </form> */}
+
           <VerificationInput
             autoFocus
             placeholder="_"
             onComplete={handleVerify}
+            classNames={{
+              character: "character",
+            }}
           />
           <div>
             <button

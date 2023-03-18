@@ -1,4 +1,5 @@
 import axios from "axios";
+import Layout from "components/layouts/background/Layout";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -48,10 +49,10 @@ function SignUp({ navigation }) {
       });
   };
   return (
-    <div>
+    <Layout>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mx-4 md:w-1/2 xl:w-1/3 md:m-auto flex flex-col gap-5 px-8 md:px-14 py-14 shadow-md rounded-md md:mt-10"
+        className="mx-4 bg-white md:w-1/2 xl:w-1/3 md:mx-auto mt-10 flex flex-col gap-5 px-8 md:px-14 py-10 shadow-md rounded-md"
       >
         <h1 className="text-3xl md:text-4xl self-center font-semibold mb-5">
           Sign up
@@ -163,10 +164,11 @@ function SignUp({ navigation }) {
 
         <input
           type="submit"
+          value={"Sign up"}
           className="text-white text-base md:text-lg bg-background_color hover:bg-background_color_hover py-2 rounded-md mt-5"
         />
       </form>
-    </div>
+    </Layout>
   );
 }
 export default SignUp;
