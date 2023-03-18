@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Authentication from "services/Authentication/Authentication";
 import subVn from "sub-vn";
 
 function CompanyDetail() {
@@ -58,8 +60,27 @@ function CompanyDetail() {
     setValue,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     console.log(data);
+    let formData = new FormData();
+    formData.append("companyName", data.companyName);
+    formData.append("companyDescription", data.companyDescription);
+    formData.append("numberOfEmployee", data.numberOfEmployee);
+    formData.append("address.province", data.address.province);
+    formData.append("address.district", data.address.district);
+    formData.append("address.ward", data.address.ward);
+    formData.append("address.detailAddress", data.address.detailAddress);
+    formData.append("companyLogoFile", data.companyLogoFile);
+
+    axios({
+      method: "put",
+      url: "http://localhost:5000/api/company",
+      data: formData,
+      headers: {
+        Authorization: Authentication.generateAuthorizationHeader(),
+      },
+    });
   };
 
   // handle upload logo
@@ -82,7 +103,7 @@ function CompanyDetail() {
     }
 
     setSelectedLogo(e.target.files[0]);
-    setValue("file", e.target.files[0]);
+    setValue("companyLogoFile", e.target.files[0]);
   };
   return (
     <div className="flex overflow-auto mx-5 md:mx-20 px-5 md:px-10  my-5 max-h-screen gap-20 border py-5 shadow-md rounded-md">
@@ -134,7 +155,7 @@ function CompanyDetail() {
               type="file"
               id="logo"
               onChange={onSelectImage}
-              name="file"
+              name="companyLogoFile"
               className="hidden"
             />
           </label>
