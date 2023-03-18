@@ -55,6 +55,7 @@ function CompanyDetail() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -81,6 +82,7 @@ function CompanyDetail() {
     }
 
     setSelectedLogo(e.target.files[0]);
+    setValue("file", e.target.files[0]);
   };
   return (
     <div className="flex overflow-auto mx-5 md:mx-20 px-5 md:px-10  my-5 max-h-screen gap-20 border py-5 shadow-md rounded-md">
@@ -98,22 +100,44 @@ function CompanyDetail() {
           Company's Information
         </h1>
 
-        <div className="mt-5 flex w-full items-center gap-10">
+        <div className="mt-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
           <div className=" ">
-            {selectedLogo && (
+            {selectedLogo ? (
               <img
                 src={preview}
                 alt="logo"
-                className=" w-40 h-40 object-cover rounded-full"
+                className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 object-cover rounded-full"
               />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={0.1}
+                stroke="#6B7280"
+                className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 object-cover rounded-full outline ml-5 outline-[#6B7280] outline-1"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+                />
+              </svg>
             )}
           </div>
-          <input
-            type="file"
-            id="logo"
-            onChange={onSelectImage}
-            {...register("companyLogoFile")}
-          />
+          <label
+            htmlFor="logo"
+            className="text-base md:text-lg font-base cursor-pointer text-background_color "
+          >
+            Change logo
+            <input
+              type="file"
+              id="logo"
+              onChange={onSelectImage}
+              name="file"
+              className="hidden"
+            />
+          </label>
         </div>
 
         <div className="flex flex-col gap-2">
