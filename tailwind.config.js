@@ -9,6 +9,7 @@ module.exports = {
         button_hover_color: "rgba(73, 228, 250, 0.8)",
         background_color: "#795FFF",
         background_color_hover: "rgba(121, 95, 255, 0.8)",
+        home_search_transparent_purple: "#A998F6",
       },
       images: {
         domains: ["images.unsplash.com"],

@@ -1,5 +1,5 @@
 import { Home } from "../pages/Home";
-import BlankLayout from "../components/layouts/BlankLayout/BlankLayout";
+import BlankLayout from "../components/layouts/blankLayout/BlankLayout";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
@@ -15,7 +15,8 @@ const privateRoutes = [
 ];
 const publicRoutes = [
   //  Example: {path: '/login', component: Login}
-  { path: "/", component: Home, layout: BlankLayout },
+  // { path: "/", component: Home, layout: BlankLayout },
+  { path: "/", component: Home},
   { path: "/auth/signin", component: SignIn, layout: BlankLayout },
   { path: "/auth/signup", component: SignUp, layout: BlankLayout },
   { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },

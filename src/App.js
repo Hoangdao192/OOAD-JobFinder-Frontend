@@ -1,7 +1,8 @@
+// @ts-nocheck
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./routes/Routes";
-import BlankLayout from "./components/layouts/BlankLayout";
+import BlankLayout from "./components/layouts/blankLayout";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
