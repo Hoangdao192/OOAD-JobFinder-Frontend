@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Authentication from "../../services/Authentication/Authentication";
 import {Route, Navigate} from "react-router-dom";
 
