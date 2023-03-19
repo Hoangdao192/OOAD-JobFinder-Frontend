@@ -80,8 +80,6 @@ export function Home() {
 
         </div>
       </BackgroudLayout>
-
-      <ToastContainer />
     </div>
   );
 }
