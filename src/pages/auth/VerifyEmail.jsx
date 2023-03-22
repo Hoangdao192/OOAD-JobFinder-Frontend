@@ -55,7 +55,9 @@ function VerifyEmail() {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-            navigate("/");
+            localStorage.setItem("accessToken", res.data.accessToken);
+            localStorage.setItem("tokenType", res.data.tokenType);
+            navigate("/auth/detail/company");
           }
           return Promise.reject(res);
         }

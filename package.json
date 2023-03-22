@@ -19,6 +19,7 @@
     "react-verification-input": "^3.3.0",
     "sass": "^1.58.3",
     "sub-vn": "^0.0.2",
+    "tailwind-datepicker-react": "^1.2.3",
     "tailwind-scrollbar-hide": "^1.1.7",
     "web-vitals": "^2.1.4"
   },

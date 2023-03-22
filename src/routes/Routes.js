@@ -4,6 +4,7 @@ import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
 import CompanyDetail from "pages/auth/detail/CompanyDetail";
+import CandidateDetail from "pages/auth/detail/CandidateDetail";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -22,6 +23,11 @@ const publicRoutes = [
   {
     path: "/auth/detail/company",
     component: CompanyDetail,
+    layout: BlankLayout,
+  },
+  {
+    path: "/auth/detail/candidate",
+    component: CandidateDetail,
     layout: BlankLayout,
   },
 ];

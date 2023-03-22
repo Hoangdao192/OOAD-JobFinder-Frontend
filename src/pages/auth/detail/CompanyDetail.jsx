@@ -80,6 +80,8 @@ function CompanyDetail() {
       headers: {
         Authorization: Authentication.generateAuthorizationHeader(),
       },
+    }).then((res) => {
+      console.log(res);
     });
   };
 
@@ -117,17 +119,17 @@ function CompanyDetail() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex w-full xl:pr-24 flex-col gap-3 text-text_color overflow-y-scroll scrollbar-hide"
       >
-        <h1 className="text-2xl md:text-3xl font-semibold">
+        <h1 className="self-center text-2xl md:text-3xl font-semibold">
           Company's Information
         </h1>
 
-        <div className="mt-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
+        <div className="mt-14 mb-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
           <div className=" ">
             {selectedLogo ? (
               <img
                 src={preview}
                 alt="logo"
-                className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 object-cover rounded-full"
+                className="w-24 h-24 md:w-28 md:h-28 xl:w-36 xl:h-36 object-cover rounded-full"
               />
             ) : (
               <svg
@@ -136,7 +138,7 @@ function CompanyDetail() {
                 viewBox="0 0 24 24"
                 strokeWidth={0.1}
                 stroke="#6B7280"
-                className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 object-cover rounded-full outline ml-5 outline-[#6B7280] outline-1"
+                className="w-24 h-24 md:w-28 md:h-28 xl:w-36 xl:h-36 object-cover rounded-full outline ml-5 outline-[#6B7280] outline-1"
               >
                 <path
                   strokeLinecap="round"
@@ -234,7 +236,7 @@ function CompanyDetail() {
               onChange={(e) => {
                 setSelectedProvince(e.target.value);
               }}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
               <option selected>Chọn tỉnh/ thành phố</option>
               {provinces.map((province) => {
@@ -254,7 +256,7 @@ function CompanyDetail() {
               onChange={(e) => {
                 setSelectedDistrict(e.target.value);
               }}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
               <option selected>Chọn quận/ huyện</option>
               {districts.map((district) => {
@@ -274,7 +276,7 @@ function CompanyDetail() {
               onChange={(e) => {
                 setSelectedWard(e.target.value);
               }}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
               <option selected>Chọn xã/ phường/ thị trấn</option>
               {wards.map((ward) => {
