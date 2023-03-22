@@ -1,6 +1,6 @@
 import axios from "axios";
 import Layout from "components/layouts/background/Layout";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 function SignUp({ navigation }) {
@@ -8,6 +8,7 @@ function SignUp({ navigation }) {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
 
@@ -48,6 +49,11 @@ function SignUp({ navigation }) {
         return Promise.reject(err);
       });
   };
+  useEffect(() => {
+    reset({
+      data: "",
+    });
+  }, [isSubmitSuccessful]);
   return (
     <Layout>
       <form
