@@ -141,7 +141,7 @@ function CandidateDetail() {
   };
 
   return (
-    <div className="flex overflow-auto mx-5 md:mx-20 px-5 md:px-10  my-5 max-h-screen gap-20 border py-5 shadow-md rounded-md">
+    <div className="flex overflow-auto mx-5 md:mx-20 px-5 md:px-10 my-5 max-h-screen gap-20 border py-5 shadow-md rounded-md">
       <img
         src="https://images.unsplash.com/photo-1579389083046-e3df9c2b3325?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
         alt="right_side"
