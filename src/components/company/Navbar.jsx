@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Navbar({ handlePostJob, handleCV }) {
+function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <div className=" text-white px-10 h-20 flex justify-between items-center bg-navbar_color/80">
       <div className="flex items-center gap-5">
@@ -15,7 +18,7 @@ function Navbar({ handlePostJob, handleCV }) {
         <ul className="flex gap-4 text-lg  ">
           <li>
             <button
-              onClick={handlePostJob}
+              onClick={() => navigate("/company/requirement")}
               className="hover:bg-button_hover_color flex gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light"
             >
               <svg
@@ -37,10 +40,7 @@ function Navbar({ handlePostJob, handleCV }) {
           </li>
 
           <li>
-            <button
-              onClick={handleCV}
-              className="hover:bg-button_hover_color flex gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light"
-            >
+            <button className="hover:bg-button_hover_color flex gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

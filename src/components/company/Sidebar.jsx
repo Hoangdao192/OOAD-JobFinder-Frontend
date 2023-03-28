@@ -1,5 +1,6 @@
 import React from "react";
 import { Transition } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 const Options = [
   {
@@ -20,6 +21,7 @@ const Options = [
       </svg>
     ),
     name: "Bảng tin",
+    link: "/company",
   },
   {
     icon: (
@@ -39,6 +41,7 @@ const Options = [
       </svg>
     ),
     name: "Tin tuyển dụng",
+    link: "/company/posts",
   },
   {
     icon: (
@@ -58,6 +61,7 @@ const Options = [
       </svg>
     ),
     name: "Quản lý CV",
+    link: "/company",
   },
   {
     icon: (
@@ -77,6 +81,7 @@ const Options = [
       </svg>
     ),
     name: "Thông tin tài khoản",
+    link: "/company",
   },
   {
     icon: (
@@ -96,10 +101,12 @@ const Options = [
       </svg>
     ),
     name: "Đăng xuất",
+    link: "/company",
   },
 ];
 
 function Sidebar() {
+  const navigate = useNavigate();
   return (
     <Transition
       show={true}
@@ -114,13 +121,14 @@ function Sidebar() {
         <div className="flex flex-col gap-5 py-10">
           {Options.map((item) => {
             return (
-              <div
+              <button
+                onClick={() => navigate(item.link)}
                 key={item.name}
                 className="flex gap-3 rounded-lg px-2 focus:bg-slate-200 hover:bg-slate-200 py-2 mx-1 text-text_color transition-all duration-200"
               >
                 {item.icon}
                 <span className="text-lg">{item.name}</span>
-              </div>
+              </button>
             );
           })}
         </div>

@@ -4,15 +4,12 @@ import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 
 function Dashboard({ children }) {
-  const handlePostJob = () => {};
-  const handleCV = () => {};
-
   return (
     <Layout>
       <div>
-        <Navbar handlePostJob={handlePostJob} handleCV={handleCV} />
+        <Navbar />
       </div>
-      <div className="flex h-full">
+      <div className="flex h-screen">
         <Sidebar />
         {children}
       </div>
