@@ -7,6 +7,7 @@ import CompanyDetail from "pages/auth/detail/CompanyDetail";
 import CandidateDetail from "pages/auth/detail/CandidateDetail";
 import HomeCompany from "pages/company/HomeCompany";
 import Requirement from "pages/company/Requirement";
+import Test from "pages/company/Test";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -33,6 +34,8 @@ const publicRoutes = [
     layout: BlankLayout,
   },
   { path: "/company", component: HomeCompany, layout: BlankLayout },
+  { path: "/company/test", component: Test, layout: BlankLayout },
+
   { path: "/company/requirement", component: Requirement, layout: BlankLayout },
 ];
 

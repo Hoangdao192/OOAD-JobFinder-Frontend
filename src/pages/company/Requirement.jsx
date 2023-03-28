@@ -7,43 +7,6 @@ import { toast } from "react-toastify";
 import Authentication from "services/Authentication/Authentication";
 
 function Requirement() {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { isSubmitSuccessful },
-  } = useForm({
-    defaultValues: {
-      jobTitle: "",
-      jobDescription: "",
-      major: "",
-      salary: "",
-      numberOfHiring: "",
-      sex: "Không",
-      workingForm: "full",
-      requireExperience: "khong",
-      jobAddress: "abc",
-    },
-  });
-  const onSubmit = (data) => {
-    // if (
-    //   data.jobTitle === "" ||
-    //   data.jobDescription === "" ||
-    //   data.major === "" ||
-    //   data.salary === "" ||
-    //   data.numberOfHiring === "" // bh nhu nao a
-    // ) {
-    //   alert("Please fill all required field");
-    // } else {
-    setValue("major", selectedMajor);
-    setValue("sex", selectedSex);
-    setValue("workingForm", selectedForm);
-    setValue("requireExperience", selectedExperience);
-    setValue("jobAddress", companyAddress);
-
-    console.log(data);
-  };
-
   const sexList = ["Không yêu cầu", "Nam", "Nữ"];
   const majorList = ["Information Technology", "Sale", "Accountant", "Medical"];
   const requireExperienceList = [
@@ -59,14 +22,61 @@ function Requirement() {
   const [selectedExperience, setSelectedExperience] = useState(
     requireExperienceList[0]
   );
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+  } = useForm();
 
-  console.log(selectedForm);
+  const onSubmit = (data) => {
+    if (
+      data.jobTitle === "" ||
+      data.jobDescription === "" ||
+      data.major === "" ||
+      data.salary === "" ||
+      data.numberOfHiring === ""
+    ) {
+      alert("Please fill all required field");
+    } else {
+      const formData = new FormData();
 
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      alert("Đăng tin thành công");
+      formData.append("jobTitle", data.jobTitle);
+      formData.append("jobDescription", data.jobDescription);
+      formData.append("major", selectedMajor);
+      formData.append("salary", data.salary);
+      formData.append("numberOfHiring", data.numberOfHiring);
+      formData.append("sex", selectedSex);
+      formData.append("workingForm", selectedForm);
+      formData.append("requireExperience", selectedExperience);
+      formData.append("jobAddress", companyAddress);
+
+      // for (const value of formData.values()) {
+      //   console.log(value);
+      // }
+      axios({
+        method: "post",
+        url: "http://localhost:5000/api/job",
+        data: formData,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Authentication.generateAuthorizationHeader(),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [isSubmitSuccessful]);
+  };
+
+  // useEffect(() => {
+  //   if (isSubmitSuccessful) {
+  //     alert("Đăng tin thành công");
+  //   }
+  // }, [isSubmitSuccessful]);
 
   const [companyAddress, setCompanyAddress] = useState("");
 
