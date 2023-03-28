@@ -41,12 +41,11 @@ function Requirement() {
     "Dưới 1 năm",
     "1 - 3 năm",
     "Trên 3 năm",
-  ]; // nó đg bị j vậy
-  const workingFormList = ["Full-time", "Part-time", "Remote"]; // hei cac bro, co nen commit trc k?
+  ];
+  const workingFormList = ["Full-time", "Part-time", "Remote"];
   const [selectedSex, setSelectedSex] = useState(sexList[0]);
   const [selectedMajor, setSelectedMajor] = useState("");
-  const [selectedForm, setSelectedForm] = useState(workingFormList[0]); // Day de toi giai thich :))
-  // Cai form o may doan selectorList nay
+  const [selectedForm, setSelectedForm] = useState(workingFormList[0]);
   const [selectedExperience, setSelectedExperience] = useState(
     requireExperienceList[0]
   );

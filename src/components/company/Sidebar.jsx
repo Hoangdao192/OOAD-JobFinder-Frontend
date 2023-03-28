@@ -110,7 +110,7 @@ function Sidebar() {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="w-60 bg-white shadow-md h-[calc(100vh-5rem)]">
+      <div className="w-60 bg-white shadow-md h-full">
         <div className="flex flex-col gap-5 py-10">
           {Options.map((item) => {
             return (

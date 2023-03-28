@@ -12,7 +12,7 @@ function Dashboard({ children }) {
       <div>
         <Navbar handlePostJob={handlePostJob} handleCV={handleCV} />
       </div>
-      <div className="flex">
+      <div className="flex h-full">
         <Sidebar />
         {children}
       </div>

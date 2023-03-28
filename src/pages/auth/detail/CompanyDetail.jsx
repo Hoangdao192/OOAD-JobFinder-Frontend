@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
 import subVn from "sub-vn";
 
@@ -48,6 +49,8 @@ function CompanyDetail() {
     setWards(wards);
   }, [selectedDistrict, districtCode]);
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -79,6 +82,7 @@ function CompanyDetail() {
     })
       .then((res) => {
         console.log(res);
+        navigate("/auth/signin");
       })
       .catch((err) => {
         console.log(err);

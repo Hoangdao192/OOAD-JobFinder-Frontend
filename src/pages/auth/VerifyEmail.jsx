@@ -33,7 +33,7 @@ function VerifyEmail() {
   };
 
   const handleVerify = (data) => {
-    console.log(data);
+    // console.log(data);
 
     axios({
       method: "post",
@@ -46,7 +46,7 @@ function VerifyEmail() {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-            localStorage.setItem("accessToken", res.data.accessToken);
+            localStorage.setItem("authToken", res.data.accessToken);
             localStorage.setItem("tokenType", res.data.tokenType);
             if (res.data.user.roles[0] === "Company") {
               navigate("/auth/detail/company");

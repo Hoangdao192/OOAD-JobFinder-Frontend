@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
 import Datepicker from "tailwind-datepicker-react";
 
@@ -63,6 +64,8 @@ const options = {
 };
 
 function CandidateDetail() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -94,6 +97,7 @@ function CandidateDetail() {
     })
       .then((res) => {
         console.log(res);
+        navigate("/auth/signin");
       })
       .catch((err) => {
         console.log(err);
