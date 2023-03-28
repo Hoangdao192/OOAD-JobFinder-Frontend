@@ -22,11 +22,23 @@ ChartJS.register(
 );
 
 export const options = {
-  responsive: true,
+//   responsive: true,
+  maintainAspectRatio: false,
+
+  // Phần trăm độ rộng của 
+  categoryPercentage: 0.9,
+  categorySpacing: 100,
+
+  // Set chiều dày cột cố định là pixel (mất gap giữa 2 cột)
+//   barThickness: 40,
+  
+  // Set chiều dày cột theo phần trăm
+  barPercentage: 0.8,
+
   plugins: {
     maintainAspectRatio: false,
     legend: {
-      position: "top",
+      position: 'top',
     },
     title: {
       display: true,
@@ -59,5 +71,11 @@ export const data = {
 };
 
 export default function Chart() {
-  return <Bar options={options} data={data} width={40} height={10} />;
+  return <div style={{
+    position: "relative",
+    width: "100%",
+    height: "17rem"
+  }}>
+    <Bar options={options} data={data}/>
+  </div>;
 }
