@@ -48,7 +48,7 @@ function Requirement() {
       formData.append("sex", selectedSex);
       formData.append("workingForm", selectedForm);
       formData.append("requireExperience", selectedExperience);
-      formData.append("jobAddress", companyAddress);
+      formData.append("jobAddress", companyAddressAsString);
 
       // for (const value of formData.values()) {
       //   console.log(value);
@@ -56,11 +56,21 @@ function Requirement() {
       axios({
         method: "post",
         url: "http://localhost:5000/api/job",
-        data: formData,
         headers: {
           "Content-Type": "application/json",
           Authorization: Authentication.generateAuthorizationHeader(),
         },
+        data: {
+            jobTitle: data.jobTitle,
+            jobDescription: data.jobDescription,
+            major: selectedMajor,
+            salary: data.salary,
+            numberOfHiring: data.numberOfHiring,
+            sex: selectedSex,
+            workingForm: selectedForm,
+            requireExperience: selectedExperience,
+            jobAddress: companyAddress
+        }
       })
         .then((res) => {
           console.log(res);
@@ -78,7 +88,8 @@ function Requirement() {
   //   }
   // }, [isSubmitSuccessful]);
 
-  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyAddressAsString, setCompanyAddressAsString] = useState("");
+  const [companyAddress, setCompanyAddress] = useState({});
 
   const companyData = Authentication.getCurrentUser();
 
@@ -89,7 +100,7 @@ function Requirement() {
     })
       .then((res) => {
         // console.log(res.data.address);
-        setCompanyAddress(
+        setCompanyAddressAsString(
           `${res.data.address.detailAddress}, ${res.data.address.ward}, ${res.data.address.district}, ${res.data.address.province}`
         );
       })
@@ -244,7 +255,7 @@ function Requirement() {
 
             <input
               type="text"
-              defaultValue={companyAddress}
+              defaultValue={companyAddressAsString}
               readOnly={true}
               className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
               {...register("jobAddress")}
