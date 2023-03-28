@@ -36,23 +36,8 @@ function Requirement() {
       data.salary === "" ||
       data.numberOfHiring === ""
     ) {
-      alert("Please fill all required field");
+      toast.error("Please fill all required field");
     } else {
-      // const formData = new FormData();
-
-      // formData.append("jobTitle", data.jobTitle);
-      // formData.append("jobDescription", data.jobDescription);
-      // formData.append("major", selectedMajor);
-      // formData.append("salary", data.salary);
-      // formData.append("numberOfHiring", data.numberOfHiring);
-      // formData.append("sex", selectedSex);
-      // formData.append("workingForm", selectedForm);
-      // formData.append("requireExperience", selectedExperience);
-      // formData.append("jobAddress", companyAddress);
-
-      // for (const value of formData.values()) {
-      //   console.log(value);
-      // }
       axios({
         method: "post",
         url: "http://localhost:5000/api/job",
@@ -70,6 +55,7 @@ function Requirement() {
           workingForm: selectedForm,
           requireExperience: selectedExperience,
           jobAddress: companyAddress,
+          closeDate: data.closeDate,
         },
       })
         .then((res) => {
@@ -87,8 +73,8 @@ function Requirement() {
   //   }
   // }, [isSubmitSuccessful]);
 
-  const [companyAddress, setCompanyAddress] = useState("");
-
+  const [companyAddress, setCompanyAddress] = useState({});
+  const [companyAddressAsString, setCompanyAddressAsString] = useState("");
   const companyData = Authentication.getCurrentUser();
 
   useEffect(() => {
@@ -98,7 +84,7 @@ function Requirement() {
     })
       .then((res) => {
         // console.log(res.data.address);
-        setCompanyAddress(
+        setCompanyAddressAsString(
           `${res.data.address.detailAddress}, ${res.data.address.ward}, ${res.data.address.district}, ${res.data.address.province}`
         );
       })
@@ -241,6 +227,20 @@ function Requirement() {
                 {...register("workingForm")}
               />
             </div>
+
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="closeDate"
+                className="text-base md:text-lg font-medium"
+              >
+                Ngày đóng đơn
+              </label>
+              <input
+                type="date"
+                {...register("closeDate")}
+                className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -253,7 +253,7 @@ function Requirement() {
 
             <input
               type="text"
-              defaultValue={companyAddress}
+              defaultValue={companyAddressAsString}
               readOnly={true}
               className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
               {...register("jobAddress")}
