@@ -1,5 +1,4 @@
 import { Home } from "../pages/Home";
-import BlankLayout from "../components/layouts/BlankLayout";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
@@ -8,6 +7,7 @@ import CandidateDetail from "pages/auth/detail/CandidateDetail";
 import HomeCompany from "pages/company/HomeCompany";
 import Requirement from "pages/company/Requirement";
 import Posts from "pages/company/Posts";
+import BlankLayout from "components/layouts/blankLayout/BlankLayout";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}

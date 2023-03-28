@@ -1,4 +1,4 @@
-import Post from "../../components/company/Post";
+import Post from "./Post";
 
 const { default: Dashboard } = require("components/company/Dashboard");
 const { default: React, useState } = require("react");

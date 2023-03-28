@@ -38,17 +38,17 @@ function Requirement() {
     ) {
       alert("Please fill all required field");
     } else {
-      const formData = new FormData();
+      // const formData = new FormData();
 
-      formData.append("jobTitle", data.jobTitle);
-      formData.append("jobDescription", data.jobDescription);
-      formData.append("major", selectedMajor);
-      formData.append("salary", data.salary);
-      formData.append("numberOfHiring", data.numberOfHiring);
-      formData.append("sex", selectedSex);
-      formData.append("workingForm", selectedForm);
-      formData.append("requireExperience", selectedExperience);
-      formData.append("jobAddress", companyAddressAsString);
+      // formData.append("jobTitle", data.jobTitle);
+      // formData.append("jobDescription", data.jobDescription);
+      // formData.append("major", selectedMajor);
+      // formData.append("salary", data.salary);
+      // formData.append("numberOfHiring", data.numberOfHiring);
+      // formData.append("sex", selectedSex);
+      // formData.append("workingForm", selectedForm);
+      // formData.append("requireExperience", selectedExperience);
+      // formData.append("jobAddress", companyAddress);
 
       // for (const value of formData.values()) {
       //   console.log(value);
@@ -61,19 +61,18 @@ function Requirement() {
           Authorization: Authentication.generateAuthorizationHeader(),
         },
         data: {
-            jobTitle: data.jobTitle,
-            jobDescription: data.jobDescription,
-            major: selectedMajor,
-            salary: data.salary,
-            numberOfHiring: data.numberOfHiring,
-            sex: selectedSex,
-            workingForm: selectedForm,
-            requireExperience: selectedExperience,
-            jobAddress: companyAddress
-        }
+          jobTitle: data.jobTitle,
+          jobDescription: data.jobDescription,
+          major: selectedMajor,
+          salary: data.salary,
+          numberOfHiring: data.numberOfHiring,
+          sex: selectedSex,
+          workingForm: selectedForm,
+          requireExperience: selectedExperience,
+          jobAddress: companyAddress,
+        },
       })
         .then((res) => {
-          console.log(res);
           console.log(res.data);
         })
         .catch((err) => {
@@ -88,8 +87,7 @@ function Requirement() {
   //   }
   // }, [isSubmitSuccessful]);
 
-  const [companyAddressAsString, setCompanyAddressAsString] = useState("");
-  const [companyAddress, setCompanyAddress] = useState({});
+  const [companyAddress, setCompanyAddress] = useState("");
 
   const companyData = Authentication.getCurrentUser();
 
@@ -100,7 +98,7 @@ function Requirement() {
     })
       .then((res) => {
         // console.log(res.data.address);
-        setCompanyAddressAsString(
+        setCompanyAddress(
           `${res.data.address.detailAddress}, ${res.data.address.ward}, ${res.data.address.district}, ${res.data.address.province}`
         );
       })
@@ -255,7 +253,7 @@ function Requirement() {
 
             <input
               type="text"
-              defaultValue={companyAddressAsString}
+              defaultValue={companyAddress}
               readOnly={true}
               className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
               {...register("jobAddress")}
