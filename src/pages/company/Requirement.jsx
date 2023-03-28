@@ -12,26 +12,36 @@ function Requirement() {
     handleSubmit,
     setValue,
     formState: { isSubmitSuccessful },
-  } = useForm();
-
+  } = useForm({
+    defaultValues: {
+      jobTitle: "",
+      jobDescription: "",
+      major: "",
+      salary: "",
+      numberOfHiring: "",
+      sex: "Không",
+      workingForm: "full",
+      requireExperience: "khong",
+      jobAddress: "abc",
+    },
+  });
   const onSubmit = (data) => {
-    if (
-      data.jobTitle === "" ||
-      data.jobDescription === "" ||
-      data.major === "" ||
-      data.salary === "" ||
-      data.numberOfHiring === ""
-    ) {
-      alert("Please fill all required field");
-    } else {
-      setValue("major", selectedMajor);
-      setValue("sex", selectedSex);
-      setValue("workingForm", selectedForm);
-      setValue("requireExperience", selectedExperience);
-      setValue("jobAddress", companyAddress);
+    // if (
+    //   data.jobTitle === "" ||
+    //   data.jobDescription === "" ||
+    //   data.major === "" ||
+    //   data.salary === "" ||
+    //   data.numberOfHiring === "" // bh nhu nao a
+    // ) {
+    //   alert("Please fill all required field");
+    // } else {
+    setValue("major", selectedMajor);
+    setValue("sex", selectedSex);
+    setValue("workingForm", selectedForm);
+    setValue("requireExperience", selectedExperience);
+    setValue("jobAddress", companyAddress);
 
-      console.log(data);
-    }
+    console.log(data);
   };
 
   const sexList = ["Không yêu cầu", "Nam", "Nữ"];

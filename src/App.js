@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./routes/Routes";
-import BlankLayout from "./components/layouts/BlankLayout";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
-import { ToastContainer } from "react-toastify";
+import BlankLayout from "./components/layouts/blankLayout"; // cho nay luc nay e de la BlankLayout
+import AuthenticatedRoute from "./components/AuthenticatedRoute"; // van con 1 loi kia. e cha sua gì nen sao biet dc
+import { ToastContainer } from "react-toastify"; // day de a xem :v a cx ko ro
 import "./App.css";
 function App() {
   return (
