@@ -1,4 +1,6 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export default function Post({ post }) {
@@ -13,6 +15,22 @@ export default function Post({ post }) {
   const handleClick = () => {
     navigate(`/company/post/${post.id}`, { state: { id: post.id } });
   };
+
+  const [job, setJob] = useState({});
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:5000/api/job/${post.id}`,
+    })
+      .then((res) => {
+        setJob(res.data);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div
       className="flex flex-col w-full p-5 gap-2 shadow-md rounded-md cursor-pointer"
@@ -36,7 +54,7 @@ export default function Post({ post }) {
           </span>
           <span className="bg-pink-100 p-2 rounded-md">{post.workingForm}</span>
         </div>
-        <p className="font-light italic pr-10">{`Ngày hết hạn: ${post.expired}`}</p>
+        <p className="font-light italic pr-10">{`Ngày hết hạn: ${post.closeDate}`}</p>
       </div>
     </div>
   );

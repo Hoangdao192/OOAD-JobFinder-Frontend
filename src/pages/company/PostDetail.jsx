@@ -1,10 +1,12 @@
 import axios from "axios";
 import Dashboard from "components/company/Dashboard";
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
 
-function PostDetail({ route, navigate }) {
+function PostDetail({ route }) {
+  const location = useLocation();
+
   useEffect(() => {
     axios({
       method: "get",
@@ -37,7 +39,10 @@ function PostDetail({ route, navigate }) {
     });
   };
 
-  const location = useLocation();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/company/post/candidates");
+  };
   return (
     <Dashboard>
       <div className="pl-10 w-full bg-white m-5 rounded-md shadow-md p-5">
@@ -101,7 +106,12 @@ function PostDetail({ route, navigate }) {
         </div>
 
         <div className=" mt-10 border-t pt-10 ">
-          <button className="text-lg font-medium flex gap-2 items-center hover:text-text_color/80">
+          <button
+            className="text-lg font-medium flex gap-2 items-center hover:text-text_color/80"
+            onClick={() => {
+              handleClick();
+            }}
+          >
             Danh sách ứng viên
             <svg
               xmlns="http://www.w3.org/2000/svg"

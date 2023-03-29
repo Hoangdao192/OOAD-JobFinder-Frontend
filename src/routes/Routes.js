@@ -9,6 +9,7 @@ import Requirement from "pages/company/Requirement";
 import Posts from "pages/company/Posts";
 import BlankLayout from "components/layouts/BlankLayout";
 import PostDetail from "pages/company/PostDetail";
+import CandidatesPerPost from "pages/company/CandidatesPerPost";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -43,6 +44,11 @@ const publicRoutes = [
     layout: BlankLayout,
   },
   { path: "company/post/:id", component: PostDetail, layout: BlankLayout },
+  {
+    path: "company/post/candidates",
+    component: CandidatesPerPost,
+    layout: BlankLayout,
+  },
 ];
 
 export { publicRoutes, privateRoutes };
