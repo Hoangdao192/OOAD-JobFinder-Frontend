@@ -22,19 +22,15 @@ function CompanyDetail() {
     const province = provinces.filter(
       (province) => province.name === selectedProvince
     );
-    console.log(province);
     if (province.length !== 0) {
       const code = province[0].code;
-      console.log(code);
       setProvinceCode(code);
-      console.log(provinceCode);
     }
   }, [selectedProvince, provinces, provinceCode]);
 
   useEffect(() => {
     const districtList = subVn.getDistrictsByProvinceCode(provinceCode);
     setDistricts(districtList);
-    // console.log(districts);
   }, [selectedProvince, provinceCode]);
 
   useEffect(() => {
@@ -44,14 +40,12 @@ function CompanyDetail() {
     if (district.length !== 0) {
       const code = district[0].code;
       setDistrictCode(code);
-      console.log(districtCode);
     }
   }, [selectedDistrict, districtCode, districts]);
 
   useEffect(() => {
     const wards = subVn.getWardsByDistrictCode(districtCode);
     setWards(wards);
-    console.log(wards);
   }, [selectedDistrict, districtCode]);
 
   const {
@@ -62,7 +56,6 @@ function CompanyDetail() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     let formData = new FormData();
     formData.append("companyName", data.companyName);
     formData.append("companyDescription", data.companyDescription);

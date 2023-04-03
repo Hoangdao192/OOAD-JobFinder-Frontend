@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 
 import serviceAuth from '../../../services/Authentication/Authentication'
 
-function Header({ Children }) {
+import LogoJobFinder from "../../../image/candidates/LogoJobFinder.png"
+
+function Header() {
   const [isLogged, setIsLogged] = useState(false)
 
   useEffect(() => {
@@ -13,26 +15,30 @@ function Header({ Children }) {
 
 
   return (
-    <header className="bg-gray-800 text-white" 
-  //   style={{position: "fixed",
-  //     top: "0",
-  // }}
-    >
+    <header className="text-gray-500">
       <nav className="container mx-auto py-4 px-2 flex items-center justify-between">
-        <h1 className="text-2xl font-bold justify-start">Job Finder</h1>
+        {/* Logo */}
+        <div className='flex flex-row space-x-3 items-center'>
+          <img className='rounded-md w-10 h-10' src={LogoJobFinder}></img>
+          <h1 className="text-2xl font-bold justify-start text-common_color">Job Finder</h1>
+        </div>
+
+        {/* Option */}
         <ul className="flex space-x-10 justify-end">
-          <li><a href="#" className="hover:text-gray-400 text-xl">For candidates</a></li>
-          <li><a href="#" className="hover:text-gray-400 text-xl">For companys</a></li>
+          <li><a href="#" className="hover:text-gray-400 text-xl hover:text-common_color">For candidates</a></li>
+          <li><a href="#" className="hover:text-gray-400 text-xl hover:text-common_color">For companys</a></li>
         </ul>
+
+        {/* Account */}
         {
           !isLogged && <div className='flex space-x-4'>
             <Link to='/auth/signin'>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded-md justify-end">
+              <button className="bg-common_color hover:bg-green-700 text-white py-1 px-4 rounded-md justify-end">
                 Sign In
               </button>
             </Link>
             <Link to="/auth/signup">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded-md justify-end">
+              <button className="bg-common_color hover:bg-green-700 text-white py-1 px-4 rounded-md justify-end">
                 Sign Up
               </button></Link>
           </div>

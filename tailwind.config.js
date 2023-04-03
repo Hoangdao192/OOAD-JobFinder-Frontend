@@ -10,11 +10,16 @@ module.exports = {
         background_color: "#795FFF",
         background_color_hover: "rgba(121, 95, 255, 0.8)",
         home_search_transparent_purple: "#A998F6",
+        common_color: "rgb(36, 149, 99)",
+        hover_common_color: "rgb(0, 100, 0)",
       },
-      images: {
-        domains: ["images.unsplash.com"],
-      },
+      // images: {
+      //   domains: ["images.unsplash.com"],
+      // },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require("tailwind-scrollbar-hide"),
+  ],
 };

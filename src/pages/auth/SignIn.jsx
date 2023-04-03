@@ -16,13 +16,11 @@ function SignIn() {
     formState: { errors, isSubmitSuccessful },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
     Authentication.login(data.email, data.password)
       .then(() => {
         navigate("/");
       })
       .catch((errors) => {
-        console.log(errors);
         toast.error("Invalid email or password");
       });
   };
