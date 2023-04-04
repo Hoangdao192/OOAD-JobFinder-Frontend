@@ -3,7 +3,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import React from "react";
 
-export default function Spinner({className = "", options, selected, setSelected }) {
+export default function Spinner({className = "", boxStyle= "", options, selected, setSelected }) {
   useEffect(() => {
     setSelected(selected);
   }, [selected, setSelected]);
@@ -12,7 +12,7 @@ export default function Spinner({className = "", options, selected, setSelected 
     <div className={className}>
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative w-fit">
-          <Listbox.Button className="flex items-center relative w-fit cursor-default rounded-[25px] text-left border py-[0.2rem] pl-4 text-[14px] md:text-lg">
+          <Listbox.Button className={`flex items-center relative w-fit cursor-default rounded-[25px] text-left border py-[0.2rem] pl-4 text-[14px] md:text-lg ${boxStyle}`}>
             <span className="block truncate text-base">
               {selected !== "" ? selected : "Tùy chọn"}
             </span>

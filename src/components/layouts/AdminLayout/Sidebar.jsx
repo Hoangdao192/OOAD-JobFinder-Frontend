@@ -21,7 +21,7 @@ const Options = [
             </svg>
         ),
         name: "Tổng quan",
-        link: "/company",
+        link: "/admin",
     },
     {
         icon: (
@@ -40,7 +40,7 @@ const Options = [
 
         ),
         name: "Quản lý người dùng",
-        link: "/company/posts",
+        link: "/admin/user",
     },
     {
         icon: (
@@ -80,7 +80,7 @@ const Options = [
             </svg>
         ),
         name: "Đăng xuất",
-        link: "/company",
+        link: "/auth/signout",
     },
 ];
 

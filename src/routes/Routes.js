@@ -12,6 +12,9 @@ import PostDetail from "pages/company/PostDetail";
 import CandidatesPerPost from "pages/company/CandidatesPerPost";
 import AdminLayout from "components/layouts/AdminLayout/AdminLayout";
 import Overview from "pages/admin/Overview/Overview";
+import UserManager from "pages/admin/UserManager/UserManager";
+import Signout from "pages/Logout";
+import NotFound from "pages/NotFound/NotFound";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -20,12 +23,17 @@ const privateRoutes = [
   //  layout: layout for this page (BlankLayout as default)
   //  component: component will be display
   //  authorization: array of roles can access this page
+
+  { path: "admin", component: Overview, layout: AdminLayout, authorization : ['Admin'] },
+  { path: "admin/user", component: UserManager, layout: AdminLayout, authorization : ['Admin']}
 ];
 const publicRoutes = [
   //  Example: {path: '/login', component: Login}
+  {path: "/not_found", component: NotFound, layout: BlankLayout},
   { path: "/", component: Home, layout: BlankLayout },
   { path: "/auth/signin", component: SignIn, layout: BlankLayout },
   { path: "/auth/signup", component: SignUp, layout: BlankLayout },
+  { path: "/auth/signout", component: Signout, layout: BlankLayout},
   { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
   {
     path: "/auth/detail/company",
@@ -50,8 +58,7 @@ const publicRoutes = [
     path: "company/post/candidates",
     component: CandidatesPerPost,
     layout: BlankLayout,
-  },
-  { path: "admin", component: Overview, layout: AdminLayout }
+  }
 ];
 
 export { publicRoutes, privateRoutes };

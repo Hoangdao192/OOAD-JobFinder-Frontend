@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { privateRoutes, publicRoutes } from "./routes/Routes";
 import BlankLayout from "./components/layouts/BlankLayout";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
@@ -23,6 +23,7 @@ function App() {
                     theme="colored"
                 />
                 <Routes>
+                    <Route path="*" element={<Navigate to="/not_found" />} />
                     {publicRoutes.map((route, index) => {
                         const Layout = route.layout || BlankLayout;
                         const Page = route.component;
@@ -55,6 +56,7 @@ function App() {
                             ></Route>
                         );
                     })}
+                    {/* <Navigate to="/not_found" /> */}
                 </Routes>
             </div>
         </BrowserRouter>

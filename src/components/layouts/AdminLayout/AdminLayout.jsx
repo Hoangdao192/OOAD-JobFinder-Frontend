@@ -13,7 +13,7 @@ function AdminLayout({ children }) {
         <div className="h-full">
             <Sidebar />
         </div>
-        <div className="w-full bg-[#f7f7f7]">
+        <div className="w-full bg-[#f7f7f7] overflow-hidden">
             {children}
         </div>
       </div>
