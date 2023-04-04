@@ -24,10 +24,10 @@ function Header() {
         </div>
 
         {/* Option */}
-        <ul className="flex space-x-10 justify-end">
+        {/* <ul className="flex space-x-10 justify-end">
           <li><a href="#" className="hover:text-gray-400 text-xl hover:text-common_color">For candidates</a></li>
           <li><a href="#" className="hover:text-gray-400 text-xl hover:text-common_color">For companys</a></li>
-        </ul>
+        </ul> */}
 
         {/* Account */}
         {

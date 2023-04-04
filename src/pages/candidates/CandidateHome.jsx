@@ -5,7 +5,7 @@ import BackgroudLayout from '../../components/layouts/background/Layout'
 import JobView from './componentCustom/JobView'
 import CompanyView from "./componentCustom/CompanyView";
 import Authentication from "services/Authentication/Authentication";
-import { getListJobDefault, getListCompanyDefault } from '../../services/candidates/CandidateService'
+import { getListJobFullFilter, getListMajor, getListJobDefault, getListCompanyDefault } from '../../services/candidates/CandidateService'
 
 import "./CandidateHome.css"
 import LogoJobFinder from "../../image/candidates/LogoJobFinder.png"
@@ -13,12 +13,12 @@ import LogoJobFinder from "../../image/candidates/LogoJobFinder.png"
 export const CandidateHome = () => {
    const [filterKey, setFilterKey] = useState(
       {
-         companyId: null,
          jobTitle: null,
-         major: null,
          workingForm: null,
+         major: null,
       }
    );
+   const [listMajor, setListMajor] = useState([]);
 
    const [listJob, setListJob] = useState([]);
 
@@ -27,9 +27,15 @@ export const CandidateHome = () => {
    const [listCompany, setListCompany] = useState([]);
 
    useEffect(() => {
-      getListJobDefault().then((data) => {
-         setListJob(data)
-      })
+      console.log("filterKey: ", filterKey);
+      getListJobFullFilter(filterKey).then((res) => {
+         console.log("element: ", res);
+         setListJob(res)
+      });
+
+      getListMajor().then((data) => {
+         setListMajor(data);
+      });
 
       getListCompanyDefault().then((data) => {
          setListCompany(data);
@@ -42,6 +48,25 @@ export const CandidateHome = () => {
       }
    }, [filterKey, userData])
 
+   const handleChangeWorkingForm = (sender) => {
+      let cloneFilterKey = { ...filterKey }
+      cloneFilterKey.workingForm = sender.target.value;
+      // 3864: Need check
+      setFilterKey(cloneFilterKey)
+   }
+
+   const handleChangeMajor = (sender) => {
+      let cloneFilterKey = { ...filterKey }
+      cloneFilterKey.major = sender.target.value;
+      // 3864: Need check
+      setFilterKey(cloneFilterKey)
+   }
+
+   const handleSubmitSearch = (event) => {
+      event.preventDefault();
+      setFilterKey({ ...filterKey, ["jobTitle"]: event.target.ipt_search.value })
+   }
+
    return (
       <div className="text-Poppins">
          <HomeHeader />
@@ -51,7 +76,7 @@ export const CandidateHome = () => {
             <div className="w-3/12 bg-white p-3 space-y-5 rounded-xl">
                <div className="flex flex-row">
                   <p className="flex-1">Filter</p>
-                  <p className="font-bold text-red-400">Clear All</p>
+                  <div className="font-bold text-red-400">Clear All</div>
                </div>
 
                <div>
@@ -67,9 +92,19 @@ export const CandidateHome = () => {
 
                <div className="flex flex-col space-y-2">
                   <label className="font-bold">JobType</label>
-                  <label><input type="checkbox" className="filterChx" /> Full-time</label>
-                  <label><input type="checkbox" className="filterChx" defaultChecked={true} /> Part-time</label>
-                  <label><input type="checkbox" className="filterChx" /> Remote</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Fulltime" name="radio_workingForm" className="accent-common_color bg-common_color"/> Full-time</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Parttime" name="radio_workingForm" className="accent-common_color bg-common_color"/> Part-time</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" name="radio_workingForm" className="accent-common_color bg-common_color"/> Remote</label>
+               </div>
+
+               <div className="flex flex-col space-y-2">
+                  <label className="font-bold">Chuyên ngành</label>
+                  {
+                     listMajor &&
+                     listMajor.map((item, index) => (
+                        <label className="filterChx"><input onChange={handleChangeMajor} type="radio" value={item.name} name="radio_major" className="accent-common_color bg-common_color" /> {item.name}</label>
+                     ))
+                  }
                </div>
             </div>
 
@@ -81,12 +116,12 @@ export const CandidateHome = () => {
 
                      <p className="text-xs">Job Finder is place where you can find your dream job in various skills, more than 10,000 jobs are available here</p>
 
-                     <form className="flex items-center space-x-3">
+                     <form onSubmit={handleSubmitSearch} className="flex items-center space-x-3">
                         <div className="relative w-full">
                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                               <svg aria-hidden="true" className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                            </div>
-                           <input type="text" className="p-3 text-xs bg-gray-100 bg-opacity-20 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-1 text-white rounded-md block w-full pl-10 placeholder-white" placeholder="Search" />
+                           <input type="text" id="ipt_search" className="p-3 text-xs bg-gray-100 bg-opacity-20 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-1 text-white rounded-md block w-full pl-10 placeholder-white" placeholder="Search" />
                         </div>
                         <button type="submit" className="p-2 w-auto h-10 text-sm text-common_color rounded-md bg-white hover:bg-hover_common_color hover:text-white">
                            <span className="m-3">Search</span>
@@ -105,7 +140,7 @@ export const CandidateHome = () => {
                         listJob.map((item, index) => (
                            <JobView data={item}></JobView>
                         ))
-                        : <div className="font-bold p-5 bg-white text-center text-common_color">Have no job for this filtered!</div>
+                        : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">Have no job for this filtered!</div>
                   }
                </div>
             </div>
@@ -114,20 +149,20 @@ export const CandidateHome = () => {
             <div className="w-3/12 space-y-3">
                {
                   userData ?
-                  <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-                     <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
-                     <p className="font-bold line-clamp-1">{userData.fullName && "Unknow"}</p>
-                     <p className="line-clamp-1">{userData.phoneNumber && "Unknow"}</p>
-                     <p className="line-clamp-1">{userData.contactEmail && "Unknow"}</p>
-                  </div>
-                  :
-                  <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-                     <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
-                     <p className="font-bold line-clamp-1">Name</p>
-                     <p className="line-clamp-1">Phone Number</p>
-                     <p className="line-clamp-1">Email Contact</p>
-                     <p className="text-xs line-clamp-1">You need sign in to display information</p>
-                  </div>
+                     <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                        <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
+                        <p className="font-bold line-clamp-1">{userData.fullName && "Unknow"}</p>
+                        <p className="line-clamp-1">{userData.phoneNumber && "Unknow"}</p>
+                        <p className="line-clamp-1">{userData.contactEmail && "Unknow"}</p>
+                     </div>
+                     :
+                     <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                        <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
+                        <p className="font-bold line-clamp-1">Name</p>
+                        <p className="line-clamp-1">Phone Number</p>
+                        <p className="line-clamp-1">Email Contact</p>
+                        <p className="text-xs line-clamp-1">You need sign in to display information</p>
+                     </div>
                }
 
                <div className="space-y-3">
@@ -135,10 +170,10 @@ export const CandidateHome = () => {
                   {/* ListCompany */}
                   {
                      listCompany.length > 0 ?
-                     listCompany.map((item, index) => (
+                        listCompany.map((item, index) => (
                            <CompanyView data={item}></CompanyView>
                         ))
-                        : <div className="font-bold p-5 bg-white text-center text-common_color">Have no company to display!</div>
+                        : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">Have no company to display!</div>
                   }
                </div>
             </div>

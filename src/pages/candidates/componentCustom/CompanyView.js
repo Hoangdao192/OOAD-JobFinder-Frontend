@@ -8,8 +8,6 @@ export const CompanyView = ({ data }) => {
    const [company, setCompany] = useState(null);
 
    useEffect(() => {
-      console.log("view data: ");
-      console.log(data);
       if (data) {
          let validData = { ...data };
 
