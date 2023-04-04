@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { set } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Authentication from "services/Authentication/Authentication";
 
 export default function Post({ post }) {
   // function to get 50 first words of job description
@@ -12,19 +13,22 @@ export default function Post({ post }) {
   }
 
   const navigate = useNavigate();
+  const [candidates, setCandidates] = useState([]);
+
   const handleClick = () => {
     navigate(`/company/post/${post.id}`, { state: { id: post.id } });
   };
 
-  const [job, setJob] = useState({});
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:5000/api/job/${post.id}`,
+      url: `http://localhost:5000/api/job-application?jobId=${post.id}`,
+      headers: {
+        Authorization: Authentication.generateAuthorizationHeader(),
+      },
     })
       .then((res) => {
-        setJob(res.data);
-        console.log(res);
+        setCandidates(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +42,9 @@ export default function Post({ post }) {
     >
       <div className="flex justify-between">
         <h1 className="text-xl font-medium">{post.jobTitle}</h1>
-        <p className="text-lg font-medium text-text_color pr-10">{`${post.numberOfCV} Đơn ứng tuyển`}</p>
+        <p className="text-lg font-medium text-text_color pr-10">{`${
+          candidates.length || 0
+        } Đơn ứng tuyển`}</p>
       </div>
       <p className="font-base">
         {`Số lượng tuyển dụng: `}

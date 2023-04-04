@@ -44,9 +44,9 @@ class Authentication {
           let authToken = response["accessToken"];
           let tokenType = response["tokenType"];
           if (
-            authToken == undefined ||
+            authToken === undefined ||
             authToken == null ||
-            authToken.length == 0
+            authToken.length === 0
           ) {
             reject("Không nhận được token đăng nhập");
             // return false;

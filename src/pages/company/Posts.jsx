@@ -120,8 +120,8 @@ export default function Posts() {
 
   return (
     <Dashboard>
-      <div className="w-full bg-white m-5 rounded-md shadow-md p-5">
-        <h1 className="text-3xl font-semibold text-text_color mb-10">
+      <div className="w-full bg-white m-5 rounded-md shadow-md p-5 overflow-y-scroll scrollbar-hide">
+        <h1 className="text-2xl font-semibold text-text_color mb-10">
           Tin tuyển dụng
         </h1>
         <div className="flex gap-10">

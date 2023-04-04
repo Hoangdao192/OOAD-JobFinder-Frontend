@@ -6,7 +6,7 @@ function HomeCompany() {
   return (
     <Dashboard>
       <div className="w-full bg-white m-5 rounded-md shadow-md p-5">
-        <h1 className="text-text_color text-3xl font-medium">
+        <h1 className="text-text_color text-2xl font-medium">
           Hiệu quả tuyển dụng
         </h1>
 

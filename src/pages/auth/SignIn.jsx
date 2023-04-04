@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Authentication from "../../services/Authentication/Authentication";
 import { toast } from "react-toastify";
 import Layout from "components/layouts/background/Layout";
@@ -15,11 +15,17 @@ function SignIn() {
 
     formState: { errors, isSubmitSuccessful },
   } = useForm();
+
   const onSubmit = (data) => {
     console.log(data);
     Authentication.login(data.email, data.password)
       .then(() => {
-        navigate("/");
+        const userData = Authentication.getCurrentUser();
+        if (userData.roles[0] === "Company") {
+          navigate("/company");
+        } else {
+          navigate("/");
+        }
       })
       .catch((errors) => {
         console.log(errors);
