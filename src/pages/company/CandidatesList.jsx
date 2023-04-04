@@ -8,7 +8,7 @@ const { default: Dashboard } = require("components/company/Dashboard");
 const { default: React, useEffect, useState } = require("react");
 
 function CandidatesList() {
-  const [candidates, setCandidates] = useState(example);
+  const [candidates, setCandidates] = useState([]);
   const [waitingCandidates, setWaitingCandidates] = useState([]);
   const [acceptedCandidates, setAcceptedCandidates] = useState([]);
   const [rejectedCandidates, setRejectedCandidates] = useState([]);
@@ -19,7 +19,8 @@ function CandidatesList() {
   const [currentPage, setCurrentPage] = useState(1);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = candidates?.slice(firstPostIndex, lastPostIndex);
+  const [currentPosts, setCurrentPosts] = useState([]);
+
   useEffect(() => {
     axios({
       method: "get",
@@ -30,23 +31,36 @@ function CandidatesList() {
     })
       .then((res) => {
         // setCandidates(res.data);
+        console.log(res.data);
         setAcceptedCandidates(
-          res.data.filter((candidate) => {
-            return candidate.status === "Accepted";
-          })
+          res.data.elements
+            .filter((candidate) => {
+              return candidate.status === "Accepted";
+            })
+            .map((item) => {
+              return item.candidate;
+            })
         );
 
         setWaitingCandidates(
-          res.data.filter((candidate) => {
-            return candidate.status === "Waiting";
-          })
+          res.data.elements
+            .filter((candidate) => {
+              return candidate.status === "Waiting";
+            })
+            .map((item) => {
+              return item.candidate;
+            })
         );
         setRejectedCandidates(
-          res.data.filter((candidate) => {
-            return candidate.status === "Rejected";
-          })
+          res.data.elements
+            .filter((candidate) => {
+              return candidate.status === "Rejected";
+            })
+            .map((item) => {
+              return item.candidate;
+            })
         );
-        console.log(res.data);
+        // console.log(res.data);
 
         switch (activeOption) {
           case "Waiting":
@@ -61,11 +75,20 @@ function CandidatesList() {
           default:
             break;
         }
+        // setCurrentPosts(candidates?.slice(firstPostIndex, lastPostIndex));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [activeOption, acceptedCandidates, waitingCandidates, rejectedCandidates]);
+  }, []);
+
+  useEffect(() => {
+    console.log("SETTER");
+    console.log(candidates);
+    setCurrentPosts(candidates?.slice(firstPostIndex, lastPostIndex));
+  }, [currentPage, candidates]);
+
+  console.log(waitingCandidates);
   return (
     <Dashboard>
       <div className="w-full bg-white m-5 rounded-md shadow-md p-5 overflow-y-scroll scrollbar-hide">
@@ -123,7 +146,7 @@ function CandidatesList() {
           </div>
         </div>
         <div className="flex flex-col gap-5 p-5 scrollbar-hide">
-          {currentPosts.map((candidate) => {
+          {candidates.slice(firstPostIndex, lastPostIndex).map((candidate) => {
             return (
               <Candidate
                 key={candidate.id}
