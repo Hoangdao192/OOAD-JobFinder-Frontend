@@ -61,7 +61,7 @@ export const JobView = ({ data }) => {
                <div onClick={handlerClickViewJobDetail} className="space-y-1.5">
                   <label className="text-[1.1rem] line-clamp-1">{data.jobTitle}</label>
 
-                  <div className="flex flex-row space-x-2 text-xs">
+                  <div className="flex flex-row space-x-2 text-xs items-center">
                      <label className="line-clamp-1">{data.workingForm}</label>
                      <img alt="." className="w-1 h-1" src={DotDivide} />
                      <label className="line-clamp-1">{data.jobAddress.province}</label>
