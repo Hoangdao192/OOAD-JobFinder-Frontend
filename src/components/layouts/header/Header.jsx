@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import serviceAuth from '../../../services/Authentication/Authentication'
 
-import LogoJobFinder from "../../../image/candidates/LogoJobFinder.png"
+import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
 
 function Header() {
   const [isLogged, setIsLogged] = useState(false)

@@ -8,7 +8,7 @@ import Authentication from "services/Authentication/Authentication";
 import { getListJobFullFilter, getListMajor, getListJobDefault, getListCompanyDefault } from '../../services/candidates/CandidateService'
 
 import "./CandidateHome.css"
-import LogoJobFinder from "../../image/candidates/LogoJobFinder.png"
+import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
 
 export const CandidateHome = () => {
    const [filterKey, setFilterKey] = useState(
@@ -165,7 +165,7 @@ export const CandidateHome = () => {
 
             {/* MidBar */}
             <div className="space-y-3 w-6/12">
-               <div className="bg-cover opacity-90 rounded-xl w-full h-xl bg-[url('./image/candidates/BackgroundSearch.png')]">
+               <div className="bg-cover opacity-90 rounded-xl w-full h-xl bg-[url('./assets/image/candidates/BackgroundSearch.png')]">
                   <div className="space-y-3 p-5 pb-2 text-gray-100">
                      <div className=" text-xl">Bạn đang tìm kiếm một công việc mơ ước?</div>
 

@@ -5,7 +5,7 @@ import Authentication from "services/Authentication/Authentication";
 import { getListCompanyDefault, getCompanyById } from '../../services/candidates/CandidateService'
 import { getJobById } from '../../services/job/JobService'
 import CompanyView from "../candidates/componentCustom/CompanyView";
-import LogoJobFinder from "../../image/candidates/LogoJobFinder.png"
+import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
 import "./JobDetail.css"
 import Header from "components/layouts/header/Header";
 
@@ -94,8 +94,8 @@ export const JobDetail = () => {
                   <label className="text-2xl">{jobDetail.jobTitle}</label>
                   <p className="flex-1"></p>
                   
-              <button className="bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-2.5 rounded-md justify-end">
-                Ứng tuyển
+              <button className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end">
+                Nộp CV
               </button>
                </div>
 
