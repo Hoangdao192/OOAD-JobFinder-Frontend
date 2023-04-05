@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { Home } from "../pages/Home";
-=======
-import { CandidateHome } from "../pages/candidates/CandidateHome";
-import BlankLayout from "../components/layouts/blankLayout/BlankLayout";
->>>>>>> origin/fe-dung
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
@@ -21,52 +15,75 @@ import UserManager from "pages/admin/UserManager/UserManager";
 import Signout from "pages/Logout";
 import NotFound from "pages/NotFound/NotFound";
 import CandidateHome from "pages/candidates/CandidateHome";
+import EditPost from "pages/company/EditPost";
+import CandidatesList from "pages/company/CandidatesList";
+import Profile from "pages/company/Profile";
+import EditProfile from "pages/company/EditProfile";
 
 const privateRoutes = [
-  //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
-  //  Explain:
-  //  path: path from root
-  //  layout: layout for this page (BlankLayout as default)
-  //  component: component will be display
-  //  authorization: array of roles can access this page
+    //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
+    //  Explain:
+    //  path: path from root
+    //  layout: layout for this page (BlankLayout as default)
+    //  component: component will be display
+    //  authorization: array of roles can access this page
 
-  { path: "admin", component: Overview, layout: AdminLayout, authorization : ['Admin'] },
-  { path: "admin/user", component: UserManager, layout: AdminLayout, authorization : ['Admin']}
+    { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
+    { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] }
 ];
 const publicRoutes = [
-  //  Example: {path: '/login', component: Login}
-  {path: "/not_found", component: NotFound, layout: BlankLayout},
-  { path: "/", component: Home, layout: BlankLayout },
-  // { path: "/", component: Home, layout: BlankLayout },
-  { path: "/", component: CandidateHome, layout: BlankLayout},
-  { path: "/auth/signin", component: SignIn, layout: BlankLayout },
-  { path: "/auth/signup", component: SignUp, layout: BlankLayout },
-  { path: "/auth/signout", component: Signout, layout: BlankLayout},
-  { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
-  {
-    path: "/auth/detail/company",
-    component: CompanyDetail,
-    layout: BlankLayout,
-  },
-  {
-    path: "/auth/detail/candidate",
-    component: CandidateDetail,
-    layout: BlankLayout,
-  },
-  { path: "/company", component: HomeCompany, layout: BlankLayout },
+    //  Example: {path: '/login', component: Login}
+    { path: "/not_found", component: NotFound, layout: BlankLayout },
+    // { path: "/", component: Home, layout: BlankLayout },
+    { path: "/", component: CandidateHome, layout: BlankLayout },
+    { path: "/auth/signin", component: SignIn, layout: BlankLayout },
+    { path: "/auth/signup", component: SignUp, layout: BlankLayout },
+    { path: "/auth/signout", component: Signout, layout: BlankLayout },
+    { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
+    {
+        path: "/auth/detail/company",
+        component: CompanyDetail,
+        layout: BlankLayout,
+    },
+    {
+        path: "/auth/detail/candidate",
+        component: CandidateDetail,
+        layout: BlankLayout,
+    },
+    { path: "/company", component: HomeCompany, layout: BlankLayout },
 
-  { path: "/company/requirement", component: Requirement, layout: BlankLayout },
-  {
-    path: "/company/posts",
-    component: Posts,
-    layout: BlankLayout,
-  },
-  { path: "company/post/:id", component: PostDetail, layout: BlankLayout },
-  {
-    path: "company/post/candidates",
-    component: CandidatesPerPost,
-    layout: BlankLayout,
-  }
+    { path: "/company/requirement", component: Requirement, layout: BlankLayout },
+    {
+        path: "/company/posts",
+        component: Posts,
+        layout: BlankLayout,
+    },
+    { path: "company/post/:id", component: PostDetail, layout: BlankLayout },
+    {
+        path: "company/post/candidates",
+        component: CandidatesPerPost,
+        layout: BlankLayout,
+    },
+    {
+        path: "company/post/edit",
+        component: EditPost,
+        layout: BlankLayout,
+    },
+    {
+        path: "company/candidates",
+        component: CandidatesList,
+        layout: BlankLayout,
+    },
+    {
+        path: "company/profile",
+        component: Profile,
+        layout: BlankLayout,
+    },
+    {
+        path: "company/profile/edit",
+        component: EditProfile,
+        layout: BlankLayout,
+    },
 ];
 
 export { publicRoutes, privateRoutes };

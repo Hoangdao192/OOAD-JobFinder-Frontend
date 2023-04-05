@@ -1,33 +1,43 @@
 import axios from "axios";
 import Dashboard from "components/company/Dashboard";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
 
-function PostDetail({ route }) {
+function PostDetail({ route, navigation }) {
   const location = useLocation();
 
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: `http://localhost:5000/api/job/${location.state.id}`,
-    });
-  }, []);
+  const [post, setPost] = useState({});
+  const [addressStr, setAddressStr] = useState("");
 
-  const post = {
-    id: 1,
-    jobTitle: "Nhân viên kế toán",
-    jobDescription: "Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao",
-    numberOfHiring: 5,
-    major: "IT",
-    salary: "5 - 10 triệu",
-    sex: "Không yêu cầu",
-    requireExperience: "Dưới 1 năm",
-    workingForm: "Full-time",
-    closeDate: "2023-04-31",
-    numberOfCV: 5,
-    jobAddress: "Duong Duy Tan,phuong Dich Vong Hau, quan Cau Giay, Ha Noi",
-  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/job/${location.state.id}`)
+      .then((res) => {
+        console.log(res.data);
+        setPost(res.data);
+        const addressObj = post.jobAddress;
+        if (!addressObj.detailAddress) {
+          addressObj.detailAddress = "";
+        }
+        if (!addressObj.ward) {
+          addressObj.ward = "";
+        }
+        if (!addressObj.district) {
+          addressObj.district = "";
+        }
+        if (!addressObj.province) {
+          addressObj.province = "";
+        }
+
+        setAddressStr(
+          `${addressObj.detailAddress}, ${addressObj.ward}, ${addressObj.district}, ${addressObj.province}`
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleDelete = () => {
     axios({
@@ -41,8 +51,13 @@ function PostDetail({ route }) {
 
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/company/post/candidates");
+    navigate("/company/post/candidates", { state: { post: post } });
   };
+
+  const handleEdit = () => {
+    navigate("/company/post/edit", { state: { id: location.state.id } });
+  };
+
   return (
     <Dashboard>
       <div className="pl-10 w-full bg-white m-5 rounded-md shadow-md p-5">
@@ -84,7 +99,7 @@ function PostDetail({ route }) {
 
         <div className="mt-5 flex flex-col gap-2">
           <p className="text-lg font-medium ">Địa điểm làm việc</p>
-          <p>{post.jobAddress}</p>
+          <p>{addressStr}</p>
         </div>
 
         <div className="mt-5 flex flex-col gap-2">
@@ -93,7 +108,10 @@ function PostDetail({ route }) {
         </div>
 
         <div className="flex gap-10 mt-10">
-          <button className="py-1 text-lg px-8 bg-background_color rounded-xl text-white hover:bg-background_color_hover">
+          <button
+            onClick={() => handleEdit()}
+            className="py-1 text-lg px-8 bg-background_color rounded-xl text-white hover:bg-background_color_hover"
+          >
             Sửa
           </button>
 
@@ -107,7 +125,7 @@ function PostDetail({ route }) {
 
         <div className=" mt-10 border-t pt-10 ">
           <button
-            className="text-lg font-medium flex gap-2 items-center hover:text-text_color/80"
+            className="text-lg font-medium flex gap-2 items-center hover:text-text_color/60"
             onClick={() => {
               handleClick();
             }}

@@ -61,7 +61,7 @@ const Options = [
       </svg>
     ),
     name: "Quản lý CV",
-    link: "/company",
+    link: "/company/candidates",
   },
   {
     icon: (
@@ -81,7 +81,7 @@ const Options = [
       </svg>
     ),
     name: "Thông tin tài khoản",
-    link: "/company",
+    link: "/company/profile",
   },
   {
     icon: (

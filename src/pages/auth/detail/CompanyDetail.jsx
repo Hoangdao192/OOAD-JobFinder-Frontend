@@ -305,6 +305,7 @@ function CompanyDetail() {
 
         <input
           type="submit"
+          value={"Cập nhật"}
           className="p-2 mt-5 border bg-background_color hover:bg-background_color_hover text-white text-base md:text-lg rounded-md"
         />
       </form>
