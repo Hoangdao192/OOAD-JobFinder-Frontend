@@ -10,18 +10,19 @@ module.exports = {
         text_color: "rgba(0, 0, 0, 0.8)",
         button_color: "#49E4FA",
         button_hover_color: "rgba(73, 228, 250, 0.8)",
-        background_color: "#bfacff",
-        background_color_hover: "#795fff",
-        navbar_color: "#1a1532",
+        background_color: "#795FFF",
+        background_color_hover: "rgba(121, 95, 255, 0.8)",
+        home_search_transparent_purple: "#A998F6",
+        common_color: "rgb(36, 149, 99)",
+        hover_common_color: "rgb(0, 100, 0)",
       },
-      images: {
-        domains: ["images.unsplash.com", "preview.colorlib.com"],
-      },
-      fontFamily: {
-        poppins: "Poppins, sans-serif",
-      },
-      backgroundColor: ["active"],
+      // images: {
+      //   domains: ["images.unsplash.com"],
+      // },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require("tailwind-scrollbar-hide"),
+  ],
 };

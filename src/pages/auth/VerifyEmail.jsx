@@ -33,8 +33,6 @@ function VerifyEmail() {
   };
 
   const handleVerify = (data) => {
-    // console.log(data);
-
     axios({
       method: "post",
       url: "http://localhost:5000/api/register/confirm",
@@ -59,7 +57,6 @@ function VerifyEmail() {
         return Promise.reject(res);
       })
       .catch((err) => {
-        console.log(err);
         return Promise.reject(err);
       });
   };
@@ -72,14 +69,12 @@ function VerifyEmail() {
       .then((res) => {
         if (res.data) {
           if (res.data.success === "true") {
-            console.log(res);
           }
           return Promise.reject(res);
         }
         return Promise.reject(res);
       })
       .catch((err) => {
-        console.log(err);
         return Promise.reject(err);
       });
     window.location.reload(false);

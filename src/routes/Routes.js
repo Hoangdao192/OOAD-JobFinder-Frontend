@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { Home } from "../pages/Home";
+=======
+import { CandidateHome } from "../pages/candidates/CandidateHome";
+import BlankLayout from "../components/layouts/blankLayout/BlankLayout";
+>>>>>>> origin/fe-dung
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
@@ -15,6 +20,7 @@ import Overview from "pages/admin/Overview/Overview";
 import UserManager from "pages/admin/UserManager/UserManager";
 import Signout from "pages/Logout";
 import NotFound from "pages/NotFound/NotFound";
+import CandidateHome from "pages/candidates/CandidateHome";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -31,6 +37,8 @@ const publicRoutes = [
   //  Example: {path: '/login', component: Login}
   {path: "/not_found", component: NotFound, layout: BlankLayout},
   { path: "/", component: Home, layout: BlankLayout },
+  // { path: "/", component: Home, layout: BlankLayout },
+  { path: "/", component: CandidateHome, layout: BlankLayout},
   { path: "/auth/signin", component: SignIn, layout: BlankLayout },
   { path: "/auth/signup", component: SignUp, layout: BlankLayout },
   { path: "/auth/signout", component: Signout, layout: BlankLayout},

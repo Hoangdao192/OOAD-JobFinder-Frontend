@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Authentication from "../../services/Authentication/Authentication";
 import {Route, Navigate} from "react-router-dom";
 import React from "react";
@@ -6,7 +7,6 @@ import React from "react";
  * Represent route that need authenticated
  */
 function AuthenticatedRoute({authorization, children}) {
-    console.log(authorization)
     const isAuthenticated = Authentication.isUserAuthenticated();
     let havePermission = false;
 
