@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import HomeHeader from '../../components/layouts/header/Header'
+import Header from '../../components/layouts/header/Header'
 import BackgroudLayout from '../../components/layouts/background/Layout'
 import JobView from './componentCustom/JobView'
 import CompanyView from "./componentCustom/CompanyView";
@@ -18,6 +18,7 @@ export const CandidateHome = () => {
          major: null,
       }
    );
+
    const [listMajor, setListMajor] = useState([]);
 
    const [listJob, setListJob] = useState([]);
@@ -28,25 +29,42 @@ export const CandidateHome = () => {
 
    const [listAddressJob, setListAddressJob] = useState([]);
 
-   const [reloadPage, setReloadPage] = useState(true);
+   useEffect (() => {
+      console.log("filterKey: ", filterKey);
+      if (filterKey.jobTitle || filterKey.major || filterKey.workingForm) {
+         getListJobFullFilter(filterKey).then((res) => {
+            console.log("listJobFilter: ", res);
+            setListJob(res);
+         });
+      }
+   }, [filterKey])
 
    useEffect(() => {
       console.log("filterKey: ", filterKey);
 
-      getListJobFullFilter(filterKey).then((res) => {
-         setListJob(res);
+      if (!filterKey.jobTitle && !filterKey.major && !filterKey.workingForm) {
+         getListJobDefault().then((data) => {
+            setListJob(data);
+   
+            let uniqueAddress = [];
+            listJob.map((item) => {
+               if (uniqueAddress.indexOf(item.jobAddress.province) == -1) {
+                  uniqueAddress.push(item.jobAddress.province);
+               }
+            })
+            setListAddressJob(uniqueAddress);
+         })
+      }
 
+      getListJobDefault().then((data) => {
          let uniqueAddress = [];
-         if (listJob.length < 1) {
-            setReloadPage(!reloadPage);
-         }
-         listJob.map((item) => {
+         data.map((item) => {
             if (uniqueAddress.indexOf(item.jobAddress.province) == -1) {
                uniqueAddress.push(item.jobAddress.province);
             }
          })
          setListAddressJob(uniqueAddress);
-      });
+      })
 
       getListMajor().then((data) => {
          setListMajor(data);
@@ -61,7 +79,7 @@ export const CandidateHome = () => {
       } else {
          setUserData(null);
       }
-   }, [filterKey, userData, reloadPage])
+   }, [filterKey, userData])
 
    const handleChangeWorkingForm = (sender) => {
       let cloneFilterKey = { ...filterKey }
@@ -94,22 +112,26 @@ export const CandidateHome = () => {
       )
    }
 
+   const handleSelectChangeMajor = (event) => {
+      setFilterKey({...filterKey, ["major"]: event.target.value})
+   }
+
    return (
       <div className="text-Poppins">
-         <HomeHeader />
+         <Header />
 
          <div className="flex items-start w-full h-full bg-gray-200 space-x-5 p-5">
             {/* LeftBar */}
-            <div className="w-3/12 bg-white p-3 space-y-5 rounded-xl">
+            <div className="w-3/12 bg-white p-5 space-y-5 rounded-xl">
                <div className="flex flex-row">
-                  <p className="flex-1">Lọc</p>
+                  <p className="flex-1 font-bold">Lọc</p>
                   <label onClick={handleClearFilter} className="font-bold text-red-400">Xóa</label>
                </div>
 
                <div>
                   <label className="block mb-2 font-bold ">Địa điểm</label>
                   <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                     <option selected>Nơi làm việc</option>
+                     <option value={null} selected>Tất cả</option>
                      {
                         listAddressJob && listAddressJob.map((item) => (
                            <option>{item}</option>
@@ -125,15 +147,20 @@ export const CandidateHome = () => {
                   <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" checked={filterKey.workingForm == "Remote"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Remote</label>
                </div>
 
-               <div className="flex flex-col space-y-2">
-                  <label className="font-bold">Chuyên ngành</label>
-                  {
-                     listMajor &&
-                     listMajor.map((item, index) => (
-                        <label className="filterChx"><input onChange={handleChangeMajor} type="radio" value={item.name} name="radio_major" checked={filterKey.major == item.name} className="accent-common_color bg-common_color" /> {item.name}</label>
-                     ))
-                  }
+{/* Major Filter */}
+               <div>
+                  <label className="block mb-2 font-bold ">Chuyên ngành</label>
+                  <select value={filterKey.major} onChange={handleSelectChangeMajor} id="major" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-common_color focus:border-common_color block w-full p-2.5">
+                     <option value={null} selected>Tất cả</option>
+                     {
+                        listMajor && listMajor.map((item) => (
+                           <option value={item.name}>{item.name}</option>
+                        ))
+                     }
+                  </select>
                </div>
+
+               <div className="h-[1rem]"></div>
             </div>
 
             {/* MidBar */}
@@ -161,14 +188,13 @@ export const CandidateHome = () => {
                   </div>
                </div>
                <div className="space-y-3">
-
                   {/* ListJob */}
                   {
                      listJob.length > 0 ?
                         listJob.map((item, index) => (
                            <JobView data={item}></JobView>
                         ))
-                        : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">Have no job for this filtered!</div>
+                        : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">Không có công việc nào phù hợp!</div>
                   }
                </div>
             </div>
@@ -194,14 +220,13 @@ export const CandidateHome = () => {
                }
 
                <div className="space-y-3">
-
                   {/* ListCompany */}
                   {
                      listCompany.length > 0 ?
                         listCompany.map((item, index) => (
                            <CompanyView data={item}></CompanyView>
                         ))
-                        : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">Have no company to display!</div>
+                        : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">Không có công ty nào được hiển thị!</div>
                   }
                </div>
             </div>

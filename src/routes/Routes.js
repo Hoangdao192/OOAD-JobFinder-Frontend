@@ -1,4 +1,5 @@
 import { CandidateHome } from "../pages/candidates/CandidateHome";
+import { JobDetail } from "../pages/job/JobDetail";
 import BlankLayout from "../components/layouts/blankLayout/BlankLayout";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
@@ -17,6 +18,7 @@ const publicRoutes = [
   //  Example: {path: '/login', component: Login}
   // { path: "/", component: Home, layout: BlankLayout },
   { path: "/", component: CandidateHome},
+  { path: "/job/:id", component: JobDetail},
   { path: "/auth/signin", component: SignIn, layout: BlankLayout },
   { path: "/auth/signup", component: SignUp, layout: BlankLayout },
   { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },

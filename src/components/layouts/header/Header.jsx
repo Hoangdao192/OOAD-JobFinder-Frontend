@@ -33,12 +33,12 @@ function Header() {
         {
           !isLogged && <div className='flex space-x-4'>
             <Link to='/auth/signin'>
-              <button className="bg-common_color hover:bg-green-700 text-white py-1 px-4 rounded-md justify-end">
+              <button className="w-[7.5rem] whitespace-nowrap bg-common_color hover:bg-green-700 text-white py-1 px-4 rounded-md justify-end">
                 Đăng nhập
               </button>
             </Link>
             <Link to="/auth/signup">
-              <button className="bg-common_color hover:bg-green-700 text-white py-1 px-4 rounded-md justify-end">
+              <button className="w-[7.5rem] whitespace-nowrap bg-common_color hover:bg-green-700 text-white py-1 px-4 rounded-md justify-end">
                 Đăng kí
               </button></Link>
           </div>
