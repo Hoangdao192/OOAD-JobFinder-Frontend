@@ -26,11 +26,26 @@ export const CandidateHome = () => {
 
    const [listCompany, setListCompany] = useState([]);
 
+   const [listAddressJob, setListAddressJob] = useState([]);
+
+   const [reloadPage, setReloadPage] = useState(true);
+
    useEffect(() => {
       console.log("filterKey: ", filterKey);
+
       getListJobFullFilter(filterKey).then((res) => {
-         console.log("element: ", res);
-         setListJob(res)
+         setListJob(res);
+
+         let uniqueAddress = [];
+         if (listJob.length < 1) {
+            setReloadPage(!reloadPage);
+         }
+         listJob.map((item) => {
+            if (uniqueAddress.indexOf(item.jobAddress.province) == -1) {
+               uniqueAddress.push(item.jobAddress.province);
+            }
+         })
+         setListAddressJob(uniqueAddress);
       });
 
       getListMajor().then((data) => {
@@ -46,7 +61,7 @@ export const CandidateHome = () => {
       } else {
          setUserData(null);
       }
-   }, [filterKey, userData])
+   }, [filterKey, userData, reloadPage])
 
    const handleChangeWorkingForm = (sender) => {
       let cloneFilterKey = { ...filterKey }
@@ -67,6 +82,18 @@ export const CandidateHome = () => {
       setFilterKey({ ...filterKey, ["jobTitle"]: event.target.ipt_search.value })
    }
 
+   const handleClearFilter = (event) => {
+      console.log("clicked");
+      // event.preventDefault();
+      setFilterKey(
+         {
+            jobTitle: null,
+            workingForm: null,
+            major: null,
+         }
+      )
+   }
+
    return (
       <div className="text-Poppins">
          <HomeHeader />
@@ -75,26 +102,27 @@ export const CandidateHome = () => {
             {/* LeftBar */}
             <div className="w-3/12 bg-white p-3 space-y-5 rounded-xl">
                <div className="flex flex-row">
-                  <p className="flex-1">Filter</p>
-                  <div className="font-bold text-red-400">Clear All</div>
+                  <p className="flex-1">Lọc</p>
+                  <label onClick={handleClearFilter} className="font-bold text-red-400">Xóa</label>
                </div>
 
                <div>
-                  <label className="block mb-2 font-bold ">Locations</label>
+                  <label className="block mb-2 font-bold ">Địa điểm</label>
                   <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                     <option selected>Choose a country</option>
-                     <option value="US">United States</option>
-                     <option value="CA">Canada</option>
-                     <option value="FR">France</option>
-                     <option value="DE">Germany</option>
+                     <option selected>Nơi làm việc</option>
+                     {
+                        listAddressJob && listAddressJob.map((item) => (
+                           <option>{item}</option>
+                        ))
+                     }
                   </select>
                </div>
 
                <div className="flex flex-col space-y-2">
-                  <label className="font-bold">JobType</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Fulltime" name="radio_workingForm" className="accent-common_color bg-common_color"/> Full-time</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Parttime" name="radio_workingForm" className="accent-common_color bg-common_color"/> Part-time</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" name="radio_workingForm" className="accent-common_color bg-common_color"/> Remote</label>
+                  <label className="font-bold">Hình thức</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Fulltime" checked={filterKey.workingForm == "Fulltime"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Full-time</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Parttime" checked={filterKey.workingForm == "Parttime"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Part-time</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" checked={filterKey.workingForm == "Remote"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Remote</label>
                </div>
 
                <div className="flex flex-col space-y-2">
@@ -102,7 +130,7 @@ export const CandidateHome = () => {
                   {
                      listMajor &&
                      listMajor.map((item, index) => (
-                        <label className="filterChx"><input onChange={handleChangeMajor} type="radio" value={item.name} name="radio_major" className="accent-common_color bg-common_color" /> {item.name}</label>
+                        <label className="filterChx"><input onChange={handleChangeMajor} type="radio" value={item.name} name="radio_major" checked={filterKey.major == item.name} className="accent-common_color bg-common_color" /> {item.name}</label>
                      ))
                   }
                </div>
@@ -158,10 +186,10 @@ export const CandidateHome = () => {
                      :
                      <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
                         <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
-                        <p className="font-bold line-clamp-1">Name</p>
-                        <p className="line-clamp-1">Phone Number</p>
-                        <p className="line-clamp-1">Email Contact</p>
-                        <p className="text-xs line-clamp-1">You need sign in to display information</p>
+                        <p className="font-bold line-clamp-1">Tên</p>
+                        <p className="line-clamp-1">Số điện thoại</p>
+                        <p className="line-clamp-1">Email</p>
+                        <p className="text-xs line-clamp-1">Bạn cần đăng nhập để hiển thị thông tin</p>
                      </div>
                }
 
