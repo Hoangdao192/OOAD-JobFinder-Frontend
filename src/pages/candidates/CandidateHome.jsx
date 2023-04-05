@@ -29,7 +29,7 @@ export const CandidateHome = () => {
 
    const [listAddressJob, setListAddressJob] = useState([]);
 
-   useEffect (() => {
+   useEffect(() => {
       console.log("filterKey: ", filterKey);
       if (filterKey.jobTitle || filterKey.major || filterKey.workingForm) {
          getListJobFullFilter(filterKey).then((res) => {
@@ -45,7 +45,7 @@ export const CandidateHome = () => {
       if (!filterKey.jobTitle && !filterKey.major && !filterKey.workingForm) {
          getListJobDefault().then((data) => {
             setListJob(data);
-   
+
             let uniqueAddress = [];
             listJob.map((item) => {
                if (uniqueAddress.indexOf(item.jobAddress.province) == -1) {
@@ -113,7 +113,12 @@ export const CandidateHome = () => {
    }
 
    const handleSelectChangeMajor = (event) => {
-      setFilterKey({...filterKey, ["major"]: event.target.value})
+      console.log("event: ", event.target.value);
+      if (event.target.value == "Tất cả") {
+         setFilterKey({ ...filterKey, ["major"]: null })
+      } else {
+         setFilterKey({ ...filterKey, ["major"]: event.target.value })
+      }
    }
 
    return (
@@ -147,7 +152,7 @@ export const CandidateHome = () => {
                   <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" checked={filterKey.workingForm == "Remote"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Remote</label>
                </div>
 
-{/* Major Filter */}
+               {/* Major Filter */}
                <div>
                   <label className="block mb-2 font-bold ">Chuyên ngành</label>
                   <select value={filterKey.major} onChange={handleSelectChangeMajor} id="major" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-common_color focus:border-common_color block w-full p-2.5">
