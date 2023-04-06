@@ -3,6 +3,7 @@ import Dashboard from "components/company/Dashboard";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Authentication from "services/Authentication/Authentication";
 import subVn from "sub-vn";
 
@@ -17,8 +18,7 @@ function EditProfile() {
 
   const location = useLocation();
 
-  const [selectedLogo, setSelectedLogo] = useState(null);
-  const [preview, setPreview] = useState(null);
+  console.log(location.state.company);
 
   const [selectedProvince, setSelectedProvince] = useState(
     location.state.company.address.province
@@ -102,12 +102,17 @@ function EditProfile() {
       .then((res) => {
         console.log(res);
         navigate("/company/profile");
+        toast("Cập nhật thông tin thành công", {
+          type: "success",
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const [selectedLogo, setSelectedLogo] = useState(null);
+  const [preview, setPreview] = useState(location.state.company.companyLogo);
   const onSelectImage = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedLogo(undefined);
@@ -116,6 +121,7 @@ function EditProfile() {
 
     setSelectedLogo(e.target.files[0]);
     setValue("companyLogoFile", e.target.files[0]);
+    setPreview(URL.createObjectURL(e.target.files[0]));
   };
   return (
     <Dashboard>
@@ -138,7 +144,7 @@ function EditProfile() {
                 />
               ) : (
                 <img
-                  src="/blankAvatar.png"
+                  src={location.state.company.companyLogo}
                   alt="blankAvatar"
                   className="w-24 h-24 md:w-28 md:h-28 xl:w-36 xl:h-36 object-cover rounded-full"
                 />

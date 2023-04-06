@@ -1,6 +1,7 @@
 import axios from "axios";
 import Authentication from "services/Authentication/Authentication";
 import Post from "../../components/company/Post";
+import Pagination, { postsPerPage } from "components/Pagination";
 
 const { default: Dashboard } = require("components/company/Dashboard");
 const { default: React, useState, useEffect } = require("react");
@@ -118,6 +119,13 @@ export default function Posts() {
       });
   }, []);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [isPressedActive, isPressedClosed]);
   return (
     <Dashboard>
       <div className="w-full bg-white m-5 rounded-md shadow-md p-5 overflow-y-scroll scrollbar-hide">
@@ -132,8 +140,9 @@ export default function Posts() {
             } text-xl font-medium `}
           >
             Tin hoạt động
+            <span className="ml-2 text-base">{closedPosts.length}</span>
             {isPressedActive && (
-              <div className="w-full h-2 bg-purple-300 mt-2 rounded-xl"></div>
+              <div className="w-full h-2 bg-purple-300 mt-1 rounded-xl"></div>
             )}
           </button>
           <button
@@ -143,22 +152,37 @@ export default function Posts() {
             } text-xl font-medium `}
           >
             Tin hết hạn
+            <span className="ml-2 text-base">{closedPosts.length}</span>
             {isPressedClosed && (
-              <div className="w-full h-2 bg-purple-300 mt-2 rounded-xl"></div>
+              <div className="w-full h-2 bg-purple-300 mt-1 rounded-xl"></div>
             )}
           </button>
         </div>
         <div className="flex flex-col gap-2 m-5 h-auto">
-          <h1 className="text-lg font-medium">
+          {/* <h1 className="text-lg font-medium">
             {`Tổng số tin: ${
               isPressedActive ? activePosts.length : closedPosts.length
             }`}
-          </h1>
+          </h1> */}
           <div className="overflow-y-scroll h-3/4 scrollbar-hide flex flex-col gap-5">
-            {isPressedActive &&
-              activePosts.map((post) => {
-                return <Post key={post.id} post={post} />;
-              })}
+            {isPressedActive && (
+              <div>
+                {activePosts
+                  .slice(firstPostIndex, lastPostIndex)
+                  .map((post) => {
+                    return (
+                      <div>
+                        <Post key={post.id} post={post} />
+                      </div>
+                    );
+                  })}
+                <Pagination
+                  totalPosts={activePosts.length}
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                />
+              </div>
+            )}
             {isPressedClosed &&
               closedPosts.map((post) => {
                 return <Post key={post.id} post={post} />;

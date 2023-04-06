@@ -3,6 +3,7 @@ import Dashboard from "components/company/Dashboard";
 import SelectionList from "components/company/SelectionList";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Authentication from "services/Authentication/Authentication";
 
@@ -22,6 +23,7 @@ function Requirement() {
   const [selectedExperience, setSelectedExperience] = useState(
     requireExperienceList[0]
   );
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -59,7 +61,8 @@ function Requirement() {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          navigate("/company/posts");
         })
         .catch((err) => {
           console.log(err);

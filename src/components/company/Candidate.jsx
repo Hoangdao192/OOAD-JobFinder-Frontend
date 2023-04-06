@@ -2,7 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Authentication from "services/Authentication/Authentication";
 
-function Candidate({ candidate, activeOption }) {
+function Candidate({
+  reload,
+  setReload,
+  application,
+  candidate,
+  activeOption,
+}) {
   function getCandidateDescription() {
     const words = candidate.selfDescription.split(" ");
     const first30Words = words.slice(0, 30).join(" ");
@@ -12,13 +18,13 @@ function Candidate({ candidate, activeOption }) {
   const handleAccept = async () => {
     const response = await axios({
       method: "get",
-      url: `http://localhost:5000/api/job-application/accept/${candidate.id}`,
+      url: `http://localhost:5000/api/job-application/accept/${application.id}`,
       headers: {
         Authorization: Authentication.generateAuthorizationHeader(),
       },
     });
     if (response.status === 200) {
-      window.location.reload();
+      setReload(!reload);
     } else {
       console.log(response);
     }
@@ -27,14 +33,14 @@ function Candidate({ candidate, activeOption }) {
   const handleReject = async () => {
     const response = await axios({
       method: "get",
-      url: `http://localhost:5000/api/job-application/reject/${candidate.id}`,
+      url: `http://localhost:5000/api/job-application/reject/${application.id}`,
       headers: {
         Authorization: Authentication.generateAuthorizationHeader(),
       },
     });
 
     if (response.status === 200) {
-      window.location.reload();
+      setReload(!reload);
     } else {
       console.log(response);
     }
@@ -65,7 +71,7 @@ function Candidate({ candidate, activeOption }) {
           </div>
         </div>
         <div>
-          <a href="/avatar.png" download>
+          <a href={application.cv} target="_blank">
             <button>Dowload image</button>
           </a>
         </div>
