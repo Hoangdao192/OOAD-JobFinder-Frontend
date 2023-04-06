@@ -4,9 +4,9 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import React from "react";
 
 export default function Spinner({className = "", boxStyle= "", options, selected, setSelected }) {
-  useEffect(() => {
-    setSelected(selected);
-  }, [selected, setSelected]);
+//   useEffect(() => {
+//     setSelected(selected);
+//   }, [selected, setSelected]);
 
   return (
     <div className={className}>

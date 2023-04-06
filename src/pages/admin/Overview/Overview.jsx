@@ -145,7 +145,7 @@ export default function Overview() {
             <div className="flex flex-wrap w-full gap-4">
                 <UserGrowthChartField />
                 <UserSummaryChartField />
-                <div className="px-4 py-4 bg-white rounded flex flex-col">
+                <div className="border-2 shadow-sm border-[#ecebee] px-4 py-4 bg-white rounded flex flex-col">
                     <p className="font-bold">Số lượng bài viết</p>
                     <p className="relative text-[3rem] mx-[2rem] font-bold my-auto">200.000</p>
                 </div>
