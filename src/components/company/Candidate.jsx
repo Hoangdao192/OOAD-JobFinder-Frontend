@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
 
 function Candidate({
@@ -46,8 +47,9 @@ function Candidate({
     }
   };
 
+  const navigate = useNavigate();
   return (
-    <div className="flex flex-col p-5 shadow-md rounded-md gap-2">
+    <div className="flex flex-col p-5 shadow-md rounded-md gap-2 ">
       <div className="flex justify-between">
         <div className="flex gap-4 items-center">
           <img
@@ -56,7 +58,19 @@ function Candidate({
             className="h-12 w-12 object-cover rounded-full"
           />
           <div className="flex gap-2 flex-col">
-            <h1 className="text-lg font-medium">{candidate.fullName}</h1>
+            <h1
+              className="text-lg font-medium cursor-pointer"
+              onClick={() =>
+                navigate("/company/candidateinfor", {
+                  state: {
+                    candidate: candidate,
+                    application: application,
+                  },
+                })
+              }
+            >
+              {candidate.fullName}
+            </h1>
             <div className="flex gap-5">
               <p className="border-r pr-5 ">
                 <a
@@ -71,8 +85,12 @@ function Candidate({
           </div>
         </div>
         <div>
-          <a href={application.cv} target="_blank">
-            <button>Dowload image</button>
+          <a
+            href={application.cv}
+            target="_blank"
+            className="text-background_color_hover underline cursor-pointer"
+          >
+            Xem CV
           </a>
         </div>
       </div>

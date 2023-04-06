@@ -189,10 +189,9 @@ function CompanyDetail() {
             htmlFor="companyDescription"
             className="text-base md:text-lg font-medium"
           >
-            Mô tả
+            Giới thiệu
           </label>
-          <input
-            type="text"
+          <textarea
             {...register("companyDescription", {
               required: true,
             })}

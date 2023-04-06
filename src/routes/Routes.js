@@ -14,6 +14,7 @@ import EditPost from "pages/company/EditPost";
 import CandidatesList from "pages/company/CandidatesList";
 import Profile from "pages/company/Profile";
 import EditProfile from "pages/company/EditProfile";
+import CandidateInfor from "pages/company/CandidateInfor";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -71,6 +72,11 @@ const publicRoutes = [
   {
     path: "company/profile/edit",
     component: EditProfile,
+    layout: BlankLayout,
+  },
+  {
+    path: "company/candidateinfor",
+    component: CandidateInfor,
     layout: BlankLayout,
   },
 ];

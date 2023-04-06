@@ -23,6 +23,8 @@ function SignIn() {
         const userData = Authentication.getCurrentUser();
         if (userData.roles[0] === "Company") {
           navigate("/company");
+        } else if (userData.roles[0] === "Admin") {
+          navigate("/admin");
         } else {
           navigate("/");
         }

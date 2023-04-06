@@ -36,7 +36,8 @@ function Requirement() {
       data.jobDescription === "" ||
       data.major === "" ||
       data.salary === "" ||
-      data.numberOfHiring === ""
+      data.numberOfHiring === "" ||
+      data.closeDate === ""
     ) {
       toast.error("Please fill all required field");
     } else {
@@ -159,7 +160,7 @@ function Requirement() {
                 htmlFor="numberOfHiring"
                 className="text-base md:text-lg font-medium"
               >
-                Số lượng
+                {`Số lượng (người)`}
                 <span className="text-red-500 ml-2">(*)</span>
               </label>
               <input
@@ -237,10 +238,13 @@ function Requirement() {
                 className="text-base md:text-lg font-medium"
               >
                 Ngày đóng đơn
+                <span className="text-red-500 ml-2">(*)</span>
               </label>
               <input
                 type="date"
-                {...register("closeDate")}
+                {...register("closeDate", {
+                  required: true,
+                })}
                 className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
               />
             </div>

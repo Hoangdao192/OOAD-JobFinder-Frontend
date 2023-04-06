@@ -140,7 +140,7 @@ export default function Posts() {
             } text-xl font-medium `}
           >
             Tin hoạt động
-            <span className="ml-2 text-base">{closedPosts.length}</span>
+            <span className="ml-2 text-base">{activePosts.length}</span>
             {isPressedActive && (
               <div className="w-full h-2 bg-purple-300 mt-1 rounded-xl"></div>
             )}
