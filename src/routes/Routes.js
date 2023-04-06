@@ -28,62 +28,40 @@ const privateRoutes = [
     //  component: component will be display
     //  authorization: array of roles can access this page
 
-    { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
-    { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] }
+    // { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
+    // { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] },
+
+    // { path: "/company", component: HomeCompany, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/requirement", component: Requirement, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/posts", component: Posts, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/post/:id", component: PostDetail, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/post/candidates", component: CandidatesPerPost, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/post/edit", component: EditPost, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/candidates", component: CandidatesList, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/profile", component: Profile, layout: BlankLayout, authorization: ['Company'] },
+    // { path: "/company/profile/edit", component: EditProfile, layout: BlankLayout, authorization: ['Company'] }
 ];
 const publicRoutes = [
-    //  Example: {path: '/login', component: Login}
+    { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
+    { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] },
+    { path: "/company", component: HomeCompany, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/requirement", component: Requirement, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/posts", component: Posts, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/post/:id", component: PostDetail, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/post/candidates", component: CandidatesPerPost, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/post/edit", component: EditPost, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/candidates", component: CandidatesList, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/profile", component: Profile, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/profile/edit", component: EditProfile, layout: BlankLayout, authorization: ['Company'] },
+
     { path: "/not_found", component: NotFound, layout: BlankLayout },
-    // { path: "/", component: Home, layout: BlankLayout },
     { path: "/", component: CandidateHome, layout: BlankLayout },
     { path: "/auth/signin", component: SignIn, layout: BlankLayout },
     { path: "/auth/signup", component: SignUp, layout: BlankLayout },
     { path: "/auth/signout", component: Signout, layout: BlankLayout },
     { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
-    {
-        path: "/auth/detail/company",
-        component: CompanyDetail,
-        layout: BlankLayout,
-    },
-    {
-        path: "/auth/detail/candidate",
-        component: CandidateDetail,
-        layout: BlankLayout,
-    },
-    { path: "/company", component: HomeCompany, layout: BlankLayout },
-
-    { path: "/company/requirement", component: Requirement, layout: BlankLayout },
-    {
-        path: "/company/posts",
-        component: Posts,
-        layout: BlankLayout,
-    },
-    { path: "company/post/:id", component: PostDetail, layout: BlankLayout },
-    {
-        path: "company/post/candidates",
-        component: CandidatesPerPost,
-        layout: BlankLayout,
-    },
-    {
-        path: "company/post/edit",
-        component: EditPost,
-        layout: BlankLayout,
-    },
-    {
-        path: "company/candidates",
-        component: CandidatesList,
-        layout: BlankLayout,
-    },
-    {
-        path: "company/profile",
-        component: Profile,
-        layout: BlankLayout,
-    },
-    {
-        path: "company/profile/edit",
-        component: EditProfile,
-        layout: BlankLayout,
-    },
+    { path: "/auth/detail/company", component: CompanyDetail, layout: BlankLayout },
+    { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout }
 ];
 
 export { publicRoutes, privateRoutes };
