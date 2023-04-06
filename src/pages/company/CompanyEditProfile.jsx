@@ -134,7 +134,7 @@ function EditProfile() {
             Company's Information
           </h1>
 
-          <div className="mt-14 mb-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
+          <div className="relative mt-14 mb-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
             <div className=" ">
               {selectedLogo ? (
                 <img
@@ -144,7 +144,10 @@ function EditProfile() {
                 />
               ) : (
                 <img
-                  src={location.state.company.companyLogo}
+                  src={
+                    location.state.company.companyLogo ||
+                    "https://i.imgur.com/6VBx3io.png"
+                  }
                   alt="blankAvatar"
                   className="w-24 h-24 md:w-28 md:h-28 xl:w-36 xl:h-36 object-cover rounded-full"
                 />
@@ -152,9 +155,28 @@ function EditProfile() {
             </div>
             <label
               htmlFor="logo"
-              className="text-base md:text-lg font-base cursor-pointer text-background_color "
+              className="cursor-pointer absolute text-gray-400 bottom-3 left-16"
             >
-              Change logo
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+                />
+              </svg>
+
               <input
                 type="file"
                 id="logo"
@@ -191,16 +213,12 @@ function EditProfile() {
               htmlFor="companyDescription"
               className="text-base md:text-lg font-medium"
             >
-              Mô tả
+              Giới thiệu
             </label>
-            <input
-              type="text"
-              // {...register("companyDescription", {
-              //   required: true,
-              // })}
+            <textarea
               defaultValue={companyDescription}
               onChange={(e) => setCompanyDescription(e.target.value)}
-              className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
+              className="border h-32 p-2 text-base md:text-lg focus:outline-none rounded-md"
             />
             {errors.companyDescription && (
               <span className="text-red-500">This field is required</span>
@@ -318,7 +336,7 @@ function EditProfile() {
           <input
             type="submit"
             value="Cập nhật"
-            className="p-2 my-10 border bg-background_color hover:bg-background_color_hover text-white text-base md:text-lg rounded-md"
+            className="p-2 my-10 border bg-emerald-500 hover:bg-emerald-600 text-white text-base md:text-lg rounded-md"
           />
         </form>
       </div>

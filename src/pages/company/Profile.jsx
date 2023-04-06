@@ -62,7 +62,7 @@ function Profile() {
           onClick={() =>
             navigate("/company/profile/edit", { state: { company: company } })
           }
-          className="bg-background_color hover:bg-background_color_hover text-white p-2 rounded-md ml-10 mt-5"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white p-2 rounded-md ml-10 mt-5"
         >
           Chỉnh sửa thông tin
         </button>

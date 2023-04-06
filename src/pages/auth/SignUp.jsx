@@ -30,7 +30,6 @@ function SignUp({ navigation }) {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-
             navigate("/auth/verifyemail", {
               state: {
                 email: res.data.email,
@@ -168,7 +167,7 @@ function SignUp({ navigation }) {
         <input
           type="submit"
           value={"Sign up"}
-          className="text-white text-base md:text-lg bg-background_color hover:bg-background_color_hover py-2 rounded-md mt-5"
+          className="text-white text-base md:text-lg bg-emerald-500 hover:bg-emerald-600 py-2 rounded-md mt-5"
         />
       </form>
     </Layout>

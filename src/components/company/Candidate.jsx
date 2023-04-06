@@ -53,7 +53,7 @@ function Candidate({
       <div className="flex justify-between">
         <div className="flex gap-4 items-center">
           <img
-            src={candidate.avatar}
+            src={candidate.avatar || "https://i.imgur.com/6VBx3io.png"}
             alt="avatar"
             className="h-12 w-12 object-cover rounded-full"
           />
@@ -75,20 +75,21 @@ function Candidate({
               <p className="border-r pr-5 ">
                 <a
                   href={`mailto:${candidate.contactEmail}`}
-                  className=" hover:underline "
+                  className="text-gray-500 hover:underline "
+                  target="_blank"
                 >
                   {candidate.contactEmail}
                 </a>
               </p>
-              <p className="">{candidate.phoneNumber}</p>
+              <p className="text-gray-500">{candidate.phoneNumber}</p>
             </div>
           </div>
         </div>
-        <div>
+        <div className="mr-5">
           <a
             href={application.cv}
             target="_blank"
-            className="text-background_color_hover underline cursor-pointer"
+            className=" text-emerald-500 underline cursor-pointer"
           >
             Xem CV
           </a>
@@ -106,7 +107,7 @@ function Candidate({
         {activeOption === "Waiting" && (
           <div className="flex h-10 gap-5 text-sm">
             <button
-              className="px-2 h-full text-white rounded-lg bg-purple-400 hover:bg-purple-500"
+              className="px-2 h-full  text-white rounded-lg bg-emerald-500 hover:bg-emerald-600"
               onClick={handleAccept}
             >
               Chấp nhận

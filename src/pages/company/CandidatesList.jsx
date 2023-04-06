@@ -97,7 +97,7 @@ function CandidatesList() {
   return (
     <Dashboard>
       <div className="w-full bg-white m-5 rounded-md shadow-md p-5 overflow-y-scroll scrollbar-hide">
-        <h1 className="text-text_color text-2xl font-medium mb-10">
+        <h1 className="text-text_color text-xl font-medium mb-10">
           Danh sách ứng viên
         </h1>
         <div className="flex gap-10">
@@ -108,12 +108,12 @@ function CandidatesList() {
                 activeOption === "Waiting"
                   ? "text-text_color"
                   : "text-text_color/50"
-              } text-lg font-medium `}
+              } text-base font-medium `}
             >
               <span>Đang chờ</span>
               <span className="ml-3">{waitingApplications.length}</span>
               {activeOption === "Waiting" && (
-                <div className="w-full h-2 bg-purple-300 mt-2 rounded-xl"></div>
+                <div className="w-full h-2 bg-emerald-300 mt-2 rounded-xl"></div>
               )}
             </button>
           </div>
@@ -124,12 +124,12 @@ function CandidatesList() {
                 activeOption === "Accepted"
                   ? "text-text_color"
                   : "text-text_color/50"
-              } text-lg font-medium `}
+              } text-base font-medium `}
             >
               <span>Chấp nhận</span>
               <span className="ml-3">{acceptedApplications.length}</span>
               {activeOption === "Accepted" && (
-                <div className="w-full h-2 bg-purple-300 mt-2 rounded-xl"></div>
+                <div className="w-full h-2 bg-emerald-300 mt-2 rounded-xl"></div>
               )}
             </button>
           </div>
@@ -140,12 +140,12 @@ function CandidatesList() {
                 activeOption === "Rejected"
                   ? "text-text_color"
                   : "text-text_color/50"
-              } text-lg font-medium `}
+              } text-base font-medium `}
             >
               <span>Từ chối</span>
               <span className="ml-3">{rejectedApplications.length}</span>
               {activeOption === "Rejected" && (
-                <div className="w-full h-2 bg-purple-300 mt-2 rounded-xl"></div>
+                <div className="w-full h-2 bg-emerald-300 mt-2 rounded-xl"></div>
               )}
             </button>
           </div>

@@ -18,8 +18,10 @@ import CandidateHome from "pages/candidates/CandidateHome";
 import EditPost from "pages/company/EditPost";
 import CandidatesList from "pages/company/CandidatesList";
 import Profile from "pages/company/Profile";
-import EditProfile from "pages/company/EditProfile";
+import EditProfile from "pages/company/CompanyEditProfile";
 import CandidateInfor from "pages/company/CandidateInfor";
+import CandidateProfile from "pages/candidates/Profile";
+import CandidateEditProfile from "pages/candidates/CandidateEditProfile";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -114,9 +116,20 @@ const publicRoutes = [
     layout: BlankLayout,
   },
   {
-    path: "company/candidateinfor",
+    path: "/company/candidateinfor",
     component: CandidateInfor,
     layout: BlankLayout,
+  },
+  {
+    path: "/candidate/profile",
+    component: CandidateProfile,
+    layout: BlankLayout,
+  },
+  {
+    path: "/candidate/profile/edit",
+    component: CandidateEditProfile,
+    layout: BlankLayout,
+    authorization: ["Candidate"],
   },
 ];
 

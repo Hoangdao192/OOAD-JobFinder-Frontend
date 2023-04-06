@@ -110,13 +110,13 @@ function PostDetail({ route, navigation }) {
         <div className="flex gap-10 mt-10">
           <button
             onClick={() => handleEdit()}
-            className="py-1 text-lg px-8 bg-background_color rounded-xl text-white hover:bg-background_color_hover"
+            className="py-1 text-base px-8 bg-emerald-500 rounded-xl text-white hover:bg-emerald-600"
           >
             Sửa
           </button>
 
           <button
-            className="py-1 text-lg px-8 bg-red-500 rounded-xl text-white hover:bg-red-700"
+            className="py-1 text-base px-8 bg-red-500 rounded-xl text-white hover:bg-red-700"
             onClick={() => handleDelete()}
           >
             Xóa

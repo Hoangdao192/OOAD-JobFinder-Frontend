@@ -7,77 +7,6 @@ const { default: Dashboard } = require("components/company/Dashboard");
 const { default: React, useState, useEffect } = require("react");
 
 export default function Posts() {
-  // const activePosts = [
-  //   {
-  //     id: 1,
-  //     jobTitle: "Front-end Developer",
-  //     jobDescription: "Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao",
-  //     numberOfHiring: 5,
-  //     major: "IT",
-  //     salary: "5 - 10 triệu",
-  //     sex: "Không yêu cầu",
-  //     requireExperience: "Dưới 1 năm",
-  //     workingForm: "Full-time",
-  //     Closed: "2023-04-31",
-  //     numberOfCV: 5,
-  //   },
-  //   {
-  //     id: 2,
-  //     jobTitle: "Back-end Developer",
-  //     jobDescription: "Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao",
-  //     numberOfHiring: 5,
-  //     major: "IT",
-  //     salary: "5 - 10 triệu",
-  //     sex: "Không yêu cầu",
-  //     requireExperience: "Dưới 1 năm",
-  //     workingForm: "Full-time",
-  //     Closed: "2023-04-31",
-  //     numberOfCV: 5,
-  //   },
-  //   {
-  //     id: 3,
-  //     jobTitle: "Front-end Developer",
-  //     jobDescription:
-  //       "Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao, Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao, Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao, Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao,Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao,Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao,Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao, ",
-  //     numberOfHiring: 5,
-  //     major: "IT",
-  //     salary: "5 - 10 triệu",
-  //     sex: "Không yêu cầu",
-  //     requireExperience: "Dưới 1 năm",
-  //     workingForm: "Full-time",
-  //     Closed: "2023-04-31",
-  //     numberOfCV: 5,
-  //   },
-  //   {
-  //     id: 4,
-  //     jobTitle: "Front-end Developer",
-  //     jobDescription: "Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao",
-  //     numberOfHiring: 5,
-  //     major: "IT",
-  //     salary: "5 - 10 triệu",
-  //     sex: "Không yêu cầu",
-  //     requireExperience: "Dưới 1 năm",
-  //     workingForm: "Full-time",
-  //     Closed: "2023-04-31",
-  //     numberOfCV: 5,
-  //   },
-  // ];
-  // const ClosedPosts = [
-  //   {
-  //     id: 1,
-  //     jobTitle: "Nhân viên kế toán",
-  //     jobDescription: "Lập trình viên ReactJS, có cơ hội thăng tiến, lương cao",
-  //     numberOfHiring: 5,
-  //     major: "IT",
-  //     salary: "5 - 10 triệu",
-  //     sex: "Không yêu cầu",
-  //     requireExperience: "Dưới 1 năm",
-  //     workingForm: "Full-time",
-  //     Closed: "2023-04-31",
-  //     numberOfCV: 5,
-  //   },
-  // ];
-
   const [isPressedActive, setIsPressedActive] = useState(true);
   const [isPressedClosed, setIsPressedClosed] = useState(false);
   const handleActivePosts = () => {
@@ -129,7 +58,7 @@ export default function Posts() {
   return (
     <Dashboard>
       <div className="w-full bg-white m-5 rounded-md shadow-md p-5 overflow-y-scroll scrollbar-hide">
-        <h1 className="text-2xl font-semibold text-text_color mb-10">
+        <h1 className="text-xl font-semibold text-text_color mb-10">
           Tin tuyển dụng
         </h1>
         <div className="flex gap-10">
@@ -137,24 +66,24 @@ export default function Posts() {
             onClick={() => handleActivePosts()}
             className={`${
               isPressedActive ? "text-text_color" : "text-text_color/50"
-            } text-xl font-medium `}
+            } text-base font-medium `}
           >
             Tin hoạt động
             <span className="ml-2 text-base">{activePosts.length}</span>
             {isPressedActive && (
-              <div className="w-full h-2 bg-purple-300 mt-1 rounded-xl"></div>
+              <div className="w-full h-2 bg-emerald-300 mt-1 rounded-xl"></div>
             )}
           </button>
           <button
             onClick={() => handleClosedPosts()}
             className={`${
               isPressedClosed ? "text-text_color" : "text-text_color/50"
-            } text-xl font-medium `}
+            } text-base font-medium `}
           >
             Tin hết hạn
             <span className="ml-2 text-base">{closedPosts.length}</span>
             {isPressedClosed && (
-              <div className="w-full h-2 bg-purple-300 mt-1 rounded-xl"></div>
+              <div className="w-full h-2 bg-emerald-300 mt-1 rounded-xl"></div>
             )}
           </button>
         </div>

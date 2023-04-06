@@ -9,7 +9,7 @@ function Pagination({ totalPosts, setCurrentPage, currentPage }) {
   }
 
   return (
-    <div className="fixed right-0 bottom-12 mx-auto inline-flex items-center justify-center -space-x-px rounded-md shadow-sm md:right-10 lg:right-20">
+    <div className="absolute right-0 -bottom-5 mx-auto inline-flex items-center justify-center -space-x-px rounded-md shadow-sm md:right-10 lg:right-20">
       <button
         onClick={() => setCurrentPage(currentPage - 1)}
         disabled={currentPage === 1}

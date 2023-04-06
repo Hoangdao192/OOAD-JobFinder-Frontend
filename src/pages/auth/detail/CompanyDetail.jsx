@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Authentication from "services/Authentication/Authentication";
 import subVn from "sub-vn";
 
@@ -17,7 +18,7 @@ function CompanyDetail() {
   const [provinceCode, setProvinceCode] = useState(null);
   const [districtCode, setDistrictCode] = useState(null);
 
-  const [selectedLogo, setSelectedLogo] = useState();
+  const [selectedLogo, setSelectedLogo] = useState(null);
   const [preview, setPreview] = useState();
   useEffect(() => {
     const province = provinces.filter(
@@ -56,44 +57,54 @@ function CompanyDetail() {
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { isSubmitSuccessful },
   } = useForm();
 
   // handle submit form
   const onSubmit = (data) => {
-    let formData = new FormData();
-    formData.append("companyName", data.companyName);
-    formData.append("companyDescription", data.companyDescription);
-    formData.append("numberOfEmployee", data.numberOfEmployee);
-    formData.append("address.province", data.address.province);
-    formData.append("address.district", data.address.district);
-    formData.append("address.ward", data.address.ward);
-    formData.append("address.detailAddress", data.address.detailAddress);
-    formData.append("companyLogoFile", data.companyLogoFile);
-
-    axios({
-      method: "put",
-      url: "http://localhost:5000/api/company",
-      data: formData,
-      headers: {
-        Authorization: Authentication.generateAuthorizationHeader(),
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        navigate("/auth/signin");
-      })
-      .catch((err) => {
-        console.log(err);
+    if (
+      data.companyName == "" ||
+      data.companyDescription == "" ||
+      data.numberOfEmployee == "" ||
+      data.address.province == "" ||
+      data.address.district == "" ||
+      data.address.ward == "" ||
+      data.address.detailAddress == ""
+    ) {
+      console.log("hello");
+      toast("Vui lòng điền đầy đủ thông tin", {
+        type: "error",
       });
-  };
+    } else {
+      console.log("sorry");
+      console.log(data);
+      let formData = new FormData();
+      formData.append("companyName", data.companyName);
+      formData.append("companyDescription", data.companyDescription);
+      formData.append("numberOfEmployee", data.numberOfEmployee);
+      formData.append("address.province", data.address.province);
+      formData.append("address.district", data.address.district);
+      formData.append("address.ward", data.address.ward);
+      formData.append("address.detailAddress", data.address.detailAddress);
+      formData.append("companyLogoFile", data.companyLogoFile);
 
-  // reset form
-  useEffect(() => {
-    reset({
-      data: "",
-    });
-  }, [isSubmitSuccessful]);
+      axios({
+        method: "put",
+        url: "http://localhost:5000/api/company",
+        data: formData,
+        headers: {
+          Authorization: Authentication.generateAuthorizationHeader(),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          navigate("/auth/signin");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   // handle upload logo
 
@@ -126,14 +137,16 @@ function CompanyDetail() {
       />
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit, (e) => {
+          console.log("INVALID");
+        })}
         className="flex w-full xl:pr-24 flex-col gap-3 text-text_color overflow-y-scroll scrollbar-hide"
       >
         <h1 className="self-center text-2xl md:text-3xl font-semibold">
-          Company's Information
+          Thông tin công ty
         </h1>
 
-        <div className="mt-14 mb-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
+        <div className="relative mt-14 mb-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
           <div className=" ">
             {selectedLogo ? (
               <img
@@ -151,9 +164,27 @@ function CompanyDetail() {
           </div>
           <label
             htmlFor="logo"
-            className="text-base md:text-lg font-base cursor-pointer text-background_color "
+            className="cursor-pointer absolute text-gray-400 bottom-3 left-16"
           >
-            Change logo
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+              />
+            </svg>
             <input
               type="file"
               id="logo"
@@ -170,17 +201,13 @@ function CompanyDetail() {
             className="text-base md:text-lg font-medium"
           >
             Tên công ty
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
           <input
             type="text"
-            {...register("companyName", {
-              required: true,
-            })}
+            {...register("companyName", {})}
             className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
           />
-          {errors.companyName && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <div className="flex flex-col gap-2 mt-5">
@@ -189,16 +216,12 @@ function CompanyDetail() {
             className="text-base md:text-lg font-medium"
           >
             Giới thiệu
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
           <textarea
-            {...register("companyDescription", {
-              required: true,
-            })}
+            {...register("companyDescription", {})}
             className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
           />
-          {errors.companyDescription && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <div className="flex flex-col gap-2 mt-5">
@@ -207,17 +230,13 @@ function CompanyDetail() {
             className="text-base md:text-lg font-medium"
           >
             Quy mô (nhân viên)
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
           <input
             type="text"
-            {...register("numberOfEmployee", {
-              required: true,
-            })}
+            {...register("numberOfEmployee", {})}
             className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
           />
-          {errors.numberOfEmployee && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -226,13 +245,12 @@ function CompanyDetail() {
             className="block text-base md:text-lg font-medium "
           >
             Địa chỉ
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
           <div className="flex gap-10">
             <select
               id="provinces"
-              {...register("address.province", {
-                required: true,
-              })}
+              {...register("address.province", {})}
               onChange={(e) => {
                 setSelectedProvince(e.target.value);
               }}
@@ -250,9 +268,7 @@ function CompanyDetail() {
 
             <select
               id="districts"
-              {...register("address.district", {
-                required: true,
-              })}
+              {...register("address.district", {})}
               onChange={(e) => {
                 setSelectedDistrict(e.target.value);
               }}
@@ -270,9 +286,7 @@ function CompanyDetail() {
 
             <select
               id="wards"
-              {...register("address.ward", {
-                required: true,
-              })}
+              {...register("address.ward", {})}
               onChange={(e) => {
                 setSelectedWard(e.target.value);
               }}
@@ -292,20 +306,15 @@ function CompanyDetail() {
           <input
             type="text"
             placeholder="Đường/ Tòa nhà"
-            {...register("address.detailAddress", {
-              required: true,
-            })}
+            {...register("address.detailAddress", {})}
             className="mt-2 border focus:outline-none p-2 text-base rounded-md"
           />
-          {errors.address && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <input
           type="submit"
           value={"Cập nhật"}
-          className="p-2 mt-5 border bg-background_color hover:bg-background_color_hover text-white text-base md:text-lg rounded-md"
+          className="p-2 my-5 border bg-emerald-500 hover:bg-emerald-600 text-white text-base md:text-lg rounded-md"
         />
       </form>
     </div>

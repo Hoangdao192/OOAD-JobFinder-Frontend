@@ -93,18 +93,14 @@ function SignIn() {
           <input
             type="submit"
             value={"Sign in"}
-            className="mt-5 bg-background_color hover:bg-background_color_hover p-2 w-full text-base md:text-lg rounded-md text-white font-normal self-center"
+            className="mt-5 bg-emerald-500 hover:bg-emerald-500 p-2 w-full text-base md:text-lg rounded-md text-white font-normal self-center"
           />
         </form>
 
         <div>
-          <p className="mt-10 text-right text-base md:text-lg hover:text-blue-600">
+          <p className="mt-10 text-left text-sm md:text-base hover:text-emerald-600">
             Forgot your password?
           </p>
-        </div>
-
-        <div>
-          <p className="mt-5 text-center">Or</p>
         </div>
       </div>
     </Layout>

@@ -56,7 +56,7 @@ function CandidateInfor() {
             <a
               href={location.state.application.cv}
               target="_blank"
-              className="underline text-background_color_hover cursor-pointer"
+              className="underline text-emerald-500 cursor-pointer"
             >
               Xem CV
             </a>
