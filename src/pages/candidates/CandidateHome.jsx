@@ -61,7 +61,7 @@ export const CandidateHome = () => {
       } else {
          setUserData(null);
       }
-   }, [filterKey, userData, reloadPage])
+   }, [filterKey])
 
    const handleChangeWorkingForm = (sender) => {
       let cloneFilterKey = { ...filterKey }

@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 function AdminLayout({ children }) {
   return (
-    <div className="bg-rose-700 h-screen flex flex-col">
+    <div className="bg-[#0d0c22] h-screen flex flex-col">
       <div>
         <Navbar />
       </div>
