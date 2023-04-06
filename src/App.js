@@ -6,6 +6,7 @@ import BlankLayout from "./components/layouts/blankLayout";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
+import('preline')
 function App() {
   return (
     <BrowserRouter>

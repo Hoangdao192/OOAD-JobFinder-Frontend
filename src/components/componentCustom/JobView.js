@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import logoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
-import DotDivide from "../../../assets/image/candidates/DotDivide.png"
-import savedIcon from "../../../assets/image/candidates/savedIcon.png"
-import unSavedIcon from "../../../assets/image/candidates/unSavedIcon.png"
-import { getCompanyById, saveJob, isSavedJob, unSaveJob } from "../../../services/candidates/CandidateService"
+import logoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
+import DotDivide from "../../assets/image/candidates/DotDivide.png"
+import savedIcon from "../../assets/image/candidates/savedIcon.png"
+import unSavedIcon from "../../assets/image/candidates/unSavedIcon.png"
+import { getCompanyById, saveJob, isSavedJob, unSaveJob } from "../../services/candidates/CandidateService"
 import { handler } from "tailwind-scrollbar-hide";
 import { useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";

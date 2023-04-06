@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
-import DotDivide from "../../../assets/image/candidates/DotDivide.png"
+import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
+import DotDivide from "../../assets/image/candidates/DotDivide.png"
 
 export const CompanyView = ({ data }) => {
    const defaultValue = "Unknow";

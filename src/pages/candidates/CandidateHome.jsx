@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import Header from '../../components/layouts/header/Header'
 import BackgroudLayout from '../../components/layouts/background/Layout'
-import JobView from './componentCustom/JobView'
-import CompanyView from "./componentCustom/CompanyView";
+import JobView from '../../components/componentCustom/JobView'
+import CompanyView from "../../components/componentCustom/CompanyView";
 import Authentication from "services/Authentication/Authentication";
 import { getListJobFullFilter, getListMajor, getListJobDefault, getListCompanyDefault } from '../../services/candidates/CandidateService'
 
 import "./CandidateHome.css"
 import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
+import("preline")
 
 export const CandidateHome = () => {
    const [filterKey, setFilterKey] = useState(
@@ -30,18 +31,14 @@ export const CandidateHome = () => {
    const [listAddressJob, setListAddressJob] = useState([]);
 
    useEffect(() => {
-      console.log("filterKey: ", filterKey);
       if (filterKey.jobTitle || filterKey.major || filterKey.workingForm) {
          getListJobFullFilter(filterKey).then((res) => {
-            console.log("listJobFilter: ", res);
             setListJob(res);
          });
       }
    }, [filterKey])
 
    useEffect(() => {
-      console.log("filterKey: ", filterKey);
-
       if (!filterKey.jobTitle && !filterKey.major && !filterKey.workingForm) {
          getListJobDefault().then((data) => {
             setListJob(data);
@@ -101,7 +98,6 @@ export const CandidateHome = () => {
    }
 
    const handleClearFilter = (event) => {
-      console.log("clicked");
       // event.preventDefault();
       setFilterKey(
          {
@@ -113,7 +109,6 @@ export const CandidateHome = () => {
    }
 
    const handleSelectChangeMajor = (event) => {
-      console.log("event: ", event.target.value);
       if (event.target.value == "Tất cả") {
          setFilterKey({ ...filterKey, ["major"]: null })
       } else {
@@ -147,9 +142,9 @@ export const CandidateHome = () => {
 
                <div className="flex flex-col space-y-2">
                   <label className="font-bold">Hình thức</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Fulltime" checked={filterKey.workingForm == "Fulltime"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Full-time</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Parttime" checked={filterKey.workingForm == "Parttime"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Part-time</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" checked={filterKey.workingForm == "Remote"} name="radio_workingForm" className="accent-common_color bg-common_color" /> Remote</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Fulltime" checked={filterKey.workingForm == "Fulltime"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5"/>Full-time</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Parttime" checked={filterKey.workingForm == "Parttime"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5"/>Part-time</label>
+                  <label className="flex filterChx items-center"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" checked={filterKey.workingForm == "Remote"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5"/>Remote</label>
                </div>
 
                {/* Major Filter */}

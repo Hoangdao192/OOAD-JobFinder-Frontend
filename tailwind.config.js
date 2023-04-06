@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    'node_modules/preline/dist/*.js',
+  ],
   theme: {
     extend: {
       colors: {
@@ -21,5 +24,8 @@ module.exports = {
   plugins: [
     require('@tailwindcss/line-clamp'),
     require("tailwind-scrollbar-hide"),
+    require('flowbite/plugin'),
+    require('preline/plugin'),
+    // require("daisyui"),
   ],
 };

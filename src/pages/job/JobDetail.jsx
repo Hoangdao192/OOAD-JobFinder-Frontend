@@ -4,10 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
 import { getListCompanyDefault, getCompanyById } from '../../services/candidates/CandidateService'
 import { getJobById } from '../../services/job/JobService'
-import CompanyView from "../candidates/componentCustom/CompanyView";
+import CompanyView from "../../components/componentCustom/CompanyView";
 import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
-import "./JobDetail.css"
 import Header from "components/layouts/header/Header";
+import ModelCV from "components/componentCustom/ModalCV";
+import "./JobDetail.css"
 
 export const JobDetail = () => {
    const params = useParams();
@@ -39,9 +40,10 @@ export const JobDetail = () => {
    const [companyLogo, setCompanyLogo] = useState("");
    const [companyTitle, setCompanyTitle] = useState("");
 
+   const [reloadPage, setReloadPage] = useState(false);
+
    // first load
    useEffect(() => {
-      console.log("JobDetail: ", jobDetail);
       if (params.id) {
          getJobById(params.id).then((data) => {
             setJobDetail(data);
@@ -59,6 +61,8 @@ export const JobDetail = () => {
       getListCompanyDefault().then((data) => {
          setListCompany(data);
       })
+      console.log("1 - JobDetail: ", jobDetail);
+      console.log("1 - userData: ", userData);
    }, [userData])
 
    // Load behind get jobDetail
@@ -70,7 +74,6 @@ export const JobDetail = () => {
             } else {
                setCompanyLogo(LogoJobFinder)
             }
-            console.log("company.companyName: ", company.companyName);
             if (company.companyName) {
                setCompanyTitle(company.companyName);
             } else {
@@ -80,6 +83,7 @@ export const JobDetail = () => {
       } else {
          setCompanyLogo(LogoJobFinder)
       }
+      console.log("2 - JobDetail: ", jobDetail);
    }, [jobDetail])
 
    return (
@@ -94,8 +98,8 @@ export const JobDetail = () => {
                   <label className="text-2xl">{jobDetail.jobTitle}</label>
                   <p className="flex-1"></p>
                   
-              <button className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end">
-                Nộp CV
+              <button className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end" data-hs-overlay="#hs-slide-down-animation-modal">
+                Gửi CV
               </button>
                </div>
 
@@ -118,8 +122,16 @@ export const JobDetail = () => {
                   <label className="labelItem">Yêu cầu</label>
                   <p className="pItem">Kinh nghiêm: {jobDetail.requireExperience}</p>
                   <p className="pItem">Giới tính: {jobDetail.sex}</p>
-               
                </div>
+
+
+
+{
+   // jobDetail.id && userData &&
+   <ModelCV idModal="hs-slide-down-animation-modal" job={jobDetail} candidate={userData}/>
+}
+
+
             </div>
 
             {/* RightBar */}
