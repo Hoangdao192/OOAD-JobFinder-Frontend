@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 
 function Dashboard({ children }) {
   return (
-    <Layout>
+    <div className="bg-[#f7f7f7]">
       <div>
         <Navbar />
       </div>
@@ -13,7 +13,7 @@ function Dashboard({ children }) {
         <Sidebar />
         {children}
       </div>
-    </Layout>
+    </div>
   );
 }
 export default Dashboard;

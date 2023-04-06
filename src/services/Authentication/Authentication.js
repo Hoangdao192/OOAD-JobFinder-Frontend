@@ -1,5 +1,6 @@
-import config from "../../config.json";
-import ServerMessageParser from "../ServerMessageParser";
+// @ts-nocheck
+import config from '../../config.json';
+import ServerMessageParser from '../ServerMessageParser';
 
 /**
  * For authentication using JsonWebToken

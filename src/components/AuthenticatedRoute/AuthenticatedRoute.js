@@ -1,16 +1,17 @@
+// @ts-nocheck
 import Authentication from "../../services/Authentication/Authentication";
 import {Route, Navigate} from "react-router-dom";
+import React from "react";
 
 /**
  * Represent route that need authenticated
  */
 function AuthenticatedRoute({authorization, children}) {
-    console.log(authorization)
     const isAuthenticated = Authentication.isUserAuthenticated();
     let havePermission = false;
 
     if (isAuthenticated) {
-        const userRole = Authentication.getCurrentUser().role;
+        const userRole = Authentication.getCurrentUser().roles[0];
         if (authorization != undefined) {
             if (authorization.includes(userRole)) {
                 havePermission = true;
@@ -23,7 +24,7 @@ function AuthenticatedRoute({authorization, children}) {
         isAuthenticated ? (
             havePermission ? children : <Navigate to="/not_found"/>
         ) : (
-            <Navigate to="/login" />
+            <Navigate to="/auth/signin" />
         )
     )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Authentication from "../../services/Authentication/Authentication";
 import { toast } from "react-toastify";
 import Layout from "components/layouts/background/Layout";

@@ -15,7 +15,6 @@ function SignUp({ navigation }) {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
     axios({
       method: "post",
       url: "http://localhost:5000/api/register",
@@ -31,7 +30,6 @@ function SignUp({ navigation }) {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-            console.log(res);
 
             navigate("/auth/verifyemail", {
               state: {
@@ -45,7 +43,6 @@ function SignUp({ navigation }) {
         return Promise.reject(res);
       })
       .catch((err) => {
-        console.log(err);
         return Promise.reject(err);
       });
   };

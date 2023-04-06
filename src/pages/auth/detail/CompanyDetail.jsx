@@ -61,7 +61,6 @@ function CompanyDetail() {
 
   // handle submit form
   const onSubmit = (data) => {
-    console.log(data);
     let formData = new FormData();
     formData.append("companyName", data.companyName);
     formData.append("companyDescription", data.companyDescription);

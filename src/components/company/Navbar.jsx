@@ -5,7 +5,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <div className=" text-white px-10 h-20 flex justify-between items-center bg-navbar_color/80">
+    <div className=" text-white px-10 py-4 flex justify-between items-center bg-[#0d0c22]">
       <div className="flex items-center gap-5">
         <span className="text-2xl font-medium">
           JobFinder
@@ -19,7 +19,7 @@ function Navbar() {
           <li>
             <button
               onClick={() => navigate("/company/requirement")}
-              className="hover:bg-button_hover_color flex gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light"
+              className="text-[0.9rem] hover:bg-button_hover_color flex items-center gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ function Navbar() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-[1.2rem] h-[1.2rem]"
               >
                 <path
                   strokeLinecap="round"
@@ -40,14 +40,14 @@ function Navbar() {
           </li>
 
           <li>
-            <button className="hover:bg-button_hover_color flex gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light">
+            <button className="text-[0.9rem] hover:bg-button_hover_color items-center flex gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-[1.2rem] h-[1.2rem]"
               >
                 <path
                   strokeLinecap="round"
@@ -62,7 +62,7 @@ function Navbar() {
         <img
           src="/blankAvatar.png"
           alt="avatar"
-          className="w-12 h-12 rounded-full object-cover"
+          className="w-7 h-7 rounded-full object-cover"
         />
       </div>
     </div>
