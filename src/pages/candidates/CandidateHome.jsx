@@ -149,7 +149,7 @@ export const CandidateHome = () => {
 
                <div>
                   <label className="block mb-2 font-bold ">Địa điểm</label>
-                  <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                  <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-common_color focus:border-common_color block w-full p-2.5">
                      <option value={null} selected>Tất cả</option>
                      {
                         listAddressJob && listAddressJob.map((item) => (
@@ -199,7 +199,7 @@ export const CandidateHome = () => {
                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                               <svg aria-hidden="true" className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                            </div>
-                           <input type="text" id="ipt_search" className="p-3 text-xs bg-gray-100 bg-opacity-20 outline-none border-none focus:ring focus:ring-gray-300 focus:ring-1 text-white rounded-md block w-full pl-10 placeholder-white" placeholder="Tên công việc" />
+                           <input type="text" id="ipt_search" className="p-3 text-xs bg-gray-100 bg-opacity-20 outline-none border-none focus:ring focus:ring-hover_common_color focus:ring-1 text-white rounded-md block w-full pl-10 placeholder-white" placeholder="Tên công việc" />
                         </div>
                         <button type="submit" className="w-auto whitespace-nowrap h-10 text-sm text-common_color rounded-md bg-white hover:bg-hover_common_color hover:text-white">
                            <span className="m-3">Tìm kiếm</span>
