@@ -4,9 +4,10 @@ function Layout({ children }) {
   return (
     <div
       className="overflow-auto
-      bg-[url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-opacity-100 h-screen"
+      bg-[url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-opacity-100 h-screen
+      "
     >
-      <div className="bg-gradient-to-br from-purple-200/75 to-indigo-900/90 overflow-auto min-h-screen">
+      <div className="bg-gradient-to-r from-background_color/90 to-background_color_hover backdrop-brightness-75 overflow-auto min-h-screen">
         {children}
       </div>
     </div>

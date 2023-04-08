@@ -8,15 +8,6 @@ import "./VerifyInput.css";
 function VerifyEmail() {
   const location = useLocation();
   const navigate = useNavigate();
-  const inputRef = useRef(null);
-  const inputRefTwo = useRef(null);
-  function checkPress(e) {
-    if (e.keyCode === 13) {
-      inputRefTwo.current.focus();
-    }
-  }
-
-  const inputs = 6;
 
   const rendered = ({ minutes, seconds, completed }) => {
     if (completed) {
@@ -42,8 +33,6 @@ function VerifyEmail() {
   };
 
   const handleVerify = (data) => {
-    console.log(data);
-
     axios({
       method: "post",
       url: "http://localhost:5000/api/register/confirm",
@@ -55,14 +44,19 @@ function VerifyEmail() {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-            navigate("/");
+            localStorage.setItem("authToken", res.data.accessToken);
+            localStorage.setItem("tokenType", res.data.tokenType);
+            if (res.data.user.roles[0] === "Company") {
+              navigate("/auth/detail/company");
+            } else {
+              navigate("/auth/detail/candidate");
+            }
           }
           return Promise.reject(res);
         }
         return Promise.reject(res);
       })
       .catch((err) => {
-        console.log(err);
         return Promise.reject(err);
       });
   };
@@ -75,16 +69,15 @@ function VerifyEmail() {
       .then((res) => {
         if (res.data) {
           if (res.data.success === "true") {
-            console.log(res);
           }
           return Promise.reject(res);
         }
         return Promise.reject(res);
       })
       .catch((err) => {
-        console.log(err);
         return Promise.reject(err);
       });
+    window.location.reload(false);
   };
   return (
     <div className="">

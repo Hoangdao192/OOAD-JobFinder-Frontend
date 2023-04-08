@@ -1,6 +1,6 @@
 import axios from "axios";
 import Layout from "components/layouts/background/Layout";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 function SignUp({ navigation }) {
@@ -8,13 +8,13 @@ function SignUp({ navigation }) {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
 
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
     axios({
       method: "post",
       url: "http://localhost:5000/api/register",
@@ -30,7 +30,6 @@ function SignUp({ navigation }) {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-            console.log(res);
 
             navigate("/auth/verifyemail", {
               state: {
@@ -44,10 +43,14 @@ function SignUp({ navigation }) {
         return Promise.reject(res);
       })
       .catch((err) => {
-        console.log(err);
         return Promise.reject(err);
       });
   };
+  useEffect(() => {
+    reset({
+      data: "",
+    });
+  }, [isSubmitSuccessful]);
   return (
     <Layout>
       <form
