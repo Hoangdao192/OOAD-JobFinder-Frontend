@@ -8,15 +8,6 @@ import "./VerifyInput.css";
 function VerifyEmail() {
   const location = useLocation();
   const navigate = useNavigate();
-  const inputRef = useRef(null);
-  const inputRefTwo = useRef(null);
-  function checkPress(e) {
-    if (e.keyCode === 13) {
-      inputRefTwo.current.focus();
-    }
-  }
-
-  const inputs = 6;
 
   const rendered = ({ minutes, seconds, completed }) => {
     if (completed) {
@@ -53,7 +44,13 @@ function VerifyEmail() {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-            navigate("/");
+            localStorage.setItem("authToken", res.data.accessToken);
+            localStorage.setItem("tokenType", res.data.tokenType);
+            if (res.data.user.roles[0] === "Company") {
+              navigate("/auth/detail/company");
+            } else {
+              navigate("/auth/detail/candidate");
+            }
           }
           return Promise.reject(res);
         }
@@ -80,6 +77,7 @@ function VerifyEmail() {
       .catch((err) => {
         return Promise.reject(err);
       });
+    window.location.reload(false);
   };
   return (
     <div className="">

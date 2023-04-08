@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Authentication from "services/Authentication/Authentication";
 import subVn from "sub-vn";
 
@@ -16,7 +18,7 @@ function CompanyDetail() {
   const [provinceCode, setProvinceCode] = useState(null);
   const [districtCode, setDistrictCode] = useState(null);
 
-  const [selectedLogo, setSelectedLogo] = useState();
+  const [selectedLogo, setSelectedLogo] = useState(null);
   const [preview, setPreview] = useState();
   useEffect(() => {
     const province = provinces.filter(
@@ -48,32 +50,60 @@ function CompanyDetail() {
     setWards(wards);
   }, [selectedDistrict, districtCode]);
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    reset,
+    formState: { isSubmitSuccessful },
   } = useForm();
 
+  // handle submit form
   const onSubmit = (data) => {
-    let formData = new FormData();
-    formData.append("companyName", data.companyName);
-    formData.append("companyDescription", data.companyDescription);
-    formData.append("numberOfEmployee", data.numberOfEmployee);
-    formData.append("address.province", data.address.province);
-    formData.append("address.district", data.address.district);
-    formData.append("address.ward", data.address.ward);
-    formData.append("address.detailAddress", data.address.detailAddress);
-    formData.append("companyLogoFile", data.companyLogoFile);
+    if (
+      data.companyName == "" ||
+      data.companyDescription == "" ||
+      data.numberOfEmployee == "" ||
+      data.address.province == "" ||
+      data.address.district == "" ||
+      data.address.ward == "" ||
+      data.address.detailAddress == ""
+    ) {
+      console.log("hello");
+      toast("Vui lòng điền đầy đủ thông tin", {
+        type: "error",
+      });
+    } else {
+      console.log("sorry");
+      console.log(data);
+      let formData = new FormData();
+      formData.append("companyName", data.companyName);
+      formData.append("companyDescription", data.companyDescription);
+      formData.append("numberOfEmployee", data.numberOfEmployee);
+      formData.append("address.province", data.address.province);
+      formData.append("address.district", data.address.district);
+      formData.append("address.ward", data.address.ward);
+      formData.append("address.detailAddress", data.address.detailAddress);
+      formData.append("companyLogoFile", data.companyLogoFile);
 
-    axios({
-      method: "put",
-      url: "http://localhost:5000/api/company",
-      data: formData,
-      headers: {
-        Authorization: Authentication.generateAuthorizationHeader(),
-      },
-    });
+      axios({
+        method: "put",
+        url: "http://localhost:5000/api/company",
+        data: formData,
+        headers: {
+          Authorization: Authentication.generateAuthorizationHeader(),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          navigate("/auth/signin");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   // handle upload logo
@@ -107,43 +137,54 @@ function CompanyDetail() {
       />
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit, (e) => {
+          console.log("INVALID");
+        })}
         className="flex w-full xl:pr-24 flex-col gap-3 text-text_color overflow-y-scroll scrollbar-hide"
       >
-        <h1 className="text-2xl md:text-3xl font-semibold">
-          Company's Information
+        <h1 className="self-center text-2xl md:text-3xl font-semibold">
+          Thông tin công ty
         </h1>
 
-        <div className="mt-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
+        <div className="relative mt-14 mb-5 flex sm:flex-row flex-col w-full sm:items-center gap-5 md:gap-10">
           <div className=" ">
             {selectedLogo ? (
               <img
                 src={preview}
                 alt="logo"
-                className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 object-cover rounded-full"
+                className="w-24 h-24 md:w-28 md:h-28 xl:w-36 xl:h-36 object-cover rounded-full"
               />
             ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={0.1}
-                stroke="#6B7280"
-                className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 object-cover rounded-full outline ml-5 outline-[#6B7280] outline-1"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
-                />
-              </svg>
+              <img
+                src="/blankAvatar.png"
+                alt="blankAvatar"
+                className="w-24 h-24 md:w-28 md:h-28 xl:w-36 xl:h-36 object-cover rounded-full"
+              />
             )}
           </div>
           <label
             htmlFor="logo"
-            className="text-base md:text-lg font-base cursor-pointer text-background_color "
+            className="cursor-pointer absolute text-gray-400 bottom-3 left-16"
           >
-            Change logo
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"
+              />
+            </svg>
             <input
               type="file"
               id="logo"
@@ -160,17 +201,13 @@ function CompanyDetail() {
             className="text-base md:text-lg font-medium"
           >
             Tên công ty
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
           <input
             type="text"
-            {...register("companyName", {
-              required: true,
-            })}
+            {...register("companyName", {})}
             className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
           />
-          {errors.companyName && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <div className="flex flex-col gap-2 mt-5">
@@ -178,18 +215,13 @@ function CompanyDetail() {
             htmlFor="companyDescription"
             className="text-base md:text-lg font-medium"
           >
-            Mô tả
+            Giới thiệu
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
-          <input
-            type="text"
-            {...register("companyDescription", {
-              required: true,
-            })}
+          <textarea
+            {...register("companyDescription", {})}
             className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
           />
-          {errors.companyDescription && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <div className="flex flex-col gap-2 mt-5">
@@ -198,17 +230,13 @@ function CompanyDetail() {
             className="text-base md:text-lg font-medium"
           >
             Quy mô (nhân viên)
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
           <input
             type="text"
-            {...register("numberOfEmployee", {
-              required: true,
-            })}
+            {...register("numberOfEmployee", {})}
             className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
           />
-          {errors.numberOfEmployee && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -217,17 +245,16 @@ function CompanyDetail() {
             className="block text-base md:text-lg font-medium "
           >
             Địa chỉ
+            <span className="text-red-500 ml-2">(*)</span>
           </label>
           <div className="flex gap-10">
             <select
               id="provinces"
-              {...register("address.province", {
-                required: true,
-              })}
+              {...register("address.province", {})}
               onChange={(e) => {
                 setSelectedProvince(e.target.value);
               }}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
               <option selected>Chọn tỉnh/ thành phố</option>
               {provinces.map((province) => {
@@ -241,13 +268,11 @@ function CompanyDetail() {
 
             <select
               id="districts"
-              {...register("address.district", {
-                required: true,
-              })}
+              {...register("address.district", {})}
               onChange={(e) => {
                 setSelectedDistrict(e.target.value);
               }}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
               <option selected>Chọn quận/ huyện</option>
               {districts.map((district) => {
@@ -261,13 +286,11 @@ function CompanyDetail() {
 
             <select
               id="wards"
-              {...register("address.ward", {
-                required: true,
-              })}
+              {...register("address.ward", {})}
               onChange={(e) => {
                 setSelectedWard(e.target.value);
               }}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
               <option selected>Chọn xã/ phường/ thị trấn</option>
               {wards.map((ward) => {
@@ -283,19 +306,15 @@ function CompanyDetail() {
           <input
             type="text"
             placeholder="Đường/ Tòa nhà"
-            {...register("address.detailAddress", {
-              required: true,
-            })}
+            {...register("address.detailAddress", {})}
             className="mt-2 border focus:outline-none p-2 text-base rounded-md"
           />
-          {errors.address && (
-            <span className="text-red-500">This field is required</span>
-          )}
         </div>
 
         <input
           type="submit"
-          className="p-2 mt-5 border bg-background_color hover:bg-background_color_hover text-white text-base md:text-lg rounded-md"
+          value={"Cập nhật"}
+          className="p-2 my-5 border bg-emerald-500 hover:bg-emerald-600 text-white text-base md:text-lg rounded-md"
         />
       </form>
     </div>

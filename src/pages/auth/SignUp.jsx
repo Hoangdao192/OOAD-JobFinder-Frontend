@@ -1,6 +1,6 @@
 import axios from "axios";
 import Layout from "components/layouts/background/Layout";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 function SignUp({ navigation }) {
@@ -8,6 +8,7 @@ function SignUp({ navigation }) {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
 
@@ -29,7 +30,6 @@ function SignUp({ navigation }) {
       .then((res) => {
         if (res.data) {
           if (res.status === 200 || res.status === 201) {
-
             navigate("/auth/verifyemail", {
               state: {
                 email: res.data.email,
@@ -45,6 +45,11 @@ function SignUp({ navigation }) {
         return Promise.reject(err);
       });
   };
+  useEffect(() => {
+    reset({
+      data: "",
+    });
+  }, [isSubmitSuccessful]);
   return (
     <Layout>
       <form
@@ -162,7 +167,7 @@ function SignUp({ navigation }) {
         <input
           type="submit"
           value={"Sign up"}
-          className="text-white text-base md:text-lg bg-background_color hover:bg-background_color_hover py-2 rounded-md mt-5"
+          className="text-white text-base md:text-lg bg-emerald-500 hover:bg-emerald-600 py-2 rounded-md mt-5"
         />
       </form>
     </Layout>

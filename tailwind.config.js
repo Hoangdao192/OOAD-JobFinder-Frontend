@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     'node_modules/preline/dist/*.js',
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js",
   ],
   theme: {
     extend: {
@@ -13,7 +14,7 @@ module.exports = {
         background_color: "#795FFF",
         background_color_hover: "rgba(121, 95, 255, 0.8)",
         home_search_transparent_purple: "#A998F6",
-        common_color: "rgb(36, 149, 99)",
+        common_color: "#369d70",
         hover_common_color: "rgb(0, 100, 0)",
       },
       // images: {
@@ -22,7 +23,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/line-clamp'),
+    require("@tailwindcss/line-clamp"),
     require("tailwind-scrollbar-hide"),
     require('flowbite/plugin'),
     require('preline/plugin'),
