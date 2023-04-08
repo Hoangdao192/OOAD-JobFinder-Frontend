@@ -9,6 +9,7 @@ import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
 import Header from "components/layouts/header/Header";
 import ModelCV from "components/componentCustom/ModalCV";
 import "./JobDetail.css"
+import { toast } from "react-toastify";
 
 export const JobDetail = () => {
    const params = useParams();
@@ -41,6 +42,12 @@ export const JobDetail = () => {
    const [companyTitle, setCompanyTitle] = useState("");
 
    const [reloadPage, setReloadPage] = useState(false);
+
+const handleClickSendCV = (e) => {
+   if (!userData) {
+      toast.warn("Bạn cần đăng nhập trước khi Gửi CV");
+   }
+}
 
    // first load
    useEffect(() => {
@@ -104,7 +111,7 @@ export const JobDetail = () => {
                   <label className="text-2xl">{jobDetail.jobTitle}</label>
                   <p className="flex-1"></p>
                   
-              <button className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end" data-hs-overlay="#hs-slide-down-animation-modal">
+              <button onClick={handleClickSendCV} className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end" data-hs-overlay={userData? "#hs-slide-down-animation-modal" : "#NONE"}>
                 Gửi CV
               </button>
                </div>

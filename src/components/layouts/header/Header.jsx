@@ -1,5 +1,5 @@
 import React, { Children } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import serviceAuth from "../../../services/Authentication/Authentication";
@@ -7,7 +7,12 @@ import serviceAuth from "../../../services/Authentication/Authentication";
 import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
 
 function HomeHeader() {
+  const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState(false);
+
+const handleClickLogoJobFinder = (e) => {
+  navigate("/");
+}
 
   useEffect(() => {
     setIsLogged(serviceAuth.isUserAuthenticated());
@@ -17,7 +22,7 @@ function HomeHeader() {
     <header className="text-gray-500">
       <nav className="container mx-auto py-4 px-2 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex flex-row space-x-3 items-center">
+        <div onClick={handleClickLogoJobFinder} className="flex flex-row space-x-3 items-center">
           <img className="rounded-md w-10 h-10" src={LogoJobFinder}></img>
           <h1 className="text-2xl font-bold justify-start text-common_color">
             Job Finder

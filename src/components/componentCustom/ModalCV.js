@@ -1,6 +1,7 @@
 import { postCV } from "services/job/JobService";
 import React, { useEffect, useState } from "react";
 import "./ModalCV.css"
+import { toast } from 'react-toastify';
 
 export const ModelCV = ({ idModal, job, candidate }) => {
 
@@ -11,13 +12,9 @@ export const ModelCV = ({ idModal, job, candidate }) => {
 
   const [toastType, setToastType] = useState("UNSHOW");
 
-  const handleClickToast = (event) => {
-    setToastType("UNSHOW");
-  }
-
   const handleChangeInputFile = (event) => {
     if (event.target.files && event.target.files.length > 0) {
-      setDataCV({ ...dataCV, ["cvFile"]:event.target.files[0]})
+      setDataCV({ ...dataCV, ["cvFile"]: event.target.files[0] })
     }
   }
 
@@ -25,10 +22,14 @@ export const ModelCV = ({ idModal, job, candidate }) => {
     setDataCV({ ...dataCV, ["description"]: event.target.value })
   }
 
+  const handleClickCloseModal = (e) => {
+    setToastType("UNSHOW")
+  }
+
   const handleClickSendCV = (event) => {
-console.log("job: ", job);
-console.log("candidate: ", candidate);
-console.log("dataCV: ", dataCV);
+    console.log("job: ", job);
+    console.log("candidate: ", candidate);
+    console.log("dataCV: ", dataCV);
 
     if (job && job.id && candidate && candidate.userId && dataCV.cvFile) {
       let formData = new FormData();
@@ -36,15 +37,18 @@ console.log("dataCV: ", dataCV);
       formData.append("jobId", job.id);
       formData.append("description", dataCV.description);
       formData.append("cvFile", dataCV.cvFile);
-      
+
       postCV(formData).then((res) => {
-        console.log("send cv success");
-        setToastType("SUCCESS");
+        toast.success("Gửi cv thành công")
+      }).catch((error) => {
+        console.log(error);
+        toast.warn(error.response.data.errors[0].message);
       });
     }
     else {
-      setToastType("FAIL");
+      toast.error("Thông tin không hợp lệ");
     }
+    console.log("toastType: ", toastType);
   }
   // data-hs-overlay="#hs-slide-down-animation-modal"
   useEffect(() => {
@@ -84,7 +88,7 @@ console.log("dataCV: ", dataCV);
 
             {/* Footer */}
             <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
-              <button onClick={handleClickToast} type="button" className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-hover_common_color transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-500 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800" data-hs-overlay="#hs-slide-down-animation-modal">
+              <button onClick={handleClickCloseModal} type="button" className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-hover_common_color transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-500 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800" data-hs-overlay="#hs-slide-down-animation-modal">
                 Đóng
               </button>
               <button onClick={handleClickSendCV} className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-common_color text-white hover:bg-hover_common_color focus:outline-none focus:ring-2 focus:ring-hover_common_color focus:ring-offset-2 transition-all text-sm focus:ring-offset-gray-800">
@@ -96,42 +100,7 @@ console.log("dataCV: ", dataCV);
         </div>
       </div>
 
-      {
-        toastType == "SUCCESS" ?
-          <div onClick={handleClickToast} className="toastCV fixed right-3 bottom-2 z-[100] w-auto h-auto">
-            <div className="max-w-xs bg-white border rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700" role="alert">
-              <div className="flex p-4">
-                <div className="flex-shrink-0">
-                  <svg className="h-4 w-4 text-green-500 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm text-gray-700 dark:text-gray-400">
-                    Gửi cv thành công
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          : toastType == "FAIL" &&
-          <div onClick={handleClickToast} className="toastCV fixed right-3 bottom-2 z-[100] w-auto h-auto">
-            <div className="max-w-xs bg-white border rounded-md shadow-lg dark:bg-gray-800 dark:border-gray-700" role="alert">
-              <div className="flex p-4">
-                <div className="flex-shrink-0">
-                  <svg className="h-4 w-4 text-red-500 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm text-gray-700 dark:text-gray-400">
-                    Thông tin không hợp lệ
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-      }
+      {/* <MyToast toastType={toastType} setToastType={setToastType} /> */}
     </>
   );
 }
