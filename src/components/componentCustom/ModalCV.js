@@ -5,8 +5,6 @@ import "./ModalCV.css"
 export const ModelCV = ({ idModal, job, candidate }) => {
 
   const [dataCV, setDataCV] = useState({
-    candidateId: null,
-    jobId: null,
     description: null,
     cvFile: null
   });
@@ -18,8 +16,8 @@ export const ModelCV = ({ idModal, job, candidate }) => {
   }
 
   const handleChangeInputFile = (event) => {
-    if (event.target.file && event.target.file[0]) {
-      setDataCV({ ...dataCV, ["cvFile"]: event.target.file[0] })
+    if (event.target.files && event.target.files.length > 0) {
+      setDataCV({ ...dataCV, ["cvFile"]:event.target.files[0]})
     }
   }
 
@@ -28,14 +26,19 @@ export const ModelCV = ({ idModal, job, candidate }) => {
   }
 
   const handleClickSendCV = (event) => {
-    if (job && job.id && candidate && candidate.id && dataCV.cvFile) {
+console.log("job: ", job);
+console.log("candidate: ", candidate);
+console.log("dataCV: ", dataCV);
+
+    if (job && job.id && candidate && candidate.userId && dataCV.cvFile) {
       let formData = new FormData();
-      formData.append("candidateId", candidate.id);
+      formData.append("candidateId", candidate.userId);
       formData.append("jobId", job.id);
       formData.append("description", dataCV.description);
       formData.append("cvFile", dataCV.cvFile);
-
+      
       postCV(formData).then((res) => {
+        console.log("send cv success");
         setToastType("SUCCESS");
       });
     }
@@ -45,7 +48,6 @@ export const ModelCV = ({ idModal, job, candidate }) => {
   }
   // data-hs-overlay="#hs-slide-down-animation-modal"
   useEffect(() => {
-    console.log("idModal: ", idModal);
   }, [toastType])
 
   return (

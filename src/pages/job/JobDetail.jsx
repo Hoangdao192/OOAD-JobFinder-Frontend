@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Authentication from "services/Authentication/Authentication";
-import { getListCompanyDefault, getCompanyById } from '../../services/candidates/CandidateService'
+import { getListCompanyDefault, getCompanyById, getCandidateInfoByid } from '../../services/candidates/CandidateService'
 import { getJobById } from '../../services/job/JobService'
 import CompanyView from "../../components/componentCustom/CompanyView";
 import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
@@ -42,11 +42,16 @@ export const JobDetail = () => {
 
    const [reloadPage, setReloadPage] = useState(false);
 
-
    // first load
-   useEffect(()=> {
-      if (Authentication.isUserAuthenticated()) {
-         setUserData(Authentication.getCurrentUser());
+   useEffect(() => {
+      if (Authentication.isUserAuthenticated() && Authentication.getCurrentUser().roles[0] == "Candidate") {
+         getCandidateInfoByid(Authentication.getCurrentUser().id).then((res) => {
+            if (res) {
+               setUserData(res);
+            } else {
+               setUserData(null);
+            }
+         })
       } else {
          setUserData(null);
       }
@@ -65,8 +70,6 @@ export const JobDetail = () => {
       getListCompanyDefault().then((data) => {
          setListCompany(data);
       })
-      console.log("1 - JobDetail: ", jobDetail);
-      console.log("1 - userData: ", userData);
    }, [userData])
 
    // Load after get jobDetail
@@ -87,7 +90,6 @@ export const JobDetail = () => {
       } else {
          setCompanyLogo(LogoJobFinder)
       }
-      console.log("2 - JobDetail: ", jobDetail);
    }, [jobDetail])
 
    return (
@@ -138,28 +140,36 @@ export const JobDetail = () => {
 
             </div>
 
-            {/* RightBar */}
-            <div className="w-3/12 space-y-3 rounded-xl">
-               {
-                  userData ?
-                     <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-                        <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
-                        <p className="font-bold line-clamp-1">{userData.fullName && "Unknow"}</p>
-                        <p className="line-clamp-1">{userData.phoneNumber && "Unknow"}</p>
-                        <p className="line-clamp-1">{userData.contactEmail && "Unknow"}</p>
-                     </div>
-                     :
-                     <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-                        <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
-                        <p className="font-bold line-clamp-1">Tên</p>
-                        <p className="line-clamp-1">Số điện thoại</p>
-                        <p className="line-clamp-1">Email</p>
-                        <p className="text-xs line-clamp-1">Bạn cần đăng nhập để hiển thị thông tin</p>
-                     </div>
-               }
+             {/* RightBar */}
+             <div className="w-3/12 space-y-3">
+               {userData ? (
+                  <div className="flex flex-col items-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                     <img
+                        className="m-auto w-1/3 h-1/3 rounded-md"
+                        src={LogoJobFinder}
+                     />
+                     <p className="font-bold line-clamp-1">
+                        {userData.fullName}
+                     </p>
+                     <p className="line-clamp-1">{userData.phoneNumber}</p>
+                     <p className="line-clamp-1 w-full">{userData.contactEmail}</p>
+                  </div>
+               ) : (
+                  <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                     <img
+                        className="m-auto w-1/3 h-1/3 rounded-md"
+                        src={LogoJobFinder}
+                     />
+                     <p className="font-bold line-clamp-1">Tên</p>
+                     <p className="line-clamp-1">Số điện thoại</p>
+                     <p className="line-clamp-1">Email</p>
+                     <p className="text-xs line-clamp-1">
+                        Bạn cần đăng nhập để hiển thị thông tin
+                     </p>
+                  </div>
+               )}
 
                <div className="space-y-3">
-
                   {/* ListCompany */}
                   {
                      listCompany.length > 0 ?

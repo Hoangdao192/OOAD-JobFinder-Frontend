@@ -10,6 +10,8 @@ import {
    getListMajor,
    getListJobDefault,
    getListCompanyDefault,
+   getCompanyById,
+   getCandidateInfoByid
 } from "../../services/candidates/CandidateService";
 
 import "./CandidateHome.css"
@@ -37,12 +39,19 @@ export const CandidateHome = () => {
 
    // first load
    useEffect(() => {
-      if (Authentication.isUserAuthenticated()) {
-         setUserData(Authentication.getCurrentUser());
+      if (Authentication.isUserAuthenticated() && Authentication.getCurrentUser().roles[0] == "Candidate") {
+         getCandidateInfoByid(Authentication.getCurrentUser().id).then((res) => {
+            if (res) {
+               setUserData(res);
+            } else {
+               setUserData(null);
+            }
+         })
       } else {
          setUserData(null);
       }
    }, [])
+
 
    useEffect(() => {
       if (filterKey.jobTitle || filterKey.major || filterKey.workingForm) {
@@ -188,7 +197,7 @@ export const CandidateHome = () => {
                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                               <svg aria-hidden="true" className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                            </div>
-                           <input type="text" id="ipt_search" className="p-3 text-xs bg-gray-100 bg-opacity-20 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-1 text-white rounded-md block w-full pl-10 placeholder-white" placeholder="Tên công việc" />
+                           <input type="text" id="ipt_search" className="p-3 text-xs bg-gray-100 bg-opacity-20 outline-none border-none focus:ring focus:ring-gray-300 focus:ring-1 text-white rounded-md block w-full pl-10 placeholder-white" placeholder="Tên công việc" />
                         </div>
                         <button type="submit" className="w-auto whitespace-nowrap h-10 text-sm text-common_color rounded-md bg-white hover:bg-hover_common_color hover:text-white">
                            <span className="m-3">Tìm kiếm</span>
@@ -214,18 +223,16 @@ export const CandidateHome = () => {
             {/* RightBar */}
             <div className="w-3/12 space-y-3">
                {userData ? (
-                  <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                  <div className="flex flex-col items-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
                      <img
                         className="m-auto w-1/3 h-1/3 rounded-md"
                         src={LogoJobFinder}
                      />
                      <p className="font-bold line-clamp-1">
-                        {userData.fullName && "Unknow"}
+                        {userData.fullName}
                      </p>
-                     <p className="line-clamp-1">{userData.phoneNumber && "Unknow"}</p>
-                     <p className="line-clamp-1">
-                        {userData.contactEmail && "Unknow"}
-                     </p>
+                     <p className="line-clamp-1">{userData.phoneNumber}</p>
+                     <p className="line-clamp-1 w-full">{userData.contactEmail}</p>
                   </div>
                ) : (
                   <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Authentication from 'services/Authentication/Authentication';
 
 const getJobById = (_id) => {
   if (_id >= 0) {
@@ -25,7 +26,10 @@ const postCV = (formData) => {
       axios({
         method: "post", //you can set what request you want to be
         url: "http://localhost:5000/api/job-application",
-        data: formData
+        data: formData,
+        headers: {
+          Authorization: Authentication.generateAuthorizationHeader(),
+        },
       })
         .then((res) => {
           resolve("SUCCESS")
