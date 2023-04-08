@@ -1,5 +1,6 @@
 // @ts-nocheck
 import axios from 'axios';
+import Authentication from 'services/Authentication/Authentication';
 
 // import config from '../../config.json';
 
@@ -96,10 +97,69 @@ const getCompanyById = (_id) => {
   }
 }
 
+const isSavedJob = (_idJob, _idCandidate) => {
+  let isSavedJobResult = false;
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get", //you can set what request you want to be
+      url: "http://localhost:5000/api/job/save?candidateId=" + _idCandidate,
+    })
+      .then((res) => {
+        res.data.elements.forEach(item => {
+          if (item.id && item.id == _idJob) {
+            isSavedJobResult = true;
+          }
+        });
+        resolve(isSavedJobResult)
+      })
+      .catch(error => reject(error));
+  });
+}
+
+const saveJob = (_idJob, _idCandidate) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "post", //you can set what request you want to be
+      url: "http://localhost:5000/api/job/save",
+      headers: {
+        "Authorization": Authentication.generateAuthorizationHeader(),
+        "Content-Type": "application/json"
+      },
+      data: {
+        "jobId" : _idJob,
+        "candidateId" : _idCandidate
+      }
+    })
+      .then((res) => {
+        resolve(res)
+      })
+      .catch(error => reject(error));
+  });
+}
+
+const unSaveJob = (_idJob, _idCandidate) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "delete", //you can set what request you want to be
+      url: "http://localhost:5000/api/job/save/" + _idJob,
+      headers: {
+        "Authorization": Authentication.generateAuthorizationHeader(),
+      },
+    })
+      .then((res) => {
+        resolve(res)
+      })
+      .catch(error => reject(error));
+  });
+}
+
 export {
   getListMajor,
   getListCompanyDefault,
   getListJobDefault,
   getListJobFullFilter,
   getCompanyById,
+  isSavedJob,
+  saveJob,
+  unSaveJob,
 };

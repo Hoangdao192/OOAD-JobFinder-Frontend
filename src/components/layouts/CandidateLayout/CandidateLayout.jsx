@@ -2,17 +2,12 @@ import React, { Children } from 'react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import serviceAuth from '../../../services/Authentication/Authentication'
+import Authentication from 'services/Authentication/Authentication';
 
 import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
 
 function Header() {
-    const [isLogged, setIsLogged] = useState(false)
-
-    useEffect(() => {
-        setIsLogged(serviceAuth.isUserAuthenticated());
-    }, [isLogged]);
-
+    const isLogged = Authentication.isUserAuthenticated();
 
     return (
         <header className="text-gray-500">
@@ -22,14 +17,6 @@ function Header() {
                     <img className='rounded-md w-10 h-10' src={LogoJobFinder}></img>
                     <h1 className="text-2xl font-bold justify-start text-common_color">Job Finder</h1>
                 </div>
-
-                {/* Option */}
-                {/* <ul className="flex space-x-10 justify-end">
-          <li><a href="#" className="hover:text-gray-400 text-xl hover:text-common_color">For candidates</a></li>
-          <li><a href="#" className="hover:text-gray-400 text-xl hover:text-common_color">For companys</a></li>
-        </ul> */}
-
-                {/* Account */}
                 {
                     !isLogged && <div className='flex space-x-4'>
                         <Link to='/auth/signin'>
@@ -56,4 +43,16 @@ function Header() {
     );
 }
 
-export default Header;
+
+export default function CandidateLayout({ children }) {
+    return (
+        <div className="bg-[#f7f7f7] h-screen flex flex-col">
+            <div>
+                <Header />
+            </div>
+            <div className="flex w-full flex-grow">
+                {children}
+            </div>
+        </div>
+    );
+}

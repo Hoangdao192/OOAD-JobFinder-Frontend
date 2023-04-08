@@ -1,3 +1,4 @@
+import { JobDetail } from "../pages/job/JobDetail";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
@@ -19,6 +20,9 @@ import EditPost from "pages/company/EditPost";
 import CandidatesList from "pages/company/CandidatesList";
 import Profile from "pages/company/Profile";
 import EditProfile from "pages/company/EditProfile";
+import ViewCompany from "pages/company/ViewCompany";
+import CandidateLayout from "components/layouts/CandidateLayout/CandidateLayout";
+import Report from "pages/admin/Report/Report";
 
 const privateRoutes = [
     //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -44,6 +48,8 @@ const privateRoutes = [
 const publicRoutes = [
     { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
     { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] },
+    { path: "admin/report", component: Report, layout: AdminLayout, authorization: ['Admin']},
+
     { path: "/company", component: HomeCompany, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/requirement", component: Requirement, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/posts", component: Posts, layout: BlankLayout, authorization: ['Company'] },
@@ -61,7 +67,13 @@ const publicRoutes = [
     { path: "/auth/signout", component: Signout, layout: BlankLayout },
     { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
     { path: "/auth/detail/company", component: CompanyDetail, layout: BlankLayout },
-    { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout }
+    { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout },
+
+    //  Example: {path: '/login', component: Login}
+    // { path: "/", component: Home, layout: BlankLayout },
+    { path: "/", component: CandidateHome },
+    { path: "/job/:id", component: JobDetail },
+    { path: "/company/:id", component: ViewCompany, layout: CandidateLayout }
 ];
 
 export { publicRoutes, privateRoutes };

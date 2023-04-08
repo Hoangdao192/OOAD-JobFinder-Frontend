@@ -60,7 +60,7 @@ const Options = [
             </svg>
         ),
         name: "Báo cáo",
-        link: "/company",
+        link: "/admin/report",
     },
     {
         icon: (

@@ -7,6 +7,7 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import('preline')
 function App() {
     return (
         <BrowserRouter>

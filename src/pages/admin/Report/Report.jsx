@@ -76,7 +76,7 @@ function TablePaginationActions(props) {
     );
 }
 
-function UserTable({ userPage, handleChangePage, handleChangeRowsPerPage, pagination }) {
+function ReportTable({ reportPage, handleChangePage, handleChangeRowsPerPage, pagination }) {
 
     return (
         <TableContainer >
@@ -85,29 +85,27 @@ function UserTable({ userPage, handleChangePage, handleChangeRowsPerPage, pagina
                     <TableRow>
                         <TableCell>STT</TableCell>
                         <TableCell align="left">ID</TableCell>
-                        <TableCell align="left">Email</TableCell>
-                        <TableCell align="left">Loại tài khoản</TableCell>
-                        <TableCell align="left">Được kích hoạt</TableCell>
-                        <TableCell align="left">Bị khóa</TableCell>
-                        <TableCell align="left">Ngày tạo</TableCell>
+                        <TableCell align="left">Người báo cáo</TableCell>
+                        <TableCell align="left">Công ty bị báo cáo</TableCell>
+                        <TableCell align="left">Ngày báo cáo</TableCell>
+                        <TableCell align="left">Phản ánh</TableCell>
                         <TableCell align="left">Tùy chọn</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {userPage.elements.slice(0, pagination.pageSize).map((user, index) => (
+                    {reportPage.elements.slice(0, pagination.pageSize).map((report, index) => (
                         <TableRow
                             key={index}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell>{index}</TableCell>
                             <TableCell component="th" scope="row">
-                                {user.id}
+                                {report.id}
                             </TableCell>
-                            <TableCell align="left">{user.email}</TableCell>
-                            <TableCell align="left">{user.roles[0]}</TableCell>
-                            <TableCell align="left">{user.enabled ? "Có" : "Không"}</TableCell>
-                            <TableCell align="left">{user.locked ? "Có" : "Không"}</TableCell>
-                            <TableCell align="left">{user.createDate}</TableCell>
+                            <TableCell align="left">{report.candidate.email}</TableCell>
+                            <TableCell align="left">{report.company.email}</TableCell>
+                            <TableCell align="left">{report.date ? "Có" : "Không"}</TableCell>
+                            <TableCell align="left">{report.message ? "Có" : "Không"}</TableCell>
                             <TableCell align="left">
                                 <div className="flex gap-4">
                                     <IconButton>
@@ -126,7 +124,7 @@ function UserTable({ userPage, handleChangePage, handleChangeRowsPerPage, pagina
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25, 50]}
                             colSpan={8}
-                            count={userPage.page.totalElement}
+                            count={reportPage.page.totalElement}
                             rowsPerPage={pagination.pageSize}
                             page={pagination.page}
                             labelRowsPerPage="Số hàng trên một trang"
@@ -147,12 +145,12 @@ function UserTable({ userPage, handleChangePage, handleChangeRowsPerPage, pagina
     )
 }
 
-export default function UserManager() {
+export default function Report() {
     const [pagination, setPagination] = useState({
         page: 0,
         pageSize: 10
     })
-    const [userPage, setUserPage] = useState({
+    const [reportPage, setReportPage] = useState({
         page: {
             currentPage: 0,
             pageSize: 10,
@@ -163,13 +161,13 @@ export default function UserManager() {
     })
     const [requestOption, setRequestOption] = useState({
         method: 'GET',
-        url: `${config.server.domain}/user`,
+        url: `${config.server.domain}/report`,
         headers: {
             Authorization: Authentication.generateAuthorizationHeader()
         }
     })
 
-    const [requestUrl, setRequestUrl] = useState(`${config.server.domain}/user`)
+    const [requestUrl, setRequestUrl] = useState(`${config.server.domain}/report`)
     const [requestParams, setRequestParams] = useState([])
 
     useEffect(() => {
@@ -189,7 +187,7 @@ export default function UserManager() {
                 }
             }
         ).then((response) => {
-            setUserPage(response.data)
+            setReportPage(response.data)
             console.log(response.data)
         })
     }, [requestUrl])
@@ -212,7 +210,7 @@ export default function UserManager() {
                 Authorization: Authentication.generateAuthorizationHeader()
             }
         }).then((response) => {
-            setUserPage(response.data)
+            setReportPage(response.data)
             console.log(response.data)
             // setPage(newPage);
             setPagination({
@@ -256,7 +254,7 @@ export default function UserManager() {
         setSelectedLocked(locked[0])
         setEmail("")
         setIsFiltered(false)
-        setRequestUrl(`${config.server.domain}/user`)
+        setRequestUrl(`${config.server.domain}/report`)
     }
 
     function onFilterButtonClick() {
@@ -311,8 +309,8 @@ export default function UserManager() {
                 </div>
             </div>
             <div className=" bg-white rounded overflow-hidden px-4">
-                <UserTable
-                    userPage={userPage}
+                <ReportTable
+                    reportPage={reportPage}
                     handleChangePage={handleChangePage}
                     handleChangeRowsPerPage={handleChangeRowsPerPage}
                     pagination={pagination} />
