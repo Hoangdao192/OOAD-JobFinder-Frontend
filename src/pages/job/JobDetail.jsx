@@ -42,7 +42,17 @@ export const JobDetail = () => {
 
    const [reloadPage, setReloadPage] = useState(false);
 
+
    // first load
+   useEffect(()=> {
+      if (Authentication.isUserAuthenticated()) {
+         setUserData(Authentication.getCurrentUser());
+      } else {
+         setUserData(null);
+      }
+   }, [])
+
+   // load after userData
    useEffect(() => {
       if (params.id) {
          getJobById(params.id).then((data) => {
@@ -52,12 +62,6 @@ export const JobDetail = () => {
          navigate('/');
       }
 
-      if (Authentication.isUserAuthenticated()) {
-         setUserData(Authentication.getCurrentUser());
-      } else {
-         setUserData(null);
-      }
-
       getListCompanyDefault().then((data) => {
          setListCompany(data);
       })
@@ -65,7 +69,7 @@ export const JobDetail = () => {
       console.log("1 - userData: ", userData);
    }, [userData])
 
-   // Load behind get jobDetail
+   // Load after get jobDetail
    useEffect(() => {
       if (jobDetail.userId) {
          getCompanyById(jobDetail.userId).then((company) => {
