@@ -10,6 +10,7 @@ import Header from "components/layouts/header/Header";
 import ModelCV from "components/componentCustom/ModalCV";
 import "./JobDetail.css"
 import { toast } from "react-toastify";
+import Footer from "components/layouts/footer/Footer";
 
 export const JobDetail = () => {
    const params = useParams();
@@ -43,11 +44,11 @@ export const JobDetail = () => {
 
    const [reloadPage, setReloadPage] = useState(false);
 
-const handleClickSendCV = (e) => {
-   if (!userData) {
-      toast.warn("Bạn cần đăng nhập trước khi Gửi CV");
+   const handleClickSendCV = (e) => {
+      if (!userData) {
+         toast.warn("Bạn cần đăng nhập trước khi Gửi CV");
+      }
    }
-}
 
    // first load
    useEffect(() => {
@@ -103,17 +104,19 @@ const handleClickSendCV = (e) => {
       <div className="text-Poppins">
          <Header />
 
-         <div className="flex items-start w-full h-full bg-gray-200 space-x-5 p-5">
-            <div className="w-9/12 space-y-4 bg-white p-6 rounded-xl">
+         {/* Body */}
+         <div className="h-[120vh] flex items-start w-full h-full bg-gray-200 space-x-5 p-5">
+            {/* Left Content */}
+            <div className="scroll-hidden overflow-auto h-full w-9/12 space-y-4 bg-white p-6 rounded-xl">
                {/* Header */}
                <div className="flex flex-row items-center space-x-4">
                   <img className="rounded-md w-12 h-12" src={companyLogo} />
                   <label className="text-2xl">{jobDetail.jobTitle}</label>
                   <p className="flex-1"></p>
-                  
-              <button onClick={handleClickSendCV} className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end" data-hs-overlay={userData? "#hs-slide-down-animation-modal" : "#NONE"}>
-                Gửi CV
-              </button>
+
+                  <button onClick={handleClickSendCV} className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end" data-hs-overlay={userData ? "#hs-slide-down-animation-modal" : "#NONE"}>
+                     Gửi CV
+                  </button>
                </div>
 
                {/* Infor */}
@@ -139,16 +142,16 @@ const handleClickSendCV = (e) => {
 
 
 
-{
-   // jobDetail.id && userData &&
-   <ModelCV idModal="hs-slide-down-animation-modal" job={jobDetail} candidate={userData}/>
-}
+               {
+                  // jobDetail.id && userData &&
+                  <ModelCV idModal="hs-slide-down-animation-modal" job={jobDetail} candidate={userData} />
+               }
 
 
             </div>
 
-             {/* RightBar */}
-             <div className="w-3/12 space-y-3">
+            {/* Right Content */}
+            <div className="scrollbar-hide overflow-auto h-full w-3/12 space-y-3">
                {userData ? (
                   <div className="flex flex-col items-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
                      <img
@@ -188,6 +191,8 @@ const handleClickSendCV = (e) => {
                </div>
             </div>
          </div>
+
+         <Footer />
       </div>
    );
 }

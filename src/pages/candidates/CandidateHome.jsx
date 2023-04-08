@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import Header from '../../components/layouts/header/Header'
+import Header from '../../components/layouts/header/Header';
+import Footer from '../../components/layouts/footer/Footer';
 import BackgroudLayout from '../../components/layouts/background/Layout'
 import JobView from '../../components/componentCustom/JobView'
 import CompanyView from "../../components/componentCustom/CompanyView";
@@ -138,9 +139,9 @@ export const CandidateHome = () => {
       <div className="text-Poppins">
          <Header />
 
-         <div className="flex items-start w-full h-full bg-gray-200 space-x-5 p-5">
+         <div className="flex items-start w-full h-full bg-gray-200 space-x-5 p-5 h-[200vh]">
             {/* LeftBar */}
-            <div className="w-3/12 bg-white p-5 space-y-5 rounded-xl">
+            <div className="overflow-hidden w-3/12 h-full bg-white p-5 space-y-5 rounded-xl">
                <div className="flex flex-row">
                   <p className="flex-1 font-bold">Lọc</p>
                   <label onClick={handleClearFilter} className="font-bold text-red-400">Xóa</label>
@@ -182,8 +183,9 @@ export const CandidateHome = () => {
             </div>
 
             {/* MidBar */}
-            <div className="space-y-3 w-6/12">
-               <div className="bg-cover opacity-90 rounded-xl w-full h-xl bg-[url('./assets/image/candidates/BackgroundSearch.png')]">
+            <div className="scrollbar-hide overflow-auto h-full space-y-3 w-6/12">
+                 {/* Search Card */}
+                 <div className="bg-cover opacity-90 rounded-xl w-full h-xl bg-[url('./assets/image/candidates/BackgroundSearch.png')]">
                   <div className="space-y-3 p-5 pb-2 text-gray-100">
                      <div className=" text-xl">Bạn đang tìm kiếm một công việc mơ ước?</div>
 
@@ -221,7 +223,7 @@ export const CandidateHome = () => {
             </div>
 
             {/* RightBar */}
-            <div className="w-3/12 space-y-3">
+            <div className="scrollbar-hide overflow-auto w-3/12 h-full space-y-3">
                {userData ? (
                   <div className="flex flex-col items-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
                      <img
@@ -261,6 +263,8 @@ export const CandidateHome = () => {
                </div>
             </div>
          </div>
+
+         <Footer />
       </div>
    );
 }
