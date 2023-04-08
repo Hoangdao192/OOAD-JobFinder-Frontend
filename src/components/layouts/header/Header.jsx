@@ -44,7 +44,7 @@ function HomeHeader() {
               </button>
             </Link>
           </div>
-        )}
+        }
         {isLogged && (
           <div className="flex space-x-4">
             <svg

@@ -6,10 +6,10 @@ import JobView from '../../components/componentCustom/JobView'
 import CompanyView from "../../components/componentCustom/CompanyView";
 import Authentication from "services/Authentication/Authentication";
 import {
-  getListJobFullFilter,
-  getListMajor,
-  getListJobDefault,
-  getListCompanyDefault,
+   getListJobFullFilter,
+   getListMajor,
+   getListJobDefault,
+   getListCompanyDefault,
 } from "../../services/candidates/CandidateService";
 
 import "./CandidateHome.css"
@@ -27,13 +27,22 @@ export const CandidateHome = () => {
 
    const [listMajor, setListMajor] = useState([]);
 
-  const [listJob, setListJob] = useState([]);
+   const [listJob, setListJob] = useState([]);
 
-  const [userData, setUserData] = useState(null);
+   const [userData, setUserData] = useState(null);
 
-  const [listCompany, setListCompany] = useState([]);
+   const [listCompany, setListCompany] = useState([]);
 
    const [listAddressJob, setListAddressJob] = useState([]);
+
+   // first load
+   useEffect(() => {
+      if (Authentication.isUserAuthenticated()) {
+         setUserData(Authentication.getCurrentUser());
+      } else {
+         setUserData(null);
+      }
+   }, [])
 
    useEffect(() => {
       if (filterKey.jobTitle || filterKey.major || filterKey.workingForm) {
@@ -68,39 +77,34 @@ export const CandidateHome = () => {
          setListAddressJob(uniqueAddress);
       })
 
-    getListMajor().then((data) => {
-      setListMajor(data);
-    });
+      getListMajor().then((data) => {
+         setListMajor(data);
+      });
 
-    getListCompanyDefault().then((data) => {
-      setListCompany(data);
-    });
+      getListCompanyDefault().then((data) => {
+         setListCompany(data);
+      });
 
-      if (Authentication.isUserAuthenticated()) {
-         setUserData(Authentication.getCurrentUser());
-      } else {
-         setUserData(null);
-      }
    }, [filterKey, userData])
 
-  const handleChangeWorkingForm = (sender) => {
-    let cloneFilterKey = { ...filterKey };
-    cloneFilterKey.workingForm = sender.target.value;
-    // 3864: Need check
-    setFilterKey(cloneFilterKey);
-  };
+   const handleChangeWorkingForm = (sender) => {
+      let cloneFilterKey = { ...filterKey };
+      cloneFilterKey.workingForm = sender.target.value;
+      // 3864: Need check
+      setFilterKey(cloneFilterKey);
+   };
 
-  const handleChangeMajor = (sender) => {
-    let cloneFilterKey = { ...filterKey };
-    cloneFilterKey.major = sender.target.value;
-    // 3864: Need check
-    setFilterKey(cloneFilterKey);
-  };
+   const handleChangeMajor = (sender) => {
+      let cloneFilterKey = { ...filterKey };
+      cloneFilterKey.major = sender.target.value;
+      // 3864: Need check
+      setFilterKey(cloneFilterKey);
+   };
 
-  const handleSubmitSearch = (event) => {
-    event.preventDefault();
-    setFilterKey({ ...filterKey, ["jobTitle"]: event.target.ipt_search.value });
-  };
+   const handleSubmitSearch = (event) => {
+      event.preventDefault();
+      setFilterKey({ ...filterKey, ["jobTitle"]: event.target.ipt_search.value });
+   };
 
    const handleClearFilter = (event) => {
       // event.preventDefault();
@@ -147,9 +151,9 @@ export const CandidateHome = () => {
 
                <div className="flex flex-col space-y-2">
                   <label className="font-bold">Hình thức</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Fulltime" checked={filterKey.workingForm == "Fulltime"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5"/>Full-time</label>
-                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Parttime" checked={filterKey.workingForm == "Parttime"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5"/>Part-time</label>
-                  <label className="flex filterChx items-center"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" checked={filterKey.workingForm == "Remote"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5"/>Remote</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Fulltime" checked={filterKey.workingForm == "Fulltime"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5" />Full-time</label>
+                  <label className="filterChx"><input onChange={handleChangeWorkingForm} type="radio" value="Parttime" checked={filterKey.workingForm == "Parttime"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5" />Part-time</label>
+                  <label className="flex filterChx items-center"><input onChange={handleChangeWorkingForm} type="radio" value="Remote" checked={filterKey.workingForm == "Remote"} name="radio_workingForm" className="text-common_color focus:ring-common_color focus:ring-1 focus:ring-offset-1 w-3.5 h-3.5 mr-1.5" />Remote</label>
                </div>
 
                {/* Major Filter */}
@@ -174,10 +178,10 @@ export const CandidateHome = () => {
                   <div className="space-y-3 p-5 pb-2 text-gray-100">
                      <div className=" text-xl">Bạn đang tìm kiếm một công việc mơ ước?</div>
 
-              <p className="text-xs">
-                Job Finder là nơi bạn có thể tìm thấy công việc mơ ước của mình
-                với nhiều kỹ năng khác nhau, hơn 10.000 việc làm có sẵn tại đây
-              </p>
+                     <p className="text-xs">
+                        Job Finder là nơi bạn có thể tìm thấy công việc mơ ước của mình
+                        với nhiều kỹ năng khác nhau, hơn 10.000 việc làm có sẵn tại đây
+                     </p>
 
                      <form onSubmit={handleSubmitSearch} className="flex items-center space-x-3">
                         <div className="relative w-full">
@@ -207,36 +211,36 @@ export const CandidateHome = () => {
                </div>
             </div>
 
-        {/* RightBar */}
-        <div className="w-3/12 space-y-3">
-          {userData ? (
-            <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-              <img
-                className="m-auto w-1/3 h-1/3 rounded-md"
-                src={LogoJobFinder}
-              />
-              <p className="font-bold line-clamp-1">
-                {userData.fullName && "Unknow"}
-              </p>
-              <p className="line-clamp-1">{userData.phoneNumber && "Unknow"}</p>
-              <p className="line-clamp-1">
-                {userData.contactEmail && "Unknow"}
-              </p>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-              <img
-                className="m-auto w-1/3 h-1/3 rounded-md"
-                src={LogoJobFinder}
-              />
-              <p className="font-bold line-clamp-1">Tên</p>
-              <p className="line-clamp-1">Số điện thoại</p>
-              <p className="line-clamp-1">Email</p>
-              <p className="text-xs line-clamp-1">
-                Bạn cần đăng nhập để hiển thị thông tin
-              </p>
-            </div>
-          )}
+            {/* RightBar */}
+            <div className="w-3/12 space-y-3">
+               {userData ? (
+                  <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                     <img
+                        className="m-auto w-1/3 h-1/3 rounded-md"
+                        src={LogoJobFinder}
+                     />
+                     <p className="font-bold line-clamp-1">
+                        {userData.fullName && "Unknow"}
+                     </p>
+                     <p className="line-clamp-1">{userData.phoneNumber && "Unknow"}</p>
+                     <p className="line-clamp-1">
+                        {userData.contactEmail && "Unknow"}
+                     </p>
+                  </div>
+               ) : (
+                  <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                     <img
+                        className="m-auto w-1/3 h-1/3 rounded-md"
+                        src={LogoJobFinder}
+                     />
+                     <p className="font-bold line-clamp-1">Tên</p>
+                     <p className="line-clamp-1">Số điện thoại</p>
+                     <p className="line-clamp-1">Email</p>
+                     <p className="text-xs line-clamp-1">
+                        Bạn cần đăng nhập để hiển thị thông tin
+                     </p>
+                  </div>
+               )}
 
                <div className="space-y-3">
                   {/* ListCompany */}

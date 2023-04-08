@@ -1,3 +1,4 @@
+// @ts-ignore
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import React from "react";
 export const postsPerPage = 3;

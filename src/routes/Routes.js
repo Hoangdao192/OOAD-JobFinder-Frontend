@@ -1,6 +1,5 @@
-import { CandidateHome } from "../pages/candidates/CandidateHome";
+// import { CandidateHome } from "../pages/candidates/CandidateHome";
 import { JobDetail } from "../pages/job/JobDetail";
-import BlankLayout from "../components/layouts/blankLayout/BlankLayout";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
