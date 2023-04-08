@@ -46,6 +46,12 @@ const privateRoutes = [
     // { path: "/company/profile/edit", component: EditProfile, layout: BlankLayout, authorization: ['Company'] }
 ];
 const publicRoutes = [
+  //  Example: {path: '/login', component: Login}
+//   { path: "/", component: Home, layout: BlankLayout },
+  { path: "/auth/signin", component: SignIn, layout: BlankLayout },
+  { path: "/auth/signup", component: SignUp, layout: BlankLayout },
+  { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
+
     { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
     { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] },
     { path: "admin/report", component: Report, layout: AdminLayout, authorization: ['Admin']},
@@ -67,6 +73,7 @@ const publicRoutes = [
     { path: "/auth/signout", component: Signout, layout: BlankLayout },
     { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
     { path: "/auth/detail/company", component: CompanyDetail, layout: BlankLayout },
+
     { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout },
 
     //  Example: {path: '/login', component: Login}
@@ -74,6 +81,7 @@ const publicRoutes = [
     { path: "/", component: CandidateHome },
     { path: "/job/:id", component: JobDetail },
     { path: "/company/:id", component: ViewCompany, layout: CandidateLayout }
+    { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout }
 ];
 
 export { publicRoutes, privateRoutes };
