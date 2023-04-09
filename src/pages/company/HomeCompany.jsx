@@ -15,10 +15,14 @@ import {
   Tooltip,
   Legend,
   LineElement,
+  Filler,
 } from "chart.js";
 import { faker } from "@faker-js/faker";
+import { toast } from "react-toastify";
+import Spinner from "components/components/Spinner";
 
 ChartJS.register(
+  Filler,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -28,7 +32,18 @@ ChartJS.register(
   LineElement
 );
 
-function ApplicationAnalysticChartLine({ month = 0, year = 0 }) {
+function ApplicationAnalysticChartLine() {
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const [selectedMonth, setSelectedMonth] = useState(months[0]);
+
+  const years = [2023, 2022, 2021, 2020];
+  const [selectedYear, setSelectedYear] = useState(years[0]);
+
+  const statisticalUnit = ["Tháng", "Năm"];
+  const [selectedStatisticalUnit, setSelectedStatisticalUnit] = useState(
+    statisticalUnit[0]
+  );
+
   const options = {
     tension: 0.27,
     responsive: true,
@@ -49,7 +64,12 @@ function ApplicationAnalysticChartLine({ month = 0, year = 0 }) {
       },
       y: {
         // stacked: true,
-        suggestedMax: 200,
+        ticks: {
+          // forces step size to be 50 units
+          stepSize: 1,
+        },
+        suggestedMax: 20,
+        suggestedMin: 0,
       },
     },
   };
@@ -68,10 +88,10 @@ function ApplicationAnalysticChartLine({ month = 0, year = 0 }) {
     "T11",
     "T12",
   ];
-  if (month != 0) {
-    label = Array.from(Array(new Date(year, month, 0).getDate()).keys()).map(
-      (index) => `${index + 1}`
-    );
+  if (selectedMonth != 0) {
+    label = Array.from(
+      Array(new Date(selectedYear, selectedMonth, 0).getDate()).keys()
+    ).map((index) => `${index + 1}`);
   }
 
   const [chartData, setChartData] = useState({
@@ -114,172 +134,135 @@ function ApplicationAnalysticChartLine({ month = 0, year = 0 }) {
         labels: label,
         datasets: [
           {
-            label: "CV Từ chối",
-            data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
-            backgroundColor: "#1a181f",
+            fill: true,
+            label: "CV Ứng tuyển",
+            data: [],
+            backgroundColor: "#f66885",
             borderRadius: 50,
             borderColor: "#f66885",
             pointBackgroundColor: "#f66885",
             // pointRadius: 0
             // stack: 'Stack 0',
           },
+        ],
+      });
+    });
+  }, [month, year]);
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: `${config.server.domain}/job-application/statistic/chart?month=${selectedMonth}&year=${selectedYear}`,
+      headers: {
+        Authorization: Authentication.generateAuthorizationHeader(),
+      },
+    }).then((response) => {
+      console.log(response.data);
+      console.log(
+        response.data
+          .slice(0, label.length)
+          .map((item) => item.numberOfApplication)
+      );
+      if (selectedMonth != 0) {
+        label = Array.from(
+          Array(new Date(selectedYear, selectedMonth, 0).getDate()).keys()
+        ).map((index) => `${index + 1}`);
+      }
+      setChartData({
+        labels: label,
+        datasets: [
           {
-            label: "CV Tiếp nhận",
-            data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
-            backgroundColor: "#1a181f",
+            label: "CV Ứng tuyển",
+            data: response.data
+              .slice(0, label.length)
+              .map((item) => item.numberOfApplication),
+            backgroundColor: "rgba(246, 104, 133, 0.2)",
             borderRadius: 50,
-            borderColor: "#36a0ea",
-            pointBackgroundColor: "#36a0ea",
+            borderColor: "#f66885",
+            pointBackgroundColor: "#f66885",
+            fill: true,
             // pointRadius: 0
             // stack: 'Stack 0',
           },
         ],
       });
     });
-  }, [month, year]);
+  }, [selectedMonth, selectedYear]);
 
-  return <Line options={options} data={chartData} />;
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex items-center gap-[0.5rem]">
+        <p className="font-bold mr-[1rem]">Thống kê đơn ứng tuyển</p>
+        <Spinner
+          options={statisticalUnit}
+          selected={selectedStatisticalUnit}
+          setSelected={(value) => {
+            setSelectedStatisticalUnit(value);
+            if (value == statisticalUnit[1]) {
+              console.log("CALLED");
+              setSelectedMonth(0);
+            } else if (value == statisticalUnit[0]) {
+              console.log("CALLED");
+              setSelectedMonth(months[0]);
+            }
+          }}
+        />
+        {selectedStatisticalUnit == statisticalUnit[0] ? (
+          <Spinner
+            options={months}
+            selected={selectedMonth}
+            setSelected={setSelectedMonth}
+          />
+        ) : (
+          <></>
+        )}
+        <Spinner
+          options={years}
+          selected={selectedYear}
+          setSelected={setSelectedYear}
+        />
+      </div>
+      <div className="flex-[1] mt-4">
+        <Line options={options} data={chartData} />
+      </div>
+    </div>
+  );
 }
 
-function ApplicationAnalysticChart({ month = 0, year = 2023 }) {
-  const [statisticData, setStatisticData] = useState();
-  const [candidate, setCandidate] = useState([]);
-  const [company, setCompany] = useState([]);
-
-  let label = [
-    "T1",
-    "T2",
-    "T3",
-    "T4",
-    "T5",
-    "T6",
-    "T7",
-    "T8",
-    "T9",
-    "T10",
-    "T11",
-    "T12",
-  ];
-  if (month != 0) {
-    label = Array.from(Array(new Date(year, month, 0).getDate()).keys()).map(
-      (index) => `${index + 1}`
-    );
-  }
-
-  const [chartData, setChartData] = useState({
-    labels: label,
-    datasets: [
-      {
-        label: "Ứng viên",
-        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
-        backgroundColor: "#3762ec",
-        borderRadius: 50,
-        // stack: 'Stack 1',
-      },
-      {
-        label: "Công ty",
-        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
-        backgroundColor: "#1a181f",
-        borderRadius: 50,
-        // stack: 'Stack 0',
-      },
-    ],
+function HomeCompany() {
+  const [statisticData, setStatisticData] = useState({
+    openJob: 0,
+    totalJob: 0,
+    incomingApplication: 0,
+    repliedApplication: 0,
+    star: 0,
   });
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${config.server.domain}/user/statistic?month=${month}&year=${year}`,
+      url: `${config.server.domain}/job-application/statistic`,
       headers: {
         Authorization: Authentication.generateAuthorizationHeader(),
       },
-    }).then((res) => {
-      console.log(res);
-      setCandidate(res.data.candidate);
-      setCompany(res.data.company);
-
-      let labels = [""];
-      setChartData({
-        labels: label,
-        datasets: [
-          {
-            maxBarThickness: 5,
-            barThickness: 5,
-            label: "Ứng viên",
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
-            backgroundColor: "#3762ec",
-            borderRadius: 50,
-            // stack: 'Stack 1',
-          },
-          {
-            maxBarThickness: 5,
-            barThickness: 5,
-            label: "Công ty",
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
-            backgroundColor: "#1a181f",
-            borderRadius: 50,
-            // stack: 'Stack 0',
-          },
-        ],
+    })
+      .then((response) => {
+        setStatisticData(response.data);
+      })
+      .catch((error) => {
+        toast.error("Có lỗi xảy ra");
       });
-    });
-  }, [month, year]);
+  }, []);
 
-  const options = {
-    tension: 0.4,
-    responsive: true,
-    maintainAspectRatio: false,
-    barPercentage: 0.4,
-    maxBarThickness: 20,
-    data: {
-      borderRadius: [50, 40],
-    },
-    plugins: {
-      title: {
-        display: false,
-        text: "Tăng trưởng người dùng",
-      },
-      legend: {
-        display: true,
-        padding: {
-          bottom: 20,
-        },
-        labels: {
-          boxHeight: 15,
-          boxWidth: 15,
-        },
-      },
-    },
-    scales: {
-      x: {
-        stacked: true,
-      },
-      y: {
-        stacked: true,
-        min: 0,
-        suggestedMax: 4,
-        ticks: {
-          // forces step size to be 50 units
-          stepSize: 1,
-        },
-      },
-    },
-  };
-
-  return <Bar options={options} data={chartData} />;
-}
-
-function HomeCompany() {
   return (
     <Dashboard>
-      <div className="flex flex-col w-full bg-white m-5 rounded-md shadow-md p-5 ">
+      <div className="flex h-full flex-col w-full rounded-md gap-4 p-4 overflow-hidden">
         <div>
-          <h1 className="text-text_color text-xl font-medium">
-            Hiệu quả tuyển dụng
-          </h1>
-          <ul className="flex mt-10 gap-5">
-            <li className="flex flex-col gap-5 w-64 px-5 py-10 bg-purple-100 rounded-xl">
-              <p className="text-3xl font-bold text-gray-800">8</p>
+          <ul className="flex gap-5">
+            <li className="flex border-2 shadow-sm border-[#ecebee] flex-col gap-5 w-64 px-5 py-10 bg-white rounded">
+              <p className="text-3xl font-bold text-gray-800">
+                {statisticData.openJob}
+              </p>
               <div className="flex justify-between">
                 <p className="text-base">Tin tuyển dụng đang mở</p>
                 <svg
@@ -299,8 +282,10 @@ function HomeCompany() {
               </div>
             </li>
 
-            <li className="flex flex-col gap-5 w-64 px-5 py-10 bg-blue-100 rounded-xl">
-              <p className="text-3xl font-bold text-gray-800">10</p>
+            <li className="flex border-2 shadow-sm border-[#ecebee] flex-col gap-5 w-64 px-5 py-10 bg-white rounded">
+              <p className="text-3xl font-bold text-gray-800">
+                {statisticData.incomingApplication}
+              </p>
               <div className="flex justify-between">
                 <p className="text-base">CV tiếp nhận</p>
                 <svg
@@ -320,8 +305,10 @@ function HomeCompany() {
               </div>
             </li>
 
-            <li className="flex flex-col gap-5 w-64 px-5 py-10 bg-cyan-100 rounded-xl">
-              <p className="text-3xl font-bold text-gray-800">5</p>
+            <li className="flex border-2 shadow-sm border-[#ecebee] flex-col gap-5 w-64 px-5 py-10 bg-white rounded">
+              <p className="text-3xl font-bold text-gray-800">
+                {statisticData.repliedApplication}
+              </p>
               <div className="flex justify-between">
                 <p className="text-base">CV phản hồi</p>
                 <svg
@@ -341,7 +328,7 @@ function HomeCompany() {
               </div>
             </li>
 
-            <li className="flex flex-col gap-5 w-64 px-5 py-10 bg-pink-100 rounded-xl">
+            <li className="flex border-2 shadow-sm border-[#ecebee] flex-col gap-5 w-64 px-5 py-10 bg-white rounded">
               <p className="text-3xl font-bold text-gray-800">2</p>
               <div className="flex justify-between">
                 <p className="text-base">CV ứng tuyển mới</p>
@@ -363,7 +350,7 @@ function HomeCompany() {
             </li>
           </ul>
         </div>
-        <div className="mt-[2rem] flex-[1] h-[20rem]">
+        <div className="border-2 shadow-sm border-[#ecebee] relative w-full bg-white p-4 rounded flex-[1]">
           {/* <ApplicationAnalysticChart /> */}
           <ApplicationAnalysticChartLine />
         </div>
