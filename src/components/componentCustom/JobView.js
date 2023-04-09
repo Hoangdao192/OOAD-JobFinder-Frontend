@@ -7,6 +7,7 @@ import { getCompanyById, saveJob, isSavedJob, unSaveJob } from "../../services/c
 import { handler } from "tailwind-scrollbar-hide";
 import { useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
+import { toast } from "react-toastify";
 
 export const JobView = ({ data }) => {
    const navigate = useNavigate();
@@ -41,9 +42,15 @@ export const JobView = ({ data }) => {
    }, [data])
 
    const handleOnClickSaveJobIcon = (event) => {
-      if (!isSavedJobVariable) {
+      if (true) {
          if (data.id && Authentication.isUserAuthenticated()) {
             saveJob(data.id, Authentication.getCurrentUser().id)
+            .then(() => {
+                toast.success("Lưu công việc thành công")
+            })
+            .catch((error) => {
+                toast.error("Công việc đã được lưu rồi.")
+            })
          };
       }
 

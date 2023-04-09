@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 import Authentication from 'services/Authentication/Authentication';
 
 import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
-import { AccountCircle, Lock, Logout } from '@mui/icons-material';
+import { AccountCircle, Bookmark, Lock, Logout, MarkEmailRead } from '@mui/icons-material';
+import Footer from '../footer/Footer';
+import BlankAvatar from './blankAvatar.svg'
 // import { useOnClickOutside } from 'hooks/useOnClickOutside';
 
 function Header() {
@@ -20,12 +22,30 @@ function Header() {
         {
             title: "Thông tin cá nhân",
             icon: <AccountCircle />,
-            onClick: () => {}
+            onClick: () => {
+                navigate("/candidate/profile")
+            }
+        },
+        {
+            title: "Công việc đã lưu",
+            icon: <Bookmark />,
+            onClick: () => {
+                navigate("/candidate/savedjob")
+            }
+        },
+        {
+            title: "Công việc đã ứng tuyển",
+            icon: <MarkEmailRead />,
+            onClick: () => {
+                navigate("/candidate/appliedjob")
+            }
         },
         {
             title: "Đổi mật khẩu",
             icon: <Lock />,
-            onClick: () => {}
+            onClick: () => { 
+                navigate("/auth/change-password")
+            }
         },
         {
             title: "Đăng xuất",
@@ -46,7 +66,7 @@ function Header() {
         {
             title: "Đổi mật khẩu",
             icon: <Lock />,
-            onClick: () => {}
+            onClick: () => { }
         },
         {
             title: "Đăng xuất",
@@ -67,7 +87,9 @@ function Header() {
         {
             title: "Đổi mật khẩu",
             icon: <Lock />,
-            onClick: () => {}
+            onClick: () => {
+                navigate("/auth/change-password")
+            }
         },
         {
             title: "Đăng xuất",
@@ -78,20 +100,60 @@ function Header() {
         }
     ]
 
-    let subMenuItem =  subMenuItemCandidate;
+    const [activeItemIndex, setActiveItemIndex] = useState(0);
+    const navigationItems = [
+        {
+            title: "Tìm việc",
+            action: "/"
+        },
+        {
+            title: "Công ty",
+            action: "/"
+        },
+        {
+            title: "Về chúng tôi",
+            action: "/"
+        }
+    ]
+
+    let subMenuItem = subMenuItemCandidate;
     if (Authentication.isCompany()) {
         subMenuItem = subMenuItemCompany;
     } else if (Authentication.isAdmin()) {
         subMenuItem = subMenuItemAdmin;
     }
 
+    const user = Authentication.getCurrentUser()
+    const avatar = user.avatar ? user.avater : user.companyLogo != undefined ? user.companyLogo : null;
+
     return (
-        <header className="text-gray-500">
-            <nav className="container mx-auto py-4 px-[2rem] flex items-center justify-between">
+        <header className="bg-white">
+            <nav className="relative container px-[2rem] flex items-center justify-between">
                 {/* Logo */}
-                <div className='flex flex-row space-x-3 items-center'>
+                <div onClick={() => {navigate("/")}} className='flex cursor-pointer py-4 flex-row space-x-3 items-center'>
                     <img className='rounded-md w-10 h-10' src={LogoJobFinder}></img>
                     <h1 className="text-2xl font-bold justify-start text-common_color">Job Finder</h1>
+                </div>
+                <div className="flex gap-8 h-full absolute left-[50%] translate-x-[-50%]">
+                    {
+                        navigationItems.map((item, index) => {
+                            if (index === activeItemIndex) {
+                                return (
+                                    <div onClick={() => {navigate(item.action)}} className='flex justify-center py-6 cursor-pointer relative'>
+                                        <p className='font-bold text-[#71a893] inline-block'>{item.title}</p>
+                                        <div className='bg-[#71a893] w-full rounded-3xl h-[3px] absolute bottom-0'></div>
+                                    </div>
+                                )
+                            } else {
+                                return (
+                                    <div onClick={() => {navigate(item.action)}} className='transition-[0.3s] group flex justify-center py-6 cursor-pointer relative'>
+                                        <p className='font-bold text-[#c5c5c5] group-hover:text-[#71a893] inline-block'>{item.title}</p>
+                                        <div className='bg-[#71a893] hidden group-hover:block transition-transform w-full rounded-3xl h-[3px] absolute bottom-0'></div>
+                                    </div>
+                                )
+                            }
+                        })
+                    }
                 </div>
                 {
                     !isLogged && <div className='flex space-x-4'>
@@ -107,30 +169,31 @@ function Header() {
                     </div>
                 }
                 {
-                    isLogged && 
+                    isLogged &&
                     <div className='flex space-x-4 relative'
                         ref={subMenuRef}
                         onMouseOver={() => setIsSubmenuOpen(true)}
-                        
+
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
+                        {
+                            avatar != null ? <img src={avatar} className='w-7 h-7' alt="" />
+                            : <img src={BlankAvatar} className='w-7 h-7' />
+                        }
                         {
                             isSubmenuOpen &&
                             <div className="min-w-[15rem] drop-shadow-md flex flex-col right-0 bg-white rounded-xl z-10 top-full mt-2 absolute w-fit whitespace-nowrap"
                                 onMouseLeave={() => setIsSubmenuOpen(false)}
                             ><div className="overflow-hidden rounded-xl">
-                                {
-                                    subMenuItem.map((item, index) => {
-                                        return (
-                                            <div onClick={item.onClick} className="p-4 group hover:bg-[#f1f1f1] cursor-pointer flex items-center gap-[1rem]" key={index}>
-                                                {item.icon}
-                                                <p>{item.title}</p>
-                                            </div>
-                                        )
-                                    })
-                                }</div>
+                                    {
+                                        subMenuItem.map((item, index) => {
+                                            return (
+                                                <div onClick={item.onClick} className="p-4 group hover:bg-[#f1f1f1] cursor-pointer flex items-center gap-[1rem]" key={index}>
+                                                    {item.icon}
+                                                    <p>{item.title}</p>
+                                                </div>
+                                            )
+                                        })
+                                    }</div>
                             </div>
                         }
                     </div>
@@ -150,6 +213,7 @@ export default function CandidateLayout({ children }) {
             <div className="flex w-full flex-grow">
                 {children}
             </div>
+            <Footer />
         </div>
     );
 }

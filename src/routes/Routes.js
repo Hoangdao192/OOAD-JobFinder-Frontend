@@ -91,24 +91,24 @@ const publicRoutes = [
     {
         path: "/candidate/profile",
         component: CandidateProfile,
-        layout: BlankLayout,
+        layout: CandidateLayout,
     },
     {
         path: "/candidate/profile/edit",
         component: CandidateEditProfile,
-        layout: BlankLayout,
+        layout: CandidateLayout,
         authorization: ["Candidate"],
     },
     {
         path: "/candidate/savedjob",
         component: SavedJob,
-        layout: BlankLayout,
+        layout: CandidateLayout,
         authorization: ["Candidate"],
     },
     {
         path: "/candidate/appliedjob",
         component: AppliedJob,
-        layout: BlankLayout,
+        layout: CandidateLayout,
         authorization: ["Candidate"],
     },
 

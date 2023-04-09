@@ -130,12 +130,10 @@ export const CandidateHome = () => {
     };
 
     return (
-        <div className="text-Poppins">
-            <Header />
-
+        <div className="text-Poppins w-full">
             <div className="flex items-start w-full h-full bg-gray-200 space-x-5 p-5 h-[200vh]">
                 {/* LeftBar */}
-                <div className="overflow-hidden w-3/12 h-full bg-white p-5 space-y-5 rounded-xl">
+                <div className="overflow-hidden w-3/12 bg-white p-5 space-y-5 rounded-xl">
                     <div className="flex flex-row">
                         <p className="flex-1 font-bold">Lọc</p>
                         <label
@@ -323,8 +321,6 @@ export const CandidateHome = () => {
                     </div>
                 </div>
             </div>
-
-            <Footer />
         </div>
     );
 };

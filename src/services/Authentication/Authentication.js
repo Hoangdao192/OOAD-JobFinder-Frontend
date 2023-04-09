@@ -119,9 +119,26 @@ class Authentication {
                 localStorage.setItem("authToken", authToken);
                 localStorage.setItem("tokenType", tokenType);
 
-                localStorage.setItem("user", JSON.stringify(response.data.user));
-                resolve();
-                return
+                let url = ""
+                if (response.data.user.roles[0] == "Company") {
+                    url = `${config.server.domain}/company/${response.data.user.id}`
+                } else if (response.data.user.roles[0] == "Candidate") {
+                    url = `${config.server.domain}/candidate/${response.data.user.id}`
+                }
+                axios({
+                    method: "GET",
+                    url: url,
+                    headers: {
+                        Authorization: this.generateAuthorizationHeader()
+                    }
+                }).then((res) => {
+                    localStorage.setItem("user", JSON.stringify({
+                        ...response.data.user,
+                        ...res.data
+                    }));
+                    resolve();
+                    return
+                })
             }).catch((error) => {
                 if (error.response != undefined) {
                     reject(ServerMessageParser.parseObject(error.response.data));

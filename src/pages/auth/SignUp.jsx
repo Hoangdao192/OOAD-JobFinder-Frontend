@@ -165,7 +165,6 @@ function SignUp({ navigation }) {
                     </div>
                 </div>
 
-<<<<<<< HEAD
                 <input
                     type="submit"
                     value={"Sign up"}
@@ -174,15 +173,5 @@ function SignUp({ navigation }) {
             </form>
         </Layout>
     );
-=======
-        <input
-          type="submit"
-          value={"Sign up"}
-          className="text-white text-base md:text-lg bg-emerald-500 hover:bg-emerald-600 py-2 rounded-md mt-5"
-        />
-      </form>
-    </Layout>
-  );
->>>>>>> origin/fe-dung
 }
 export default SignUp;
