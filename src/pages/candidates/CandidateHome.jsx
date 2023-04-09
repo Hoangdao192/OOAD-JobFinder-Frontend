@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-import Header from '../../components/layouts/header/Header'
+import Header from '../../components/layouts/header/Header';
+import Footer from '../../components/layouts/footer/Footer';
 import BackgroudLayout from '../../components/layouts/background/Layout'
 import JobView from '../../components/componentCustom/JobView'
 import CompanyView from "../../components/componentCustom/CompanyView";
 import Authentication from "services/Authentication/Authentication";
-import { getListJobFullFilter, getListMajor, getListJobDefault, getListCompanyDefault } from '../../services/candidates/CandidateService'
+import {
+   getListJobFullFilter,
+   getListMajor,
+   getListJobDefault,
+   getListCompanyDefault,
+   getCompanyById,
+   getCandidateInfoByid
+} from "../../services/candidates/CandidateService";
 
 import "./CandidateHome.css"
 import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"

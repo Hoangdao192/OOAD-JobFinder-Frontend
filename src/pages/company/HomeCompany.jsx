@@ -2,7 +2,7 @@ import Dashboard from "components/company/Dashboard";
 import React, { useEffect, useState } from "react";
 import Chart from "components/company/Chart";
 import axios from "axios";
-import config from '../../config.json'
+import config from "../../config.json";
 import Authentication from "services/Authentication/Authentication";
 import { Bar, Line } from "react-chartjs-2";
 
@@ -78,7 +78,43 @@ function ApplicationAnalysticChartLine() {
             .map((index) => `${index + 1}`)
     }
 
-    const [chartData, setChartData] = useState({
+  const [chartData, setChartData] = useState({
+    labels: label,
+    datasets: [
+      {
+        fill: true,
+        label: "CV Chấp nhận",
+        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
+        backgroundColor: "#f66885",
+        borderRadius: 50,
+        borderColor: "#f66885",
+        pointBackgroundColor: "#f66885",
+        // pointRadius: 0
+        // stack: 'Stack 0',
+      },
+      {
+        fill: true,
+        label: "CV Từ chối",
+        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
+        backgroundColor: "#36a0ea",
+        borderRadius: 50,
+        borderColor: "#36a0ea",
+        pointBackgroundColor: "#36a0ea",
+        // pointRadius: 0
+        // stack: 'Stack 0',
+      },
+    ],
+  });
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: `${config.server.domain}/job/statistic?month=${selectedMonth}&year=${selectedYear}`,
+      headers: {
+        Authorization: Authentication.generateAuthorizationHeader(),
+      },
+    }).then((response) => {
+      setChartData({
         labels: label,
         datasets: [
             {
@@ -93,7 +129,9 @@ function ApplicationAnalysticChartLine() {
                 // stack: 'Stack 0',
             }
         ],
-    })
+      });
+    });
+  }, [selectedMonth, selectedYear]);
 
     useEffect(() => {
         axios({

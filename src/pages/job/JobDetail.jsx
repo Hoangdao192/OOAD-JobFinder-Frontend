@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Authentication from "services/Authentication/Authentication";
-import { getListCompanyDefault, getCompanyById } from '../../services/candidates/CandidateService'
+import { getListCompanyDefault, getCompanyById, getCandidateInfoByid } from '../../services/candidates/CandidateService'
 import { getJobById } from '../../services/job/JobService'
 import CompanyView from "../../components/componentCustom/CompanyView";
 import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png"
 import Header from "components/layouts/header/Header";
 import ModelCV from "components/componentCustom/ModalCV";
 import "./JobDetail.css"
+import { toast } from "react-toastify";
+import Footer from "components/layouts/footer/Footer";
 
 export const JobDetail = () => {
    const params = useParams();
@@ -42,7 +44,28 @@ export const JobDetail = () => {
 
    const [reloadPage, setReloadPage] = useState(false);
 
+   const handleClickSendCV = (e) => {
+      if (!userData) {
+         toast.warn("Bạn cần đăng nhập trước khi Gửi CV");
+      }
+   }
+
    // first load
+   useEffect(() => {
+      if (Authentication.isUserAuthenticated() && Authentication.getCurrentUser().roles[0] == "Candidate") {
+         getCandidateInfoByid(Authentication.getCurrentUser().id).then((res) => {
+            if (res) {
+               setUserData(res);
+            } else {
+               setUserData(null);
+            }
+         })
+      } else {
+         setUserData(null);
+      }
+   }, [])
+
+   // load after userData
    useEffect(() => {
       if (params.id) {
          getJobById(params.id).then((data) => {
@@ -52,20 +75,12 @@ export const JobDetail = () => {
          navigate('/');
       }
 
-      if (Authentication.isUserAuthenticated()) {
-         setUserData(Authentication.getCurrentUser());
-      } else {
-         setUserData(null);
-      }
-
       getListCompanyDefault().then((data) => {
          setListCompany(data);
       })
-      console.log("1 - JobDetail: ", jobDetail);
-      console.log("1 - userData: ", userData);
-   }, [])
+   }, [userData])
 
-   // Load behind get jobDetail
+   // Load after get jobDetail
    useEffect(() => {
       if (jobDetail.userId) {
          getCompanyById(jobDetail.userId).then((company) => {
@@ -83,24 +98,25 @@ export const JobDetail = () => {
       } else {
          setCompanyLogo(LogoJobFinder)
       }
-      console.log("2 - JobDetail: ", jobDetail);
-   }, [])
+   }, [jobDetail])
 
    return (
       <div className="text-Poppins">
          <Header />
 
-         <div className="flex items-start w-full h-full bg-gray-200 space-x-5 p-5">
-            <div className="w-9/12 space-y-4 bg-white p-6 rounded-xl">
+         {/* Body */}
+         <div className="h-[120vh] flex items-start w-full h-full bg-gray-200 space-x-5 p-5">
+            {/* Left Content */}
+            <div className="scroll-hidden overflow-auto h-full w-9/12 space-y-4 bg-white p-6 rounded-xl">
                {/* Header */}
                <div className="flex flex-row items-center space-x-4">
                   <img className="rounded-md w-12 h-12" src={companyLogo} />
                   <label className="text-2xl">{jobDetail.jobTitle}</label>
                   <p className="flex-1"></p>
-                  
-              <button className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end" data-hs-overlay="#hs-slide-down-animation-modal">
-                Gửi CV
-              </button>
+
+                  <button onClick={handleClickSendCV} className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end" data-hs-overlay={userData ? "#hs-slide-down-animation-modal" : "#NONE"}>
+                     Gửi CV
+                  </button>
                </div>
 
                {/* Infor */}
@@ -126,36 +142,44 @@ export const JobDetail = () => {
 
 
 
-{
-   // jobDetail.id && userData &&
-   <ModelCV idModal="hs-slide-down-animation-modal" job={jobDetail} candidate={userData}/>
-}
+               {
+                  // jobDetail.id && userData &&
+                  <ModelCV idModal="hs-slide-down-animation-modal" job={jobDetail} candidate={userData} />
+               }
 
 
             </div>
 
-            {/* RightBar */}
-            <div className="w-3/12 space-y-3 rounded-xl">
-               {
-                  userData ?
-                     <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-                        <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
-                        <p className="font-bold line-clamp-1">{userData.fullName && "Unknow"}</p>
-                        <p className="line-clamp-1">{userData.phoneNumber && "Unknow"}</p>
-                        <p className="line-clamp-1">{userData.contactEmail && "Unknow"}</p>
-                     </div>
-                     :
-                     <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
-                        <img className="m-auto w-1/3 h-1/3 rounded-md" src={LogoJobFinder} />
-                        <p className="font-bold line-clamp-1">Tên</p>
-                        <p className="line-clamp-1">Số điện thoại</p>
-                        <p className="line-clamp-1">Email</p>
-                        <p className="text-xs line-clamp-1">Bạn cần đăng nhập để hiển thị thông tin</p>
-                     </div>
-               }
+            {/* Right Content */}
+            <div className="scrollbar-hide overflow-auto h-full w-3/12 space-y-3">
+               {userData ? (
+                  <div className="flex flex-col items-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                     <img
+                        className="m-auto w-1/3 h-1/3 rounded-md"
+                        src={LogoJobFinder}
+                     />
+                     <p className="font-bold line-clamp-1">
+                        {userData.fullName}
+                     </p>
+                     <p className="line-clamp-1">{userData.phoneNumber}</p>
+                     <p className="line-clamp-1 w-full">{userData.contactEmail}</p>
+                  </div>
+               ) : (
+                  <div className="flex flex-col items-center content-center space-y-2 pt-7 pb-5 bg-white p-3 rounded-xl">
+                     <img
+                        className="m-auto w-1/3 h-1/3 rounded-md"
+                        src={LogoJobFinder}
+                     />
+                     <p className="font-bold line-clamp-1">Tên</p>
+                     <p className="line-clamp-1">Số điện thoại</p>
+                     <p className="line-clamp-1">Email</p>
+                     <p className="text-xs line-clamp-1">
+                        Bạn cần đăng nhập để hiển thị thông tin
+                     </p>
+                  </div>
+               )}
 
                <div className="space-y-3">
-
                   {/* ListCompany */}
                   {
                      listCompany.length > 0 ?
@@ -167,6 +191,8 @@ export const JobDetail = () => {
                </div>
             </div>
          </div>
+
+         <Footer />
       </div>
    );
 }

@@ -1,11 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Authentication from "services/Authentication/Authentication";
 
 function Navbar() {
   const navigate = useNavigate();
 
+  const user = Authentication.getCurrentUser();
+
+  const [company, setCompany] = useState({});
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/company/${user.id}`, {
+        headers: {
+          Authorization: Authentication.generateAuthorizationHeader(),
+        },
+      })
+      .then((res) => {
+        setCompany(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
-    <div className=" text-white px-10 py-4 flex justify-between items-center bg-[#0d0c22]">
+    <div className=" text-white px-10 py-4 flex justify-between items-center bg-emerald-500">
       <div className="flex items-center gap-5">
         <span className="text-2xl font-medium">
           JobFinder
@@ -19,7 +38,7 @@ function Navbar() {
           <li>
             <button
               onClick={() => navigate("/company/requirement")}
-              className="text-[0.9rem] hover:bg-button_hover_color flex items-center gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light"
+              className="text-[0.9rem] flex items-center gap-2 py-2 px-4 rounded-md font-poppins uppercase"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,32 +57,20 @@ function Navbar() {
               Đăng tin
             </button>
           </li>
-
-          <li>
-            <button className="text-[0.9rem] hover:bg-button_hover_color items-center flex gap-2 py-2 px-4 rounded-md font-poppins uppercase font-light">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-[1.2rem] h-[1.2rem]"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-              Tìm CV
-            </button>
-          </li>
         </ul>
-        <img
-          src="/blankAvatar.png"
-          alt="avatar"
-          className="w-7 h-7 rounded-full object-cover"
-        />
+        {company.companyLogo ? (
+          <img
+            src={company.companyLogo}
+            alt="avatar"
+            className="w-10 h-10 rounded-full object-cover"
+          />
+        ) : (
+          <img
+            src="/blankAvatar.png"
+            alt="avatar"
+            className="w-12 h-12 rounded-full object-cover"
+          />
+        )}
       </div>
     </div>
   );
