@@ -301,10 +301,10 @@ export default function UserManager() {
                         setSelected={setSelectedLocked}
                         boxStyle="border-none outline-none" />
                 </div>
-                <div className="rounded px-4 py-2 bg-[#3b1534] cursor-pointer">
+                <div className="flex justify-center items-center rounded px-4 py-2 bg-[#3b1534] cursor-pointer">
                     <p onClick={clearFilter} className="text-white font-bold">Clear</p>
                 </div>
-                <div onClick={onFilterButtonClick} className="cursor-pointer rounded px-4 py-2 bg-white">
+                <div onClick={onFilterButtonClick} className="flex justify-center items-center cursor-pointer rounded px-4 py-2 bg-white">
                     {
                         isFiltered ? <FilterAltOffIcon /> : <FilterAltIcon />
                     }

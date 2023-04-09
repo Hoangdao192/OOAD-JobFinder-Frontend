@@ -54,8 +54,8 @@ export default function Post({ post }) {
 
       <div className="flex justify-between">
         <div className="flex gap-5">
-          <span className="bg-purple-200 p-2 rounded-md">{post.salary}</span>
-          <span className="bg-cyan-100 p-2 rounded-md">
+          <span className="bg-red-200 p-2 rounded-md">{post.salary}</span>
+          <span className="bg-green-200 p-2 rounded-md">
             {post.requireExperience}
           </span>
           <span className="bg-pink-100 p-2 rounded-md">{post.workingForm}</span>

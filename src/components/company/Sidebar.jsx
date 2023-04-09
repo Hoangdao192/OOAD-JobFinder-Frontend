@@ -101,7 +101,7 @@ const Options = [
             </svg>
         ),
         name: "Đăng xuất",
-        link: "/company",
+        link: "/auth/signout",
     },
 ];
 
@@ -117,7 +117,7 @@ function Sidebar() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
         >
-            <div className="w-64 bg-white shadow-md h-full">
+            <div className="w-64 bg-white shadow-md h-full rounded-md">
                 <div className="flex flex-col gap-5 py-10 h-full">
                     {Options.map((item) => {
                         return (

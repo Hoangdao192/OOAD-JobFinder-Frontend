@@ -5,11 +5,11 @@ import Sidebar from "./Sidebar";
 
 function Dashboard({ children }) {
   return (
-    <div className="bg-[#f7f7f7]">
+    <div className="bg-[#f7f7f7] flex flex-col h-screen">
       <div>
         <Navbar />
       </div>
-      <div className="flex h-screen">
+      <div className="flex flex-[1] overflow-hidden">
         <Sidebar />
         {children}
       </div>

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import React from "react";
 export const postsPerPage = 3;
@@ -9,7 +10,7 @@ function Pagination({ totalPosts, setCurrentPage, currentPage }) {
   }
 
   return (
-    <div className="fixed right-0 bottom-12 mx-auto inline-flex items-center justify-center -space-x-px rounded-md shadow-sm md:right-10 lg:right-20">
+    <div className=" mx-auto inline-flex items-center justify-center -space-x-px rounded-md shadow-sm md:right-10 lg:right-20">
       <button
         onClick={() => setCurrentPage(currentPage - 1)}
         disabled={currentPage === 1}

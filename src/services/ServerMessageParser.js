@@ -1,11 +1,18 @@
+const errorCodeMap = []
+errorCodeMap["LGERR1"] = "Email hoặc mật khẩu không chính xác"
+
 class ServerMessageParser {
     parse(message) {
-        let errors = JSON.parse(message);
-        let errorList = [];
-        for (let val of Object.values(errors)) {
-            errorList.push(val);
-        }
-        return errorList;
+        return JSON.parse(message);
+    }
+
+    parseObject(responseErrorData) {
+        return responseErrorData.errors.map((error, index) => {
+            if (errorCodeMap[error.code] != undefined) {
+                return errorCodeMap[error.code];
+            }
+            return error.message;
+        });
     }
 }
 

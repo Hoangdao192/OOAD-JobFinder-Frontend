@@ -3,6 +3,7 @@ import Dashboard from "components/company/Dashboard";
 import SelectionList from "components/company/SelectionList";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Authentication from "services/Authentication/Authentication";
 
@@ -22,6 +23,7 @@ function Requirement() {
   const [selectedExperience, setSelectedExperience] = useState(
     requireExperienceList[0]
   );
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -34,7 +36,8 @@ function Requirement() {
       data.jobDescription === "" ||
       data.major === "" ||
       data.salary === "" ||
-      data.numberOfHiring === ""
+      data.numberOfHiring === "" ||
+      data.closeDate === ""
     ) {
       toast.error("Please fill all required field");
     } else {
@@ -59,7 +62,8 @@ function Requirement() {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          navigate("/company/posts");
         })
         .catch((err) => {
           console.log(err);
@@ -156,7 +160,7 @@ function Requirement() {
                 htmlFor="numberOfHiring"
                 className="text-base md:text-lg font-medium"
               >
-                Số lượng
+                {`Số lượng (người)`}
                 <span className="text-red-500 ml-2">(*)</span>
               </label>
               <input
@@ -234,10 +238,13 @@ function Requirement() {
                 className="text-base md:text-lg font-medium"
               >
                 Ngày đóng đơn
+                <span className="text-red-500 ml-2">(*)</span>
               </label>
               <input
                 type="date"
-                {...register("closeDate")}
+                {...register("closeDate", {
+                  required: true,
+                })}
                 className="border p-2 text-base md:text-lg focus:outline-none rounded-md"
               />
             </div>

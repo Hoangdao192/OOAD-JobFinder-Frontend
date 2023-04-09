@@ -19,7 +19,7 @@ function Profile() {
       url: `http://localhost:5000/api/company/${companyData.id}`,
     })
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setCompany(res.data);
         setDetailAddress(res.data.address.detailAddress);
         setWard(res.data.address.ward);
@@ -37,7 +37,7 @@ function Profile() {
         <div className="flex flex-col px-10 py-5">
           <div className="flex gap-5 items-center">
             <img
-              src="/avatar.png"
+              src={company.companyLogo || "https://i.imgur.com/6VBx3io.png"}
               alt="avatar"
               className="h-24 w-24 object-cover rounded-full"
             />
@@ -62,7 +62,7 @@ function Profile() {
           onClick={() =>
             navigate("/company/profile/edit", { state: { company: company } })
           }
-          className="bg-background_color hover:bg-background_color_hover text-white p-2 rounded-md ml-10 mt-5"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white p-2 rounded-md ml-10 mt-5"
         >
           Chỉnh sửa thông tin
         </button>
