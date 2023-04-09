@@ -4,15 +4,15 @@ import { useState, useEffect } from "react";
 
 import serviceAuth from "../../../services/Authentication/Authentication";
 
-import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
+import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png";
 
 function HomeHeader() {
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState(false);
 
-const handleClickLogoJobFinder = (e) => {
-  navigate("/");
-}
+  const handleClickLogoJobFinder = (e) => {
+    navigate("/");
+  };
 
   useEffect(() => {
     setIsLogged(serviceAuth.isUserAuthenticated());
@@ -22,9 +22,12 @@ const handleClickLogoJobFinder = (e) => {
     <header className="text-gray-500">
       <nav className="container mx-auto py-4 px-2 flex items-center justify-between">
         {/* Logo */}
-        <div onClick={handleClickLogoJobFinder} className="flex flex-row space-x-3 items-center">
+        <div
+          onClick={handleClickLogoJobFinder}
+          className="flex flex-row space-x-3 items-center"
+        >
           <img className="rounded-md w-10 h-10" src={LogoJobFinder}></img>
-          <h1 className="text-2xl font-bold justify-start text-common_color">
+          <h1 className="text-2xl font-bold justify-start text-emerald-500">
             Job Finder
           </h1>
         </div>
@@ -36,9 +39,9 @@ const handleClickLogoJobFinder = (e) => {
         </ul> */}
 
         {/* Account */}
-        {
-          !isLogged && <div className='flex space-x-4'>
-            <Link to='/auth/signin'>
+        {!isLogged && (
+          <div className="flex space-x-4">
+            <Link to="/auth/signin">
               <button className="bg-common_color hover:bg-green-700 text-white py-1 px-4 rounded-md justify-end">
                 Đăng nhập
               </button>
@@ -49,7 +52,7 @@ const handleClickLogoJobFinder = (e) => {
               </button>
             </Link>
           </div>
-        }
+        )}
         {isLogged && (
           <div className="flex space-x-4">
             <svg

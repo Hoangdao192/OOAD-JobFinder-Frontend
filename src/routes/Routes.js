@@ -24,6 +24,8 @@ import EditProfile from "pages/company/CompanyEditProfile";
 import CandidateInfor from "pages/company/CandidateInfor";
 import CandidateProfile from "pages/candidates/Profile";
 import CandidateEditProfile from "pages/candidates/CandidateEditProfile";
+import SavedJob from "pages/candidates/SavedJob";
+import AppliedJob from "pages/candidates/AppliedJob";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -105,8 +107,8 @@ const publicRoutes = [
   { path: "/", component: CandidateHome, layout: BlankLayout },
   //  Example: {path: '/login', component: Login}
   // { path: "/", component: Home, layout: BlankLayout },
-  { path: "/", component: CandidateHome},
-  { path: "/job/:id", component: JobDetail},
+  { path: "/", component: CandidateHome },
+  { path: "/job/:id", component: JobDetail },
   { path: "/auth/signin", component: SignIn, layout: BlankLayout },
   { path: "/auth/signup", component: SignUp, layout: BlankLayout },
   { path: "/auth/signout", component: Signout, layout: BlankLayout },
@@ -134,6 +136,18 @@ const publicRoutes = [
   {
     path: "/candidate/profile/edit",
     component: CandidateEditProfile,
+    layout: BlankLayout,
+    authorization: ["Candidate"],
+  },
+  {
+    path: "/candidate/savedjob",
+    component: SavedJob,
+    layout: BlankLayout,
+    authorization: ["Candidate"],
+  },
+  {
+    path: "/candidate/appliedjob",
+    component: AppliedJob,
     layout: BlankLayout,
     authorization: ["Candidate"],
   },

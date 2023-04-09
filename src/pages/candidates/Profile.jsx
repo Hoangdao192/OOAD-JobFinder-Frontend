@@ -1,5 +1,6 @@
 import axios from "axios";
 import Dashboard from "components/company/Dashboard";
+import Footer from "components/layouts/footer/Footer";
 import HomeHeader from "components/layouts/header/Header";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -84,6 +85,7 @@ function CandidateProfile() {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -105,11 +105,13 @@ export default function Posts() {
                       </div>
                     );
                   })}
-                <Pagination
-                  totalPosts={activePosts.length}
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                />
+                <div className="absolute right-14 -bottom-5">
+                  <Pagination
+                    totalPosts={activePosts.length}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                  />
+                </div>
               </div>
             )}
             {isPressedClosed &&
