@@ -27,7 +27,10 @@ function SignIn() {
                 }
             })
             .catch((errors) => {
-                toast.error("Invalid email or password");
+                for (const error of errors) {
+                    toast.error(error);
+                }
+                // toast.error("Invalid email or password");
             });
     };
 
@@ -94,8 +97,8 @@ function SignIn() {
                 </form>
 
                 <div>
-                    <p className="mt-10 text-right text-base md:text-lg hover:text-blue-600">
-                        Forgot your password?
+                    <p className="cursor-pointer mt-10 text-right text-base md:text-lg hover:text-blue-600">
+                        Quên mật khẩu ?
                     </p>
                 </div>
 

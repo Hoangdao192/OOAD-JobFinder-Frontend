@@ -1,13 +1,89 @@
-import React, { Children } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Children, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import Authentication from 'services/Authentication/Authentication';
 
 import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png"
+import { AccountCircle, Lock, Logout } from '@mui/icons-material';
+// import { useOnClickOutside } from 'hooks/useOnClickOutside';
 
 function Header() {
+    const navigate = useNavigate()
+
     const isLogged = Authentication.isUserAuthenticated();
+    const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+
+    const subMenuRef = useRef(null);
+
+    const subMenuItemCandidate = [
+        {
+            title: "Thông tin cá nhân",
+            icon: <AccountCircle />,
+            onClick: () => {}
+        },
+        {
+            title: "Đổi mật khẩu",
+            icon: <Lock />,
+            onClick: () => {}
+        },
+        {
+            title: "Đăng xuất",
+            icon: <Logout />,
+            onClick: () => {
+                navigate("/auth/signout")
+            }
+        }
+    ]
+    const subMenuItemCompany = [
+        {
+            title: "Bảng điều khiển",
+            icon: <AccountCircle />,
+            onClick: () => {
+                navigate("/company")
+            }
+        },
+        {
+            title: "Đổi mật khẩu",
+            icon: <Lock />,
+            onClick: () => {}
+        },
+        {
+            title: "Đăng xuất",
+            icon: <Logout />,
+            onClick: () => {
+                navigate("/auth/signout")
+            }
+        }
+    ]
+    const subMenuItemAdmin = [
+        {
+            title: "Bảng điều khiển",
+            icon: <AccountCircle />,
+            onClick: () => {
+                navigate("/admin")
+            }
+        },
+        {
+            title: "Đổi mật khẩu",
+            icon: <Lock />,
+            onClick: () => {}
+        },
+        {
+            title: "Đăng xuất",
+            icon: <Logout />,
+            onClick: () => {
+                navigate("/auth/signout")
+            }
+        }
+    ]
+
+    let subMenuItem =  subMenuItemCandidate;
+    if (Authentication.isCompany()) {
+        subMenuItem = subMenuItemCompany;
+    } else if (Authentication.isAdmin()) {
+        subMenuItem = subMenuItemAdmin;
+    }
 
     return (
         <header className="text-gray-500">
@@ -31,11 +107,32 @@ function Header() {
                     </div>
                 }
                 {
-                    isLogged && <div className='flex space-x-4'>
+                    isLogged && 
+                    <div className='flex space-x-4 relative'
+                        ref={subMenuRef}
+                        onMouseOver={() => setIsSubmenuOpen(true)}
+                        
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-
+                        {
+                            isSubmenuOpen &&
+                            <div className="min-w-[15rem] drop-shadow-md flex flex-col right-0 bg-white rounded-xl z-10 top-full mt-2 absolute w-fit whitespace-nowrap"
+                                onMouseLeave={() => setIsSubmenuOpen(false)}
+                            ><div className="overflow-hidden rounded-xl">
+                                {
+                                    subMenuItem.map((item, index) => {
+                                        return (
+                                            <div onClick={item.onClick} className="p-4 group hover:bg-[#f1f1f1] cursor-pointer flex items-center gap-[1rem]" key={index}>
+                                                {item.icon}
+                                                <p>{item.title}</p>
+                                            </div>
+                                        )
+                                    })
+                                }</div>
+                            </div>
+                        }
                     </div>
                 }
             </nav>

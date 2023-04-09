@@ -23,6 +23,7 @@ import EditProfile from "pages/company/EditProfile";
 import ViewCompany from "pages/company/ViewCompany";
 import CandidateLayout from "components/layouts/CandidateLayout/CandidateLayout";
 import Report from "pages/admin/Report/Report";
+import ChangePassword from "pages/auth/ChangePassword";
 
 const privateRoutes = [
     //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -48,8 +49,6 @@ const privateRoutes = [
 const publicRoutes = [
   //  Example: {path: '/login', component: Login}
 //   { path: "/", component: Home, layout: BlankLayout },
-  { path: "/auth/signin", component: SignIn, layout: BlankLayout },
-  { path: "/auth/signup", component: SignUp, layout: BlankLayout },
   { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
 
     { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
@@ -67,12 +66,13 @@ const publicRoutes = [
     { path: "/company/profile/edit", component: EditProfile, layout: BlankLayout, authorization: ['Company'] },
 
     { path: "/not_found", component: NotFound, layout: BlankLayout },
-    { path: "/", component: CandidateHome, layout: BlankLayout },
+    { path: "/", component: CandidateHome, layout: CandidateLayout },
     { path: "/auth/signin", component: SignIn, layout: BlankLayout },
     { path: "/auth/signup", component: SignUp, layout: BlankLayout },
     { path: "/auth/signout", component: Signout, layout: BlankLayout },
     { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
     { path: "/auth/detail/company", component: CompanyDetail, layout: BlankLayout },
+    { path: "/auth/change-password", component: ChangePassword},
 
     { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout },
 
@@ -80,7 +80,7 @@ const publicRoutes = [
     // { path: "/", component: Home, layout: BlankLayout },
     { path: "/", component: CandidateHome },
     { path: "/job/:id", component: JobDetail },
-    { path: "/company/:id", component: ViewCompany, layout: CandidateLayout }
+    { path: "/company/:id", component: ViewCompany, layout: CandidateLayout },
     { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout }
 ];
 
