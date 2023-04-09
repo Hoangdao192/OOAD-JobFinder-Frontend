@@ -24,8 +24,8 @@ module.exports = {
   plugins: [
     require("@tailwindcss/line-clamp"),
     require("tailwind-scrollbar-hide"),
-    require('flowbite/plugin'),
-    require('preline/plugin'),
+    require("flowbite/plugin"),
+    require("preline/plugin"),
     // require("daisyui"),
   ],
 };

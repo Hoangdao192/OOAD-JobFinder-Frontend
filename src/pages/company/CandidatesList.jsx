@@ -166,11 +166,13 @@ function CandidatesList() {
               );
             })}
         </div>
-        <Pagination
-          totalPosts={applications.length}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-        />
+        <div className="absolute right-14 -bottom-5">
+          <Pagination
+            totalPosts={applications.length}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
     </Dashboard>
   );

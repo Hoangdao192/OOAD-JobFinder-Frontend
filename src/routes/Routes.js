@@ -20,7 +20,7 @@ import EditPost from "pages/company/EditPost";
 import CandidatesList from "pages/company/CandidatesList";
 import Profile from "pages/company/Profile";
 
-import EditProfile from "pages/company/EditProfile";
+import EditProfile from "pages/company/CompanyEditProfile";
 import ViewCompany from "pages/company/ViewCompany";
 import CandidateLayout from "components/layouts/CandidateLayout/CandidateLayout";
 import Report from "pages/admin/Report/Report";
@@ -30,6 +30,8 @@ import ChangePassword from "pages/auth/ChangePassword";
 import CandidateInfor from "pages/company/CandidateInfor";
 import CandidateProfile from "pages/candidates/Profile";
 import CandidateEditProfile from "pages/candidates/CandidateEditProfile";
+import SavedJob from "pages/candidates/SavedJob";
+import AppliedJob from "pages/candidates/AppliedJob";
 
 
 const privateRoutes = [
@@ -41,7 +43,6 @@ const privateRoutes = [
     //  authorization: array of roles can access this page
 ];
 const publicRoutes = [
-<<<<<<< HEAD
     //  Example: {path: '/login', component: Login}
     //   { path: "/", component: Home, layout: BlankLayout },
     { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
@@ -98,6 +99,19 @@ const publicRoutes = [
         layout: BlankLayout,
         authorization: ["Candidate"],
     },
+    {
+        path: "/candidate/savedjob",
+        component: SavedJob,
+        layout: BlankLayout,
+        authorization: ["Candidate"],
+    },
+    {
+        path: "/candidate/appliedjob",
+        component: AppliedJob,
+        layout: BlankLayout,
+        authorization: ["Candidate"],
+    },
+
 ];
 
 export { publicRoutes, privateRoutes };
