@@ -129,9 +129,7 @@ export const JobDetail = () => {
                         <button
                             onClick={handleClickSendCV}
                             className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end"
-                            data-hs-overlay={
-                                userData ? "#hs-slide-down-animation-modal" : "#NONE"
-                            }
+                            data-hs-overlay={"#hs-slide-down-animation-modal"}
                         >
                             Gửi CV
                         </button>
