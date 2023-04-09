@@ -108,11 +108,11 @@ function Header() {
         },
         {
             title: "Công ty",
-            action: "/"
+            action: "/findCompany"
         },
         {
             title: "Về chúng tôi",
-            action: "/"
+            action: "/about"
         }
     ]
 
@@ -124,13 +124,16 @@ function Header() {
     }
 
     const user = Authentication.getCurrentUser()
-    const avatar = user.avatar ? user.avater : user.companyLogo != undefined ? user.companyLogo : null;
+    let avatar = null;
+    if (user != undefined) {
+        avatar = user.avatar ? user.avater : user.companyLogo != undefined ? user.companyLogo : null;
+    }
 
     return (
         <header className="bg-white">
             <nav className="relative container px-[2rem] flex items-center justify-between">
                 {/* Logo */}
-                <div onClick={() => {navigate("/")}} className='flex cursor-pointer py-4 flex-row space-x-3 items-center'>
+                <div onClick={() => {setActiveItemIndex(0); navigate("/")}} className='flex cursor-pointer py-4 flex-row space-x-3 items-center'>
                     <img className='rounded-md w-10 h-10' src={LogoJobFinder}></img>
                     <h1 className="text-2xl font-bold justify-start text-common_color">Job Finder</h1>
                 </div>
@@ -139,14 +142,14 @@ function Header() {
                         navigationItems.map((item, index) => {
                             if (index === activeItemIndex) {
                                 return (
-                                    <div onClick={() => {navigate(item.action)}} className='flex justify-center py-6 cursor-pointer relative'>
+                                    <div onClick={() => {setActiveItemIndex(index); navigate(item.action)}} className='flex justify-center py-6 cursor-pointer relative'>
                                         <p className='font-bold text-[#71a893] inline-block'>{item.title}</p>
                                         <div className='bg-[#71a893] w-full rounded-3xl h-[3px] absolute bottom-0'></div>
                                     </div>
                                 )
                             } else {
                                 return (
-                                    <div onClick={() => {navigate(item.action)}} className='transition-[0.3s] group flex justify-center py-6 cursor-pointer relative'>
+                                    <div onClick={() => {setActiveItemIndex(index); navigate(item.action)}} className='transition-[0.3s] group flex justify-center py-6 cursor-pointer relative'>
                                         <p className='font-bold text-[#c5c5c5] group-hover:text-[#71a893] inline-block'>{item.title}</p>
                                         <div className='bg-[#71a893] hidden group-hover:block transition-transform w-full rounded-3xl h-[3px] absolute bottom-0'></div>
                                     </div>

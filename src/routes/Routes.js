@@ -1,4 +1,5 @@
-import { JobDetail } from "../pages/job/JobDetail";
+// import { CandidateHome } from "../pages/candidates/CandidateHome";
+import { JobDetail } from "../pages/candidates/job/JobDetail";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
@@ -32,6 +33,8 @@ import CandidateProfile from "pages/candidates/Profile";
 import CandidateEditProfile from "pages/candidates/CandidateEditProfile";
 import SavedJob from "pages/candidates/SavedJob";
 import AppliedJob from "pages/candidates/AppliedJob";
+import AboutUs from "pages/AboutUs";
+import CompanyViewPage from "pages/candidates/CompanyViewPage/CompanyViewPage";
 
 
 const privateRoutes = [
@@ -43,6 +46,8 @@ const privateRoutes = [
     //  authorization: array of roles can access this page
 ];
 const publicRoutes = [
+    { path: "/about", component: AboutUs, layout: CandidateLayout },
+    { path: "/findCompany", component: CompanyViewPage, layout: CandidateLayout},
     //  Example: {path: '/login', component: Login}
     //   { path: "/", component: Home, layout: BlankLayout },
     { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
