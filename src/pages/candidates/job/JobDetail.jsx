@@ -6,10 +6,10 @@ import {
   getListCompanyDefault,
   getCompanyById,
   getCandidateInfoByid,
-} from "../../services/candidates/CandidateService";
-import { getJobById } from "../../services/job/JobService";
-import CompanyView from "../../components/componentCustom/CompanyView";
-import LogoJobFinder from "../../assets/image/candidates/LogoJobFinder.png";
+} from "../../../services/candidates/CandidateService";
+import { getJobById } from "../../../services/job/JobService";
+import CompanyView from "../../../components/componentCustom/CompanyView";
+import LogoJobFinder from "../../../assets/image/candidates/LogoJobFinder.png";
 import Header from "components/layouts/header/Header";
 import ModelCV from "components/componentCustom/ModalCV";
 import "./JobDetail.css";

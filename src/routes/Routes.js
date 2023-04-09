@@ -1,5 +1,5 @@
 // import { CandidateHome } from "../pages/candidates/CandidateHome";
-import { JobDetail } from "../pages/job/JobDetail";
+import { JobDetail } from "../pages/candidates/job/JobDetail";
 import SignIn from "../pages/auth/SignIn";
 import SignUp from "pages/auth/SignUp";
 import VerifyEmail from "pages/auth/VerifyEmail";
@@ -26,6 +26,7 @@ import CandidateProfile from "pages/candidates/Profile";
 import CandidateEditProfile from "pages/candidates/CandidateEditProfile";
 import SavedJob from "pages/candidates/SavedJob";
 import AppliedJob from "pages/candidates/AppliedJob";
+import AboutUs from "pages/AboutUs";
 
 const privateRoutes = [
   //  Example: {path: '/manager/home', layout: ManagerLayout , component: ManagerHome, authorization : ['Admin']}
@@ -150,6 +151,11 @@ const publicRoutes = [
     component: AppliedJob,
     layout: BlankLayout,
     authorization: ["Candidate"],
+  },
+  {
+    path: "/about",
+    component: AboutUs,
+    layout: BlankLayout,
   },
 ];
 
