@@ -50,7 +50,7 @@ function ApplicationAnalysticChartLine() {
         plugins: {
             title: {
                 display: false,
-                text: 'Tăng trưởng người dùng',
+                text: 'Thống kê ứng tuyển',
             },
             legend: {
                 display: true
@@ -78,60 +78,22 @@ function ApplicationAnalysticChartLine() {
             .map((index) => `${index + 1}`)
     }
 
-  const [chartData, setChartData] = useState({
-    labels: label,
-    datasets: [
-      {
-        fill: true,
-        label: "CV Chấp nhận",
-        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
-        backgroundColor: "#f66885",
-        borderRadius: 50,
-        borderColor: "#f66885",
-        pointBackgroundColor: "#f66885",
-        // pointRadius: 0
-        // stack: 'Stack 0',
-      },
-      {
-        fill: true,
-        label: "CV Từ chối",
-        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
-        backgroundColor: "#36a0ea",
-        borderRadius: 50,
-        borderColor: "#36a0ea",
-        pointBackgroundColor: "#36a0ea",
-        // pointRadius: 0
-        // stack: 'Stack 0',
-      },
-    ],
-  });
-
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: `${config.server.domain}/job/statistic?month=${selectedMonth}&year=${selectedYear}`,
-      headers: {
-        Authorization: Authentication.generateAuthorizationHeader(),
-      },
-    }).then((response) => {
-      setChartData({
+    const [chartData, setChartData] = useState({
         labels: label,
         datasets: [
             {
                 fill: true,
-                label: 'CV Ứng tuyển',
+                label: "Đơn ứng tuyển",
                 data: [],
-                backgroundColor: '#f66885',
+                backgroundColor: "#f66885",
                 borderRadius: 50,
                 borderColor: "#f66885",
-                pointBackgroundColor: "#f66885"
+                pointBackgroundColor: "#f66885",
                 // pointRadius: 0
                 // stack: 'Stack 0',
             }
         ],
-      });
     });
-  }, [selectedMonth, selectedYear]);
 
     useEffect(() => {
         axios({
@@ -151,7 +113,7 @@ function ApplicationAnalysticChartLine() {
                 labels: label,
                 datasets: [
                     {
-                        label: 'CV Ứng tuyển',
+                        label: 'Đơn ứng tuyển',
                         data: response.data.slice(0, label.length).map((item) => item.numberOfApplication),
                         backgroundColor: 'rgba(246, 104, 133, 0.2)',
                         borderRadius: 50,

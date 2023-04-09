@@ -79,8 +79,7 @@ const publicRoutes = [
 
     //  Example: {path: '/login', component: Login}
     // { path: "/", component: Home, layout: BlankLayout },
-    { path: "/", component: CandidateHome },
-    { path: "/job/:id", component: JobDetail },
+    { path: "/job/:id", component: JobDetail, layout: CandidateLayout },
     { path: "/company/:id", component: ViewCompany, layout: CandidateLayout },
     { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout },
     {

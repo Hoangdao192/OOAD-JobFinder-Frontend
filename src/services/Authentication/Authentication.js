@@ -124,6 +124,10 @@ class Authentication {
                     url = `${config.server.domain}/company/${response.data.user.id}`
                 } else if (response.data.user.roles[0] == "Candidate") {
                     url = `${config.server.domain}/candidate/${response.data.user.id}`
+                } else {
+                    localStorage.setItem("user", JSON.stringify(response.data.user));
+                    resolve()
+                    return
                 }
                 axios({
                     method: "GET",
