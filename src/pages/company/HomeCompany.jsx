@@ -52,7 +52,7 @@ function ApplicationAnalysticChartLine() {
     plugins: {
       title: {
         display: false,
-        text: "Tăng trưởng người dùng",
+        text: "Thống kê ứng tuyển",
       },
       legend: {
         display: true,
@@ -99,8 +99,8 @@ function ApplicationAnalysticChartLine() {
     datasets: [
       {
         fill: true,
-        label: "CV Chấp nhận",
-        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
+        label: "Đơn ứng tuyển",
+        data: [],
         backgroundColor: "#f66885",
         borderRadius: 50,
         borderColor: "#f66885",
@@ -108,46 +108,8 @@ function ApplicationAnalysticChartLine() {
         // pointRadius: 0
         // stack: 'Stack 0',
       },
-      {
-        fill: true,
-        label: "CV Từ chối",
-        data: label.map(() => faker.datatype.number({ min: 0, max: 100 })),
-        backgroundColor: "#36a0ea",
-        borderRadius: 50,
-        borderColor: "#36a0ea",
-        pointBackgroundColor: "#36a0ea",
-        // pointRadius: 0
-        // stack: 'Stack 0',
-      },
     ],
   });
-
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: `${config.server.domain}/job/statistic?month=${month}&year=${year}`,
-      headers: {
-        Authorization: Authentication.generateAuthorizationHeader(),
-      },
-    }).then((response) => {
-      setChartData({
-        labels: label,
-        datasets: [
-          {
-            fill: true,
-            label: "CV Ứng tuyển",
-            data: [],
-            backgroundColor: "#f66885",
-            borderRadius: 50,
-            borderColor: "#f66885",
-            pointBackgroundColor: "#f66885",
-            // pointRadius: 0
-            // stack: 'Stack 0',
-          },
-        ],
-      });
-    });
-  }, [month, year]);
 
   useEffect(() => {
     axios({
@@ -172,7 +134,7 @@ function ApplicationAnalysticChartLine() {
         labels: label,
         datasets: [
           {
-            label: "CV Ứng tuyển",
+            label: "Đơn ứng tuyển",
             data: response.data
               .slice(0, label.length)
               .map((item) => item.numberOfApplication),
