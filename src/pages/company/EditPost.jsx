@@ -131,7 +131,7 @@ function EditPost() {
 
   return (
     <Dashboard>
-      <div className="w-full bg-white m-5 rounded-md shadow-md py-5 px-8 overflow-y-scroll scrollbar-hide">
+      <div className="w-full bg-white m-5 rounded-md shadow-md p-5">
         <h1 className="text-3xl font-semibold text-text_color mb-10">
           Đăng tin tuyển dụng
         </h1>

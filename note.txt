@@ -1,6 +1,1 @@
-Fix lỗi xóa công việc (back)
-Fix lỗi gửi cv
-Fix lỗi danh sách ứng viên của 1 công việc
-Bổ sung ảnh file
-Trang admin: nối api cho số lượng bài viết
-Hoàn thiện trang xem công ty
+hỏi ảnh cv, hỏi ảnh job
