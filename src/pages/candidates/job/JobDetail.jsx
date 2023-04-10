@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Authentication from "services/Authentication/Authentication";
 import {
-  getListCompanyDefault,
-  getCompanyById,
-  getCandidateInfoByid,
+    getListCompanyDefault,
+    getCompanyById,
+    getCandidateInfoByid,
 } from "../../../services/candidates/CandidateService";
 import { getJobById } from "../../../services/job/JobService";
 import CompanyView from "../../../components/componentCustom/CompanyView";
@@ -15,10 +15,13 @@ import ModelCV from "components/componentCustom/ModalCV";
 import "./JobDetail.css";
 import { toast } from "react-toastify";
 import Footer from "components/layouts/footer/Footer";
+import { Modal } from "@mui/material";
 
 export const JobDetail = () => {
     const params = useParams();
     const navigate = useNavigate();
+
+    const [openApply, setOpenAppy] = useState(false)
 
     const [jobDetail, setJobDetail] = useState({
         id: null,
@@ -52,9 +55,10 @@ export const JobDetail = () => {
     const [reloadPage, setReloadPage] = useState(false);
 
     const handleClickSendCV = (e) => {
-        if (!userData) {
+        if (!Authentication.isUserAuthenticated()) {
             toast.warn("Bạn cần đăng nhập trước khi Gửi CV");
         }
+        setOpenAppy(true)
     };
 
     // first load
@@ -112,26 +116,24 @@ export const JobDetail = () => {
     }, [jobDetail]);
 
     return (
-        <div className="text-Poppins">
+        <div className="text-Poppins w-full">
             {/* Body */}
             <div className="flex items-start w-full h-full bg-gray-200 space-x-5 p-5">
                 {/* Left Content */}
                 <div className="scroll-hidden overflow-auto w-9/12 space-y-4 bg-white p-6 rounded-xl">
                     {/* Header */}
                     <div className="flex flex-row items-center space-x-4">
-                        <img onClick={() => {navigate(`/company/${jobDetail.userId}`)}} className="cursor-pointer rounded-md w-12 h-12" src={companyLogo} />
+                        <img onClick={() => { navigate(`/company/${jobDetail.userId}`) }} className="cursor-pointer rounded-md w-12 h-12" src={companyLogo} />
                         <div>
                             <p className="text-2xl">{jobDetail.jobTitle}</p>
-                            <p onClick={() => {navigate(`/company/${jobDetail.userId}`)}} className="font-bold cursor-pointer hover:text-slate-400">{jobDetail.company.companyName}</p>
+                            <p onClick={() => { navigate(`/company/${jobDetail.userId}`) }} className="font-bold cursor-pointer hover:text-slate-400">{jobDetail.company.companyName}</p>
                         </div>
                         <p className="flex-1"></p>
 
                         <button
                             onClick={handleClickSendCV}
                             className="text-[0.9rem] bg-common_color whitespace-nowrap hover:bg-green-700 text-white p-3 rounded-md justify-end"
-                            data-hs-overlay={
-                                userData ? "#hs-slide-down-animation-modal" : "#NONE"
-                            }
+                            data-hs-overlay="#hs-slide-down-animation-modal"
                         >
                             Gửi CV
                         </button>
@@ -164,11 +166,15 @@ export const JobDetail = () => {
 
                     {
                         // jobDetail.id && userData &&
-                        <ModelCV
-                            idModal="hs-slide-down-animation-modal"
-                            job={jobDetail}
-                            candidate={userData}
-                        />
+                        <Modal open={openApply} onClose={() => setOpenAppy(false)}>
+                            <ModelCV
+                                open={openApply}
+                                setOpen={setOpenAppy}
+                                idModal="hs-slide-down-animation-modal"
+                                job={jobDetail}
+                                candidate={userData}
+                            />
+                        </Modal>
                     }
                 </div>
 

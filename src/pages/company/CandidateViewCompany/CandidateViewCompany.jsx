@@ -1,12 +1,26 @@
 import axios from "axios"
 import JobView from "components/componentCustom/JobView"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
-import config from '../../config.json'
+import config from '../../../config.json'
+import { IconButton, Modal, Rating } from "@mui/material"
+import { Close, Flag } from "@mui/icons-material"
+import { toast } from "react-toastify"
+import Authentication from "services/Authentication/Authentication"
+import ReportModal from "./ReportModal"
+import RateModal from "./RateModal"
 
-export default function ViewCompany() {
+export default function CandidateViewCompany() {
+    const [openRate, setOpenRate] = useState(false)
+    const [openReport, setOpenReport] = useState(false)
+
+    const onRateButtonClick = () => {
+        setOpenRate(true)
+    }
+
     const [listJob, setListJob] = useState([])
     const [company, setCompany] = useState({
+        id: -1,
         companyName: "",
         companyDescription: "",
         companyLogo: "",
@@ -40,17 +54,19 @@ export default function ViewCompany() {
 
     return (
         <div className="bg-[#e5e7eb] flex w-full p-4 gap-4">
+            <RateModal open={openRate} setOpen={setOpenRate} companyId={company.id} />
+            <ReportModal open={openReport} setOpen={setOpenReport} companyId={company.id} />
             <div className="flex-[2]">
                 <div className="rounded flex flex-col gap-4">
-                {
-                    listJob.length > 0 ?
-                        listJob.map((item, index) => (
-                            <JobView data={item}></JobView>
-                        ))
-                        : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">
-                            Công ty chưa có công việc nào
+                    {
+                        listJob.length > 0 ?
+                            listJob.map((item, index) => (
+                                <JobView data={item}></JobView>
+                            ))
+                            : <div className="font-bold p-5 bg-white text-center text-common_color rounded-xl">
+                                Công ty chưa có công việc nào
                             </div>
-                }
+                    }
                 </div>
             </div>
             <div className="flex-[5]">
@@ -67,13 +83,13 @@ export default function ViewCompany() {
                                 <p className="text-[#8e8e8e]">{company.companyAddress}</p>
                             </div>
 
-                            <div>
-                                <button className="rounded-xl bg-[#379d70] py-3 px-8 inline-block">
-                                    <span className="text-white">Báo cáo công ty</span>
+                            <div className="flex gap-4">
+                                <button onClick={onRateButtonClick} className="hover:bg-slate-600 rounded-[25px] bg-[#73a580] py-3 px-5">
+                                    <span className="font-semibold text-white">Đánh giá công ty</span>
                                 </button>
-                                <div>
-
-                                </div>
+                                <IconButton onClick={() => setOpenReport(true )} color="error" className="rounded-xl bg-[#379d70] w-[3rem] h-[3rem] inline-block">
+                                    <Flag />
+                                </IconButton>
                             </div>
                         </div>
                     </div>

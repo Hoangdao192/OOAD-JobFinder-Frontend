@@ -142,14 +142,14 @@ function Header() {
                         navigationItems.map((item, index) => {
                             if (index === activeItemIndex) {
                                 return (
-                                    <div onClick={() => {setActiveItemIndex(index); navigate(item.action)}} className='flex justify-center py-6 cursor-pointer relative'>
+                                    <div key={index} onClick={() => {setActiveItemIndex(index); navigate(item.action)}} className='flex justify-center py-6 cursor-pointer relative'>
                                         <p className='font-bold text-[#71a893] inline-block'>{item.title}</p>
                                         <div className='bg-[#71a893] w-full rounded-3xl h-[3px] absolute bottom-0'></div>
                                     </div>
                                 )
                             } else {
                                 return (
-                                    <div onClick={() => {setActiveItemIndex(index); navigate(item.action)}} className='transition-[0.3s] group flex justify-center py-6 cursor-pointer relative'>
+                                    <div key={index} onClick={() => {setActiveItemIndex(index); navigate(item.action)}} className='transition-[0.3s] group flex justify-center py-6 cursor-pointer relative'>
                                         <p className='font-bold text-[#c5c5c5] group-hover:text-[#71a893] inline-block'>{item.title}</p>
                                         <div className='bg-[#71a893] hidden group-hover:block transition-transform w-full rounded-3xl h-[3px] absolute bottom-0'></div>
                                     </div>
