@@ -34,6 +34,7 @@ import AppliedJob from "pages/candidates/AppliedJob";
 import AboutUs from "pages/AboutUs";
 import CompanyViewPage from "pages/candidates/CompanyViewPage/CompanyViewPage";
 import CandidateViewCompany from "pages/company/CandidateViewCompany/CandidateViewCompany";
+import Report from "pages/admin/Report/Report";
 
 
 const privateRoutes = [
@@ -51,24 +52,24 @@ const publicRoutes = [
     //   { path: "/", component: Home, layout: BlankLayout },
     { path: "/auth/verifyemail", component: VerifyEmail, layout: BlankLayout },
 
-    // { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
-    // { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] },
-    // { path: "admin/report", component: Report, layout: AdminLayout, authorization: ['Admin'] },
+    { path: "admin", component: Overview, layout: AdminLayout, authorization: ['Admin'] },
+    { path: "admin/user", component: UserManager, layout: AdminLayout, authorization: ['Admin'] },
+    { path: "admin/report", component: Report, layout: AdminLayout, authorization: ['Admin'] },
 
     { path: "/company", component: HomeCompany, layout: BlankLayout, authorization: ['Company'] },
-    // { path: "/company/requirement", component: Requirement, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/requirement", component: Requirement, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/posts", component: Posts, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/post/:id", component: PostDetail, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/post/candidates", component: CandidatesPerPost, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/post/edit", component: EditPost, layout: BlankLayout, authorization: ['Company'] },
-    // { path: "/company/candidates", component: CandidatesList, layout: BlankLayout, authorization: ['Company'] },
+    { path: "/company/candidates", component: CandidatesList, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/profile", component: Profile, layout: BlankLayout, authorization: ['Company'] },
     { path: "/company/profile/edit", component: EditProfile, layout: BlankLayout, authorization: ['Company'] },
-    // {
-    //     path: "/company/candidateinfor",
-    //     component: CandidateInfor,
-    //     layout: BlankLayout,
-    // },
+    {
+        path: "/company/candidateinfor",
+        component: CandidateInfor,
+        layout: BlankLayout,
+    },
 
     { path: "/not_found", component: NotFound, layout: BlankLayout },
     { path: "/", component: CandidateHome, layout: CandidateLayout },
@@ -81,8 +82,6 @@ const publicRoutes = [
 
     { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout },
 
-    //  Example: {path: '/login', component: Login}
-    // { path: "/", component: Home, layout: BlankLayout },
     { path: "/job/:id", component: JobDetail, layout: CandidateLayout },
     { path: "/company/:id", component: CandidateViewCompany, layout: CandidateLayout },
     { path: "/auth/detail/candidate", component: CandidateDetail, layout: BlankLayout },
