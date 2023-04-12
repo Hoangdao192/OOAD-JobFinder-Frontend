@@ -21,6 +21,7 @@ import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import Spinner from "components/components/Spinner"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from "react-router-dom"
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -77,6 +78,7 @@ function TablePaginationActions(props) {
 }
 
 function UserTable({ userPage, handleChangePage, handleChangeRowsPerPage, pagination }) {
+    const navigate = useNavigate()
 
     return (
         <TableContainer >
@@ -110,8 +112,14 @@ function UserTable({ userPage, handleChangePage, handleChangeRowsPerPage, pagina
                             <TableCell align="left">{user.createDate}</TableCell>
                             <TableCell align="left">
                                 <div className="flex gap-4">
-                                    <IconButton>
-                                        <VisibilityIcon className=""/>
+                                    <IconButton onClick={() => {
+                                        if (user.roles[0] === 'Company') {
+                                            // navigate(`/company/${user.id}`)
+                                            let win = window.open(`/company/${user.id}`, '_blank');
+                                            win.focus();
+                                        }
+                                    }}>
+                                        <VisibilityIcon className="" />
                                     </IconButton>
                                     <IconButton>
                                         <DeleteIcon />
@@ -175,9 +183,9 @@ export default function UserManager() {
     useEffect(() => {
         let url = requestUrl
         if (url.includes("?")) {
-            url = url + `&page=${pagination.page}&pageSize=${pagination.pageSize})`
+            url = url + `&page=${pagination.page}&pageSize=${pagination.pageSize}`
         } else {
-            url = url + `?page=${pagination.page}&pageSize=${pagination.pageSize})`
+            url = url + `?page=${pagination.page}&pageSize=${pagination.pageSize}`
         }
         axios(
             // requestOption
@@ -201,9 +209,9 @@ export default function UserManager() {
     ) => {
         let url = requestUrl;
         if (url.includes("?")) {
-            url = url + `&page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize})`
+            url = url + `&page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize}`
         } else {
-            url = url + `?page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize})`
+            url = url + `?page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize}`
         }
         axios({
             method: 'GET',
@@ -262,8 +270,8 @@ export default function UserManager() {
     function onFilterButtonClick() {
         if (!isFiltered) {
             setRequestUrl(`${config.server.domain}/user/search?email=${email}` +
-                (selectedAccountType != accountType[0] ? `&accountType=${selectedAccountType}` : "") + 
-                (selectedActivated != activated[0] ? `&isActive=${selectedActivated}` : "") + 
+                (selectedAccountType != accountType[0] ? `&accountType=${selectedAccountType}` : "") +
+                (selectedActivated != activated[0] ? `&isActive=${selectedActivated}` : "") +
                 (selectedLocked != locked[0] ? `&isLocked=${selectedLocked}` : ""))
         } else {
             setRequestUrl(`${config.server.domain}/user`)

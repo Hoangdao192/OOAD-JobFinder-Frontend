@@ -140,14 +140,27 @@ export default function Overview() {
     const statisticalUnit = ['Tháng', 'Năm']
     const [selectedStatisticalUnit, setSelectedStatisticalUnit] = useState(statisticalUnit[0])
 
+    const [numberOfJob, setNumberOfJob] = useState(0)
+    useEffect(() => {
+        axios({
+            method: "get",
+            url: `${config.server.domain}/job/countAll`,
+            headers: {
+                Authorization: Authentication.generateAuthorizationHeader()
+            }
+        }).then((response) => {
+            setNumberOfJob(response.data)
+        })
+    }, [])
+
     return (
         <div className="px-4 py-4 max-w-full w-full h-full overflow-hidden">
             <div className="flex flex-wrap w-full gap-4">
                 <UserGrowthChartField />
                 <UserSummaryChartField />
-                <div className="border-2 shadow-sm border-[#ecebee] px-4 py-4 bg-white rounded flex flex-col">
+                <div className="min-w-[18rem] items-center border-2 shadow-sm border-[#ecebee] px-4 py-4 bg-white rounded flex flex-col">
                     <p className="font-bold">Số lượng bài viết</p>
-                    <p className="relative text-[3rem] mx-[2rem] font-bold my-auto">200.000</p>
+                    <p className="relative text-[3rem] mx-[2rem] font-bold my-auto">{numberOfJob}</p>
                 </div>
                 <JobPostedChartField />
             </div>

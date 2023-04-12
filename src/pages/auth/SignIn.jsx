@@ -97,14 +97,12 @@ function SignIn() {
           />
         </form>
 
-                <div>
-                    <p className="cursor-pointer mt-10 text-right text-base md:text-lg hover:text-blue-600">
+                <div className="flex justify-between mt-8">
+                    <p onClick={() => navigate("/auth/signup")} className="cursor-pointer  text-right text-base md:text-lg hover:text-blue-600">
+                        Đăng ký</p>
+                    <p className="cursor-pointer  text-right text-base md:text-lg hover:text-blue-600">
                         Quên mật khẩu ?
                     </p>
-                </div>
-
-                <div>
-                    <p className="mt-5 text-center">Or</p>
                 </div>
             </div>
         </Layout>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import Pagination, { postsPerPage } from "components/Pagination";
 import Footer from "components/layouts/footer/Footer";
+import { useNavigate } from "react-router-dom";
 import Authentication from "services/Authentication/Authentication";
 
 const { default: HomeHeader } = require("components/layouts/header/Header");
@@ -12,7 +13,7 @@ function AppliedJob() {
     const firstPostIndex = lastPostIndex - postsPerPage;
 
     const candidateData = Authentication.getCurrentUser();
-
+    const navigate = useNavigate()
     const [appliedJobs, setAppliedJobs] = useState([]);
     useEffect(() => {
         axios({
@@ -52,15 +53,19 @@ function AppliedJob() {
                                     <div className="shadow-sm py-5" key={jobApplication.job.id}>
                                         <div className="flex gap-2 items-center">
                                             <img
-                                                src="/avatar.png"
+                                                src={jobApplication.job.company.companyLogo}
                                                 alt=""
                                                 className="h-12 w-12 rounded-full object-cover"
                                             />
-                                            <div>
-                                                <h1 className="text-lg font-semibold">
+                                            <div className="ml-4">
+                                                <h1 onClick={() => {
+                                                    navigate(`/job/${jobApplication.job.id}`)
+                                                }} className="text-lg cursor-pointer hover:text-red-400 font-semibold">
                                                     {jobApplication.job.jobTitle}
                                                 </h1>
-                                                <h1 className="text-gray-500">
+                                                <h1 onClick={() => {
+                                                    navigate(`/company/${jobApplication.job.company.userId}`)
+                                                }} className="text-gray-500 cursor-pointer hover:text-stone-700">
                                                     {jobApplication.job.company.companyName}
                                                 </h1>
                                             </div>
@@ -93,7 +98,6 @@ function AppliedJob() {
                     )}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

@@ -27,29 +27,10 @@ export const CandidateHome = () => {
 
     const [listJob, setListJob] = useState([]);
 
-    const [userData, setUserData] = useState(null);
-
     const [listCompany, setListCompany] = useState([]);
 
     const [listAddressJob, setListAddressJob] = useState([]);
-
-    // first load
-    useEffect(() => {
-        if (
-            Authentication.isUserAuthenticated() &&
-            Authentication.getCurrentUser().roles[0] === "Candidate"
-        ) {
-            getCandidateInfoByid(Authentication.getCurrentUser().id).then((res) => {
-                if (res) {
-                    setUserData(res);
-                } else {
-                    setUserData(null);
-                }
-            });
-        } else {
-            setUserData(null);
-        }
-    }, []);
+    const userData = Authentication.getCurrentUser()
 
     useEffect(() => {
         if (filterKey.jobTitle || filterKey.major || filterKey.workingForm) {
@@ -91,7 +72,7 @@ export const CandidateHome = () => {
         getListCompanyDefault().then((data) => {
             setListCompany(data);
         });
-    }, [filterKey, userData]);
+    }, [filterKey]);
 
     const handleChangeWorkingForm = (sender) => {
         let cloneFilterKey = { ...filterKey };

@@ -29,6 +29,7 @@ export default function ReportModal({ open, setOpen, companyId }) {
                     message: reportMessage 
                 }
             }).then(() => {
+                onClose()
                 toast.success("Báo cáo thành công")
             }).catch(() => {
                 toast.error("Có lỗi xảy ra")
@@ -37,7 +38,7 @@ export default function ReportModal({ open, setOpen, companyId }) {
     }
 
     return (
-        <Modal open={open} onClose={() => setOpen(false)}
+        <Modal open={open} onClose={onClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description">
             <div className="w-full h-full fixed flex justify-center items-center left-0 z-[60] overflow-x-hidden overflow-y-auto" >

@@ -89,7 +89,7 @@ function ReportTable({ reportPage, handleChangePage, handleChangeRowsPerPage, pa
                         <TableCell align="left">Công ty bị báo cáo</TableCell>
                         <TableCell align="left">Ngày báo cáo</TableCell>
                         <TableCell align="left">Phản ánh</TableCell>
-                        <TableCell align="left">Tùy chọn</TableCell>
+                        {/* <TableCell align="left">Tùy chọn</TableCell> */}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -102,20 +102,20 @@ function ReportTable({ reportPage, handleChangePage, handleChangeRowsPerPage, pa
                             <TableCell component="th" scope="row">
                                 {report.id}
                             </TableCell>
-                            <TableCell align="left">{report.candidate.email}</TableCell>
-                            <TableCell align="left">{report.company.email}</TableCell>
-                            <TableCell align="left">{report.date ? "Có" : "Không"}</TableCell>
-                            <TableCell align="left">{report.message ? "Có" : "Không"}</TableCell>
-                            <TableCell align="left">
+                            <TableCell align="left">{report.candidate.fullName}</TableCell>
+                            <TableCell align="left">{report.company.companyName}</TableCell>
+                            <TableCell align="left">{report.date.substr(0, 10)}</TableCell>
+                            <TableCell align="left">{report.message}</TableCell>
+                            {/* <TableCell align="left">
                                 <div className="flex gap-4">
                                     <IconButton>
-                                        <VisibilityIcon className=""/>
+                                        <VisibilityIcon className="" />
                                     </IconButton>
                                     <IconButton>
                                         <DeleteIcon />
                                     </IconButton>
                                 </div>
-                            </TableCell>
+                            </TableCell> */}
                         </TableRow>
                     ))}
                 </TableBody>
@@ -173,9 +173,9 @@ export default function Report() {
     useEffect(() => {
         let url = requestUrl
         if (url.includes("?")) {
-            url = url + `&page=${pagination.page}&pageSize=${pagination.pageSize})`
+            url = url + `&page=${pagination.page}&pageSize=${pagination.pageSize}`
         } else {
-            url = url + `?page=${pagination.page}&pageSize=${pagination.pageSize})`
+            url = url + `?page=${pagination.page}&pageSize=${pagination.pageSize}`
         }
         axios(
             // requestOption
@@ -199,9 +199,9 @@ export default function Report() {
     ) => {
         let url = requestUrl;
         if (url.includes("?")) {
-            url = url + `&page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize})`
+            url = url + `&page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize}`
         } else {
-            url = url + `?page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize})`
+            url = url + `?page=${newPage}&pageSize=${pageSize != null ? pageSize : pagination.pageSize}`
         }
         axios({
             method: 'GET',
@@ -260,8 +260,8 @@ export default function Report() {
     function onFilterButtonClick() {
         if (!isFiltered) {
             setRequestUrl(`${config.server.domain}/user/search?email=${email}` +
-                (selectedAccountType != accountType[0] ? `&accountType=${selectedAccountType}` : "") + 
-                (selectedActivated != activated[0] ? `&isActive=${selectedActivated}` : "") + 
+                (selectedAccountType != accountType[0] ? `&accountType=${selectedAccountType}` : "") +
+                (selectedActivated != activated[0] ? `&isActive=${selectedActivated}` : "") +
                 (selectedLocked != locked[0] ? `&isLocked=${selectedLocked}` : ""))
         } else {
             setRequestUrl(`${config.server.domain}/user`)
@@ -271,7 +271,7 @@ export default function Report() {
 
     return (
         <div className="rounded overflow-hidden m-4 h-full">
-            <div className="w-full mb-4 flex flex-wrap gap-[0.5rem]">
+            {/* <div className="w-full mb-4 flex flex-wrap gap-[0.5rem]">
                 <div className="rounded px-4 py-2 bg-white">
                     <input value={email} onChange={(event) => setEmail(event.target.value)} maxLength={320} className="border-none outline-none" type="text" placeholder="Nhập email" />
                 </div>
@@ -307,7 +307,7 @@ export default function Report() {
                         isFiltered ? <FilterAltOffIcon /> : <FilterAltIcon />
                     }
                 </div>
-            </div>
+            </div> */}
             <div className=" bg-white rounded overflow-hidden px-4">
                 <ReportTable
                     reportPage={reportPage}

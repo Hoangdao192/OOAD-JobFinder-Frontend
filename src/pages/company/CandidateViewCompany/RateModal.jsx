@@ -10,6 +10,11 @@ export default function RateModal({ open, setOpen, companyId }) {
     const [value, setValue] = useState(0)
     const description = useRef(null)
 
+    const onClose = () => {
+        setOpen(false)
+        setValue(0)
+    }
+
     const onSubmitButtonClick = () => {
         axios({
             method: "POST",
@@ -23,6 +28,7 @@ export default function RateModal({ open, setOpen, companyId }) {
                 star: value
             }
         }).then((response) => {
+            onClose()
             toast.success("Đánh giá thành công")
 
         }).catch((error) => {
@@ -32,7 +38,7 @@ export default function RateModal({ open, setOpen, companyId }) {
     }
 
     return (
-        <Modal open={open} onClose={() => setOpen(false)}
+        <Modal open={open} onClose={onClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description">
             <div className="rounded w-[20rem] flex justify-center flex-col bg-white py-4 px-6 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
@@ -49,7 +55,6 @@ export default function RateModal({ open, setOpen, companyId }) {
                     name="simple-controlled"
                     value={value}
                     onChange={(event, newValue) => {
-                        toast.info(newValue)
                         setValue(newValue);
                     }}
                 />
